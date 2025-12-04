@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Învață cu Noi - FinQuest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --light: #f8f9fa;
+            --dark: #1e293b;
+            --gray: #6b7280;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 5%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            color: var(--accent);
+        }
+        
+        .badge-financial {
+            background: linear-gradient(135deg, #2a3c8f, #1a2a6c);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .badge-financial::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 10px 10px;
+            transform: rotate(15deg);
+            pointer-events: none;
+        }
+        
+        .badge-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge-line-1 {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .badge-line-2 {
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .user-level {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .level-icon {
+            color: var(--accent);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3ab8dd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .page-hero {
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+        
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .page-hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+        
+        .learning-modules {
+            padding: 4rem 5%;
+            background-color: white;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .module-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+            border-color: var(--accent);
+        }
+        
+        .module-card.featured {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #f8fafc, #f0f7ff);
+        }
+        
+        .module-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .module-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .module-desc {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        
+        .module-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .module-tag {
+            background-color: #eef2ff;
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .module-difficulty {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .difficulty-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .difficulty-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+        }
+        
+        .difficulty-dot.active {
+            background-color: var(--primary);
+        }
+        
+        .quiz-container {
+            background-color: #f8fafc;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px dashed #d1d5db;
+            display: none;
+        }
+        
+        .quiz-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-option {
+            background-color: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .quiz-option:hover {
+            border-color: var(--accent);
+            background-color: #f0f7ff;
+        }
+        
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background-color: #eef2ff;
+        }
+        
+        .quiz-option.correct {
+            border-color: var(--success);
+            background-color: #f0fdf4;
+        }
+        
+        .quiz-option.incorrect {
+            border-color: var(--danger);
+            background-color: #fef2f2;
+        }
+        
+        .option-letter {
+            background-color: #e5e7eb;
+            color: var(--dark);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .option-text {
+            flex-grow: 1;
+        }
+        
+        .quiz-feedback {
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            display: none;
+        }
+        
+        .quiz-feedback.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .quiz-feedback.correct {
+            background-color: #f0fdf4;
+            border: 2px solid var(--success);
+        }
+        
+        .quiz-feedback.incorrect {
+            background-color: #fef2f2;
+            border: 2px solid var(--danger);
+        }
+        
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .feedback-header.correct {
+            color: var(--success);
+        }
+        
+        .feedback-header.incorrect {
+            color: var(--danger);
+        }
+        
+        .feedback-content {
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .score-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(76, 201, 240, 0.1);
+            border-radius: 10px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .score-icon {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+        
+        .quiz-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .progress-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .progress-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .resources-section {
+            padding: 4rem 5%;
+            background-color: #f0f4ff;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        .resource-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .resource-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .resource-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-section {
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5% 1.5rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-links h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: var(--accent);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .badge-financial {
+                padding: 4px 8px;
+            }
+            
+            .badge-line-1 {
+                font-size: 0.7rem;
+            }
+            
+            .badge-line-2 {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-coins logo-icon"></i>
+                    <span>FinQuest</span>
+                </div>
+                <div class="badge-financial">
+                    <div class="badge-content">
+                        <div class="badge-line badge-line-1">FINANCIAL</div>
+                        <div class="badge-line badge-line-2">EDUCATION</div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="invata.html">Învață cu Noi</a></li>
+                    <li><a href="jocuri.html">Jocuri</a></li>
+                    <li><a href="preturi.html">Prețuri</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-menu">
+                <div class="user-level">
+                    <i class="fas fa-trophy level-icon"></i>
+                    <span id="user-level-display">Level 1</span>
+                </div>
+                <button class="btn btn-primary" onclick="window.location.href='jocuri.html'">Începe un Joc</button>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Învață Finanțe Personale Pas cu Pas</h1>
+            <p>Răspunde la întrebări practice, primești feedback instant și acumulezi XP pentru fiecare răspuns corect!</p>
+            <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem;" onclick="startRandomQuiz()">
+                <i class="fas fa-brain"></i> Începe un Quiz Aleatoriu
+            </button>
+        </div>
+    </section>
+    
+    <section class="learning-modules">
+        <div class="container">
+            <h2 class="section-title">Module de Învățare Interactive</h2>
+            <p class="section-subtitle">Alege un subiect care te interesează și răspunde la întrebări practice. Fiecare răspuns corect îți aduce XP și îți îmbunătățește abilitățile financiare!</p>
+            
+            <div class="progress-container">
+                <div class="progress-title">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Progresul Tău de Învățare</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="learningProgress" style="width: 0%"></div>
+                </div>
+                <div class="progress-info">
+                    <span>Început</span>
+                    <span id="progressPercent">0%</span>
+                    <span>Expert</span>
+                </div>
+            </div>
+            
+            <div class="modules-grid">
+                <!-- Modul 1: Buget și Cheltuieli -->
+                <div class="module-card featured" data-module="budget">
+                    <div class="module-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Buget și Cheltuieli</h3>
+                    <div class="module-difficulty">
+                        <span>Dificultate:</span>
+                        <div class="difficulty-dots">
+                            <div class="difficulty-dot active"></div>
+                            <div class="difficulty-dot"></div>
+                            <div class="difficulty-dot"></div>
+                        </div>
+                    </div>
+                    <div class="module-desc">
+                        Învață cum să-ți gestionezi banii inteligent, să-ți creezi un buget realist și să-ți urmărești cheltuielile eficient.
+                    </div>
+                    <div class="module-tags">
+                        <span class="module-tag">Buget</span>
+                        <span class="module-tag">Economii</span>
+                        <span class="module-tag">Planificare</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="startModuleQuiz('budget')">
+                        <i class="fas fa-play"></i> Începe Quiz-ul
+                    </button>
+                </div>
+                
+                <!-- Modul 2: Credit și Împrumuturi -->
+                <div class="module-card" data-module="credit">
+                    <div class="module-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Credit și Împrumuturi</h3>
+                    <div class="module-difficulty">
+                        <span>Dificultate:</span>
+                        <div class="difficulty-dots">
+                            <div class="difficulty-dot active"></div>
+                            <div class="difficulty-dot active"></div>
+                            <div class="difficulty-dot"></div>
+                        </div>
+                    </div>
+                    <div class="module-desc">
+                        Descoperă cum să alegi creditul potrivit, să calculezi costurile reale și să-ți îmbunătățești scorul de credit.
+                    </div>
+                    <div class="module-tags">
+                        <span class="module-tag">Credit</span>
+                        <span class="module-tag">Dobândă</span>
+                        <span class="module-tag">Scor Credit</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="startModuleQuiz('credit')">
+                        <i class="fas fa-play"></i> Începe Quiz-ul
+                    </button>
+                </div>
+                
+                <!-- Modul 3: Investiții și Economii -->
+                <div class="module-card" data-module="investments">
+                    <div class="module-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Investiții și Economii</h3>
+                    <div class="module-difficulty">
+                        <span>Dificultate:</span>
+                        <div class="difficulty-dots">
+                            <div class="difficulty-dot active"></div>
+                            <div class="difficulty-dot active"></div>
+                            <div class="difficulty-dot active"></div>
+                        </div>
+                    </div>
+                    <div class="module-desc">
+                        Învață principiile investițiilor sigure, cum să-ți diversifici economiile și cum să te protejezi de inflație.
+                    </div>
+                    <div class="module-tags">
+                        <span class="module-tag">Investiții</span>
+                        <span class="module-tag">Inflație</span>
+                        <span class="module-tag">Diversificare</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="startModuleQuiz('investments')">
+                        <i class="fas fa-play"></i> Începe Quiz-ul
+                    </button>
+                </div>
+                
+                <!-- Modul 4: Decizii Financiare -->
+                <div class="module-card" data-module="decisions">
+                    <div class="module-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Decizii Financiare</h3>
+                    <div class="module-difficulty">
+                        <span>Dificultate:</span>
+                        <div class="difficulty-dots">
+                            <div class="difficulty-dot active"></div>
+                            <div class="difficulty-dot active"></div>
+                            <div class="difficulty-dot"></div>
+                        </div>
+                    </div>
+                    <div class="module-desc">
+                        Ia decizii financiare inteligente: cumpărare vs închiriere, evaluare achiziții, negociere salariu și planificare pe termen lung.
+                    </div>
+                    <div class="module-tags">
+                        <span class="module-tag">Decizii</span>
+                        <span class="module-tag">Planificare</span>
+                        <span class="module-tag">Negociere</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="startModuleQuiz('decisions')">
+                        <i class="fas fa-play"></i> Începe Quiz-ul
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Container pentru quiz-uri (inițial ascuns) -->
+            <div id="quizContainer" class="quiz-container"></div>
+        </div>
+    </section>
+    
+    <section class="resources-section">
+        <div class="container">
+            <h2 class="section-title">Resurse Suplimentare</h2>
+            <p class="section-subtitle">Completează-ți cunoștințele cu aceste resurse gratuite și utile.</p>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Calculează-ți Bugetul</h3>
+                    <p>Calculator interactiv pentru a-ți planifica veniturile și cheltuielile lunare într-un mod realist.</p>
+                    <button class="btn btn-secondary" onclick="openBudgetCalculator()">
+                        <i class="fas fa-external-link-alt"></i> Deschide Calculator
+                    </button>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3>Ghiduri Pas cu Pas</h3>
+                    <p>Ghiduri detaliate pentru gestionarea facturilor, completarea declarațiilor fiscale și identificarea comisioanelor ascunse.</p>
+                    <button class="btn btn-secondary" onclick="openGuides()">
+                        <i class="fas fa-book-open"></i> Vezi Ghidurile
+                    </button>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Lecții Video</h3>
+                    <p>Videoclipuri educative cu experți financiari care explică concepte complexe într-un mod simplu și accesibil.</p>
+                    <button class="btn btn-secondary" onclick="openVideoLessons()">
+                        <i class="fas fa-play-circle"></i> Vezi Lecțiile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Vrei să testezi cunoștințele într-un mod distractiv?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin: 0 auto 2rem;">Joacă jocurile noastre interactive și transformă educația financiară într-o aventură!</p>
+            <button class="btn btn-primary" style="padding: 15px 40px; font-size: 1.3rem; background-color: white; color: var(--primary);" onclick="window.location.href='jocuri.html'">
+                <i class="fas fa-gamepad"></i> Descoperă Jocurile
+            </button>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">FinQuest</div>
+                <p>Transformăm educația financiară într-o aventură interactivă și distractivă pentru toți.</p>
+                <div style="margin-top: 1.5rem; display: flex; gap: 1rem; font-size: 1.5rem;">
+                    <a href="#" style="color: #d1d5db;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: #d1d5db;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: #d1d5db;"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" style="color: #d1d5db;"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Navigare</h4>
+                <ul>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="invata.html">Învață cu Noi</a></li>
+                    <li><a href="jocuri.html">Jocuri</a></li>
+                    <li><a href="preturi.html">Prețuri</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Companie</h4>
+                <ul>
+                    <li><a href="despre.html">Despre noi</a></li>
+                    <li><a href="cariere.html">Cariere</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="termeni.html">Termeni și condiții</a></li>
+                    <li><a href="confidentialitate.html">Politica de confidențialitate</a></li>
+                    <li><a href="cookies.html">Politica de cookie-uri</a></li>
+                    <li><a href="gdpr.html">GDPR</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright container">
+            <p>&copy; 2023 FinQuest. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Datele pentru quiz-uri
+        const quizData = {
+            budget: [
+                {
+                    question: "Cum îți faci un buget lunar realist și cum îți urmărești cheltuielile?",
+                    options: [
+                        "Notez toate cheltuielile într-un carnet și împart banii în plicuri pentru categorii diferite",
+                        "Folosesc o aplicație de bugetare care automatizează tracking-ul și îmi oferă statistici",
+                        "Estimez cheltuielile aproximativ și sper că nu depășesc veniturile",
+                        "Cheltuială după cheltuială, fără un plan prestabilit"
+                    ],
+                    correct: 1,
+                    explanation: "Cel mai eficient este să folosești o aplicație de bugetare (50% din succes). Aceasta automatizează procesul, îți oferă statistici vizuale și te alertează când ești pe punctul de a depăși bugetul. Combină cu plicurile fizice (30%) pentru discipline și o estimare realistă bazată pe cheltuielile anterioare (20%)."
+                },
+                {
+                    question: "Cum decizi cât să economisești în fiecare lună?",
+                    options: [
+                        "Economisesc ce rămâne la sfârșitul lunii, dacă rămâne ceva",
+                        "Aplic regula 50/30/20: 50% nevoi, 30% dorințe, 20% economii",
+                        "Pun deoparte o sumă fixă înainte de orice altă cheltuială",
+                        "Economisesc doar pentru obiective specifice (vacanță, mașină etc.)"
+                    ],
+                    correct: 2,
+                    explanation: "EXCELENT! Regula 50/30/20 este un sistem verificat: 50% pentru necesități (chirie, utilități, mâncare), 30% pentru dorințe (distracție, haine), 20% pentru economii și datorii. Punerea deoparte a economiilor PRIMA dată (pay yourself first) asigură că nu cheltui banii destinați economiilor."
+                },
+                {
+                    question: "Cum construiești un fond de urgență și cât ar trebui să fie?",
+                    options: [
+                        "3-6 luni de cheltuieli esențiale, începând cu 10% din venit lunar",
+                        "1.000€ indiferent de venit, strânși cât mai repede",
+                        "Doar ce pot pune deoparte după toate cheltuielile",
+                        "Nu am nevoie de fond de urgență, am card de credit"
+                    ],
+                    correct: 0,
+                    explanation: "PERFECT! Un fond de urgență de 3-6 luni de cheltuieli esențiale este standardul de aur. Începi cu un obiectiv mic (1.000€ sau o lună de cheltuieli), apoi crești treptat. Cardul de credit NU înlocuiește un fond de urgență - adaugă doar datorii în momente critice."
+                }
+            ],
+            credit: [
+                {
+                    question: "Cum compari două credite diferite și cum calculezi costul total al unui împrumut?",
+                    options: [
+                        "Mă uit doar la rata lunară - cea mai mică e cea mai bună",
+                        "Calculez Dobânda Totală + comisioane + asigurări pentru fiecare credit",
+                        "Aleg creditul cu cea mai scurtă perioadă de rambursare",
+                        "Merg la banca cea mai apropiată de casă"
+                    ],
+                    correct: 1,
+                    explanation: "BRAVO! Costul real al unui credit = Dobânda Totală + comisioane + asigurări + alte taxe. Folosește un calculator de credite online pentru a compara RATA ANUALĂ EFECTIVĂ (RAE) - acesta include toate costurile. O rată lunară mică poate ascunde o perioadă lungă și costuri totale enorme!"
+                },
+                {
+                    question: "Cum îți dai seama dacă îți permiți un credit?",
+                    options: [
+                        "Dacă rata lunară e mai mică decât salariul, îmi permit",
+                        "Rata nu trebuie să depășească 30-35% din venitul net lunar",
+                        "Îmi permit dacă banca aprobă cererea",
+                        "Mă uit doar la avansul necesar"
+                    ],
+                    correct: 1,
+                    explanation: "CORECT! Regula de aur: rata creditului NU trebuie să depășească 30-35% din venitul net lunar. Dar atenție! Calculează și celelalte datorii existente. Dacă totalul datoriilor depășește 40% din venit, risci să devii supraindatorat. Banca poate aproba mai mult decât îți permiți realist."
+                },
+                {
+                    question: "Cum îți îmbunătățești scorul de credit și cum îl verifici?",
+                    options: [
+                        "Plătesc facturile la timp, mențin utilizarea cardurilor sub 30% și verific scorul anual gratuit",
+                        "Închid toate cardurile de credit pentru a arăta că nu am datorii",
+                        "Fac cereri multiple de credit pentru a vedea ce oferte primesc",
+                        "Scorul de credit nu contează în România"
+                    ],
+                    correct: 0,
+                    explanation: "EXCELENT STRATEGIE! Scorul tău de credit se îmbunătățește prin: plăți la timp (35% din scor), utilizare mică a creditului disponibil (30%), istoric lung de credit (15%), tipuri variate de credit (10%), cereri rare de credit nou (10%). În România, poți verifica scorul gratuit o dată pe an la Biroul de Credit."
+                }
+            ],
+            investments: [
+                {
+                    question: "Cum funcționează dobânda compusă și cum te afectează în timp?",
+                    options: [
+                        "Dobânda se calculează doar la suma inițială, nu crește în timp",
+                        "Dobânda se calculează la suma inițială PLUS dobânzile acumulate anterior - 'dobânda la dobândă'",
+                        "Dobânda compusă e relevantă doar pentru investiții de peste 10 ani",
+                        "E un concept matematic care nu are aplicație practică"
+                    ],
+                    correct: 1,
+                    explanation: "AI ÎNȚELES MAGIA! Dobânda compusă = 'cea mai puternică forță din univers' (Einstein). Banii tăi generează dobândă, apoi dobânda generează propria dobândă. Exemplu: 1.000€ cu 7% anual devin 1.967€ în 10 ani, 3.870€ în 20 ani, 7.612€ în 30 ani - fără să adaugi nimic! Începe DEVREME pentru efect maxim."
+                },
+                {
+                    question: "Cum îți diversifici economiile prin investiții simple?",
+                    options: [
+                        "Pun totul într-un singur fond de investiții cu randament mare",
+                        "Diversific pe clase de active: acțiuni, obligațiuni, imobiliare, numerar",
+                        "Îmi țin toți banii în contul de economii la bancă",
+                        "Investesc doar în ce înțeleg perfect"
+                    ],
+                    correct: 1,
+                    explanation: "FOARTE BINE! Diversificarea = 'nu pune toate ouăle în același coș'. Distribuie investițiile pe: clase de active diferite (acțiuni, obligațiuni), sectoare diferite (tehnologie, sănătate), regiuni geografice, monede. Fondurile indexate sunt excelente pentru începători - diversificare instantă la cost mic."
+                },
+                {
+                    question: "Cum influențează inflația banii tăi și cum te protejezi de ea?",
+                    options: [
+                        "Inflația mănâncă puterea de cumpărare - 100€ astăzi vor valora mai puțin în 10 ani",
+                        "Inflația nu afectează economiile din conturile de economii",
+                        "Protejarea împotriva inflației necesită investiții care depășesc rata inflației",
+                        "Ambele variante 1 și 3 sunt corecte"
+                    ],
+                    correct: 3,
+                    explanation: "PERFECT RĂSPUNS! Inflația de 3% anual înseamnă că 100€ astăzi vor valora doar 74€ în 10 ani (putere de cumpărare). Conturile de economii cu 1% dobândă înseamnă PIERDERE reală. Soluții: investiții în acțiuni (randament istoric 7-10%), obligațiuni indexate la inflație, imobiliare. Minimul: investiții care depășesc inflația!"
+                }
+            ],
+            decisions: [
+                {
+                    question: "Cum alegi între a cumpăra și a închiria o locuință?",
+                    options: [
+                        "Cumpărarea e întotdeauna mai bună - construiești equity",
+                        "Depinde de prețul de cumpărare vs chirie, durata de ședere și oportunitățile de investiții alternative",
+                        "Închirierea e mereu o aruncare de bani pe fereastră",
+                        "Aleg ce îmi permite creditul, indiferent de calcul"
+                    ],
+                    correct: 1,
+                    explanation: "ANALIZĂ CORECTĂ! Regula 5: cumpără DOAR dacă vei sta minim 5 ani în aceeași locuință. Calculează raportul preț-chirie: dacă prețul de cumpărare depășește 20x chiria anuală, închirierea poate fi mai inteligentă. Banii economisiți pot fi investiți altfel. Nu uita: proprietatea are costuri ascunse (reparații, taxe, asigurări)."
+                },
+                {
+                    question: "Cum stabilești dacă o achiziție mare este o investiție sau o cheltuială?",
+                    options: [
+                        "Dacă își păstrează sau crește valoarea în timp, e investiție",
+                        "Toate achizițiile mari sunt investiții pentru că costă mult",
+                        "Doar imobiliarele și acțiunile sunt investiții",
+                        "Dacă o folosesc zilnic, e investiție"
+                    ],
+                    correct: 0,
+                    explanation: "EXACT! Investiția = active care generează venituri sau apreciere în valoare. Cheltuiala = bunuri care se depreciază. Mașină nouă = cheltuială (pierde 20% valoare în primul an). Curs de specializare = investiție (crește veniturile viitoare). Calcul ROI (Return on Investment): (câștiguri - costuri) / costuri × 100."
+                },
+                {
+                    question: "Cum negociezi un salariu sau o ofertă de job?",
+                    options: [
+                        "Accept prima ofertă pentru a nu pierde oportunitatea",
+                        "Cercetez range-ul salarial pentru poziție, evidențiez valoarea adăugată și negociez pachetul total (beneficii, bonusuri, dezvoltare)",
+                        "Cer 50% mai mult decât salariul actual fără justificare",
+                        "Spun ce salariu am la jobul actual și cer puțin peste"
+                    ],
+                    correct: 1,
+                    explanation: "STRATEGIE PROFESIONISTĂ! Pașii: 1) Cercetează range-ul salarial (Glassdoor, interviuri). 2) Evidențiază valoarea adăugată (proiecte, economii, eficiență). 3) Negociază PACHETUL TOTAL: salariu + bonusuri + beneficii (asigurări medicale, training) + work-life balance. 4) Nu dezvălui salariul actual - focusează-te pe valoarea pe care o aduci. 5) Practică negocierea!"
+                }
+            ]
+        };
+
+        // Variabile globale
+        let currentModule = null;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let totalQuestionsAnswered = 0;
+        let userXP = parseInt(localStorage.getItem('finquest-learning-xp') || '0');
+
+        // Inițializare la încărcarea paginii
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserLevel();
+            updateProgress();
+            
+            // Adaugă evenimente pentru module
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('featured')) {
+                        this.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+        });
+
+        // Începe un quiz pentru un modul specific
+        function startModuleQuiz(module) {
+            currentModule = module;
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            // Ascunde toate modulele
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.style.display = 'none';
+            });
+            
+            // Arată containerul de quiz
+            const quizContainer = document.getElementById('quizContainer');
+            quizContainer.classList.add('active');
+            
+            // Încarcă prima întrebare
+            loadQuestion();
+        }
+
+        // Începe un quiz aleatoriu
+        function startRandomQuiz() {
+            const modules = Object.keys(quizData);
+            const randomModule = modules[Math.floor(Math.random() * modules.length)];
+            startModuleQuiz(randomModule);
+        }
+
+        // Încarcă întrebarea curentă
+        function loadQuestion() {
+            const questions = quizData[currentModule];
+            if (currentQuestionIndex >= questions.length) {
+                showResults();
+                return;
+            }
+            
+            const question = questions[currentQuestionIndex];
+            const quizContainer = document.getElementById('quizContainer');
+            
+            // Generează HTML pentru întrebare
+            let optionsHTML = '';
+            question.options.forEach((option, index) => {
+                optionsHTML += `
+                    <div class="quiz-option" onclick="selectOption(${index})">
+                        <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                        <div class="option-text">${option}</div>
+                    </div>
+                `;
+            });
+            
+            // Nume modul frumos
+            const moduleNames = {
+                'budget': 'Buget și Cheltuieli',
+                'credit': 'Credit și Împrumuturi',
+                'investments': 'Investiții și Economii',
+                'decisions': 'Decizii Financiare'
+            };
+            
+            quizContainer.innerHTML = `
+                <div class="quiz-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0; color: var(--primary);">${moduleNames[currentModule]}</h3>
+                    <div style="background-color: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-weight: 600;">
+                        Întrebarea ${currentQuestionIndex + 1}/${questions.length}
+                    </div>
+                </div>
+                <div class="quiz-question">${question.question}</div>
+                <div class="quiz-options">${optionsHTML}</div>
+                <div id="quizFeedback" class="quiz-feedback"></div>
+                <div id="scoreDisplay" class="score-display" style="display: none;">
+                    <i class="fas fa-star score-icon"></i>
+                    <span>Ai răspuns corect! +10 XP</span>
+                </div>
+                <div class="quiz-actions">
+                    <button class="btn btn-secondary" onclick="goBackToModules()">
+                        <i class="fas fa-arrow-left"></i> Înapoi la Module
+                    </button>
+                    <button id="nextBtn" class="btn btn-primary" onclick="nextQuestion()" style="display: none;">
+                        <i class="fas fa-arrow-right"></i> Următoarea Întrebare
+                    </button>
+                </div>
+            `;
+            
+            // Ascunde butonul "Următoarea" inițial
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        // Selectează o opțiune
+        function selectOption(optionIndex) {
+            const questions = quizData[currentModule];
+            const question = questions[currentQuestionIndex];
+            const options = document.querySelectorAll('.quiz-option');
+            const feedback = document.getElementById('quizFeedback');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Dezactivează toate opțiunile
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                opt.classList.remove('selected');
+            });
+            
+            // Marchează opțiunea selectată
+            options[optionIndex].classList.add('selected');
+            
+            // Verifică răspunsul
+            const isCorrect = optionIndex === question.correct;
+            
+            if (isCorrect) {
+                // Răspuns corect
+                options[optionIndex].classList.add('correct');
+                score++;
+                userXP += 10;
+                totalQuestionsAnswered++;
+                
+                // Salvează XP în localStorage
+                localStorage.setItem('finquest-learning-xp', userXP.toString());
+                
+                // Arată feedback pozitiv
+                feedback.innerHTML = `
+                    <div class="feedback-header correct">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Răspuns Corect!</span>
+                    </div>
+                    <div class="feedback-content">
+                        <p><strong>Explicație:</strong> ${question.explanation}</p>
+                        <p style="margin-top: 10px; font-weight: 600; color: var(--success);">💡 Ai învățat ceva valoros! Acum poți aplica această cunoștință în viața reală.</p>
+                    </div>
+                `;
+                feedback.classList.add('active', 'correct');
+                
+                // Arată scorul
+                scoreDisplay.style.display = 'flex';
+                
+                // Actualizează progresul
+                updateProgress();
+                updateUserLevel();
+                
+            } else {
+                // Răspuns incorect
+                options[optionIndex].classList.add('incorrect');
+                options[question.correct].classList.add('correct');
+                totalQuestionsAnswered++;
+                
+                // Arată feedback negativ cu explicație
+                feedback.innerHTML = `
+                    <div class="feedback-header incorrect">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Răspuns Incorect</span>
+                    </div>
+                    <div class="feedback-content">
+                        <p><strong>Răspunsul corect:</strong> ${question.options[question.correct]}</p>
+                        <p><strong>Explicație:</strong> ${question.explanation}</p>
+                        <p style="margin-top: 10px; font-weight: 600; color: var(--primary);">📚 Nu-ți face griji! Acum știi cum să faci mai bine data viitoare.</p>
+                    </div>
+                `;
+                feedback.classList.add('active', 'incorrect');
+            }
+            
+            // Arată butonul "Următoarea"
+            nextBtn.style.display = 'block';
+        }
+
+        // Trece la următoarea întrebare
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        // Arată rezultatele la final
+        function showResults() {
+            const questions = quizData[currentModule];
+            const percentage = Math.round((score / questions.length) * 100);
+            let message = '';
+            let emoji = '';
+            
+            if (percentage >= 90) {
+                message = 'EXCEPȚIONAL! Ești un expert financiar!';
+                emoji = '🏆';
+            } else if (percentage >= 70) {
+                message = 'FOARTE BINE! Ai cunoștințe solide.';
+                emoji = '⭐';
+            } else if (percentage >= 50) {
+                message = 'BUN! Continuă să exersezi.';
+                emoji = '👍';
+            } else {
+                message = 'MAI EXERSEAZĂ! Revino și încearcă din nou.';
+                emoji = '📚';
+            }
+            
+            const quizContainer = document.getElementById('quizContainer');
+            quizContainer.innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">${emoji}</div>
+                    <h2 style="color: var(--primary); margin-bottom: 1rem;">Quiz Finalizat!</h2>
+                    <div style="font-size: 3rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                        ${score}/${questions.length} corecte
+                    </div>
+                    <div style="font-size: 1.5rem; margin-bottom: 2rem; color: var(--gray);">
+                        ${percentage}% acuratețe
+                    </div>
+                    <div style="background-color: #f0f7ff; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--secondary); margin-bottom: 1rem;">${message}</h3>
+                        <p style="color: var(--gray);">Ai câștigat <strong>${score * 10} XP</strong> din acest quiz!</p>
+                        <p style="color: var(--gray);">XP total acumulat: <strong>${userXP} XP</strong></p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="startModuleQuiz('${currentModule}')">
+                            <i class="fas fa-redo"></i> Refă Quiz-ul
+                        </button>
+                        <button class="btn btn-secondary" onclick="startRandomQuiz()">
+                            <i class="fas fa-random"></i> Alt Quiz Aleatoriu
+                        </button>
+                        <button class="btn btn-secondary" onclick="goBackToModules()">
+                            <i class="fas fa-th-large"></i> Toate Modulele
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Revine la lista de module
+        function goBackToModules() {
+            // Arată toate modulele
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            // Ascunde containerul de quiz
+            document.getElementById('quizContainer').classList.remove('active');
+        }
+
+        // Actualizează progresul de învățare
+        function updateProgress() {
+            const progressFill = document.getElementById('learningProgress');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            // Calcul progres bazat pe XP
+            const maxXP = 1000; // XP necesar pentru 100%
+            const currentProgress = Math.min(100, (userXP / maxXP) * 100);
+            
+            progressFill.style.width = `${currentProgress}%`;
+            progressPercent.textContent = `${Math.round(currentProgress)}%`;
+        }
+
+        // Actualizează nivelul utilizatorului
+        function updateUserLevel() {
+            const level = Math.floor(userXP / 100) + 1;
+            document.getElementById('user-level-display').textContent = `Level ${level}`;
+            
+            // Salvează XP total pentru site-ul principal
+            const currentTotalXP = parseInt(localStorage.getItem('finquest-total-xp') || '0');
+            localStorage.setItem('finquest-total-xp', (currentTotalXP + userXP).toString());
+        }
+
+        // Funcții pentru resurse (placeholder)
+        function openBudgetCalculator() {
+            alert('Calculatorul de buget va fi disponibil în versiunea completă a FinQuest!');
+        }
+
+        function openGuides() {
+            alert('Ghidurile pas cu pas vor fi disponibile în curând!');
+        }
+
+        function openVideoLessons() {
+            alert('Lecțiile video vor fi adăugate în următoarea actualizare!');
+        }
+
+        // Animație de intrare pentru module
+        document.addEventListener('DOMContentLoaded', function() {
+            const modules = document.querySelectorAll('.module-card');
+            modules.forEach((module, index) => {
+                setTimeout(() => {
+                    module.style.opacity = '0';
+                    module.style.transform = 'translateY(20px)';
+                    module.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        module.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        module.style.opacity = '1';
+                        module.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

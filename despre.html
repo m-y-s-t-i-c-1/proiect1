@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despre Noi - FinQuest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --light: #f8f9fa;
+            --dark: #1e293b;
+            --gray: #6b7280;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 5%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            color: var(--accent);
+        }
+        
+        .badge-financial {
+            background: linear-gradient(135deg, #2a3c8f, #1a2a6c);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .badge-financial::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 10px 10px;
+            transform: rotate(15deg);
+            pointer-events: none;
+        }
+        
+        .badge-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge-line-1 {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .badge-line-2 {
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .user-level {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .level-icon {
+            color: var(--accent);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3ab8dd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .page-hero {
+            padding: 6rem 5% 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50,50 Q25,25 50,0 Q75,25 50,50 Q25,75 0,50 Q25,25 50,50 Q75,75 100,50 Q75,25 50,50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+            background-size: 200px 200px;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 200px; }
+        }
+        
+        .page-hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .page-hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item-hero {
+            text-align: center;
+        }
+        
+        .stat-number-hero {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label-hero {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+        
+        .our-story {
+            padding: 5rem 5%;
+            background-color: white;
+        }
+        
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .story-text h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .story-text p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .story-image {
+            position: relative;
+        }
+        
+        .story-img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .story-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 180px;
+        }
+        
+        .badge-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge-text {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .mission-vision {
+            padding: 5rem 5%;
+            background-color: #f0f4ff;
+        }
+        
+        .mission-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .mission-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .mission-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+        
+        .mission-card.mission::before {
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+        
+        .mission-card.vision::before {
+            background: linear-gradient(90deg, var(--success), #10b981);
+        }
+        
+        .mission-card.values::before {
+            background: linear-gradient(90deg, var(--warning), #f59e0b);
+        }
+        
+        .mission-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .mission-card.mission .mission-icon {
+            color: var(--accent);
+        }
+        
+        .mission-card.vision .mission-icon {
+            color: var(--success);
+        }
+        
+        .mission-card.values .mission-icon {
+            color: var(--warning);
+        }
+        
+        .mission-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .mission-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        .values-list {
+            list-style: none;
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+        
+        .values-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .values-list i {
+            color: var(--warning);
+        }
+        
+        .team-section {
+            padding: 5rem 5%;
+            background-color: white;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .team-member {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .member-image {
+            height: 250px;
+            background-color: #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .member-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-member:hover .member-img {
+            transform: scale(1.05);
+        }
+        
+        .member-info {
+            padding: 2rem;
+        }
+        
+        .member-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .member-role {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .member-desc {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .member-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .member-social a {
+            color: var(--gray);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .member-social a:hover {
+            color: var(--primary);
+        }
+        
+        .journey-section {
+            padding: 5rem 5%;
+            background-color: #f0f4ff;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--primary));
+        }
+        
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            width: 45%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            right: -15px;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -15px;
+            right: auto;
+        }
+        
+        .timeline-content {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .timeline-year {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+        
+        .timeline-desc {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        .partners-section {
+            padding: 5rem 5%;
+            background-color: white;
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .partner-logo {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .partner-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .partner-logo img {
+            max-width: 150px;
+            max-height: 70px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: filter 0.3s, opacity 0.3s;
+        }
+        
+        .partner-logo:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        .cta-section {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5% 1.5rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-links h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: var(--accent);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .story-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .story-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 2rem;
+                width: 100%;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 50px;
+            }
+            
+            .timeline-dot {
+                left: 10px !important;
+                right: auto !important;
+            }
+            
+            .hero-stats {
+                gap: 1.5rem;
+            }
+            
+            .stat-number-hero {
+                font-size: 2rem;
+            }
+            
+            .badge-financial {
+                padding: 4px 8px;
+            }
+            
+            .badge-line-1 {
+                font-size: 0.7rem;
+            }
+            
+            .badge-line-2 {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-coins logo-icon"></i>
+                    <span>FinQuest</span>
+                </div>
+                <div class="badge-financial">
+                    <div class="badge-content">
+                        <div class="badge-line badge-line-1">FINANCIAL</div>
+                        <div class="badge-line badge-line-2">EDUCATION</div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="invata.html">Învață cu Noi</a></li>
+                    <li><a href="jocuri.html">Jocuri</a></li>
+                    <li><a href="preturi.html">Prețuri</a></li>
+                    <li><a href="despre.html" style="background-color: rgba(255, 255, 255, 0.2);">Despre Noi</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-menu">
+                <div class="user-level">
+                    <i class="fas fa-trophy level-icon"></i>
+                    <span id="user-level-display">Level 1</span>
+                </div>
+                <button class="btn btn-primary" onclick="window.location.href='jocuri.html'">Începe Aventura</button>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Redefinim Educația Financiară pentru Generația Viitoare</h1>
+            <p>FinQuest a apărut din convingerea că educația financiară trebuie să fie accesibilă, engaging și relevantă pentru toți. Transformăm concepte financiare complexe în aventuri interactive memorabile.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item-hero">
+                    <div class="stat-number-hero" id="stat-users">50,000+</div>
+                    <div class="stat-label-hero">Tineri Înscriși</div>
+                </div>
+                <div class="stat-item-hero">
+                    <div class="stat-number-hero" id="stat-schools">500+</div>
+                    <div class="stat-label-hero">Școli Partenere</div>
+                </div>
+                <div class="stat-item-hero">
+                    <div class="stat-number-hero" id="stat-games">25+</div>
+                    <div class="stat-label-hero">Jocuri Interactive</div>
+                </div>
+                <div class="stat-item-hero">
+                    <div class="stat-number-hero" id="stat-countries">3</div>
+                    <div class="stat-label-hero">Țări Active</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="our-story">
+        <div class="container">
+            <h2 class="section-title">Povestea Noastră</h2>
+            <p class="section-subtitle">De la o idee simplă la o platformă care transformă modul în care tinerii învață despre bani</p>
+            
+            <div class="story-content">
+                <div class="story-text">
+                    <h2>De ce am creat FinQuest?</h2>
+                    <p>În 2020, un studiu al Băncii Mondiale a arătat că <strong>68% din tinerii din Moldova</strong> nu au cunoștințe financiare de bază. Am realizat că sistemul educațional tradițional nu reușește să pregătească elevii pentru deciziile financiare reale din viața de adult.</p>
+                    <p>FinQuest a luat naștere într-un hackathon pentru inovații educaționale. Echipa noastră – un mix de educatori, game designeri și experți financiari – a creat primul prototip: un joc simplu despre gestionarea banilor de buzunar.</p>
+                    <p>Reacția a fost incredibilă. Elevii care se plictiseau la orele de economie erau acum încântați să "joace" cu concepte precum bugetul, economiile și investițiile.</p>
+                    <p>Astăzi, FinQuest este mai mult decât o platformă – este o mișcare care redefinește educația financiară pentru generația digitală.</p>
+                </div>
+                <div class="story-image">
+                    <div class="story-img-placeholder" style="width: 100%; height: 400px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                        <div style="text-align: center; padding: 2rem;">
+                            <i class="fas fa-lightbulb" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.8;"></i>
+                            <p>Prima idee FinQuest - Hackathon 2020</p>
+                        </div>
+                    </div>
+                    <div class="story-badge">
+                        <div class="badge-number">2020</div>
+                        <div class="badge-text">Anul Întemeierii</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="mission-vision">
+        <div class="container">
+            <h2 class="section-title">Misiunea, Viziunea și Valorile Noastre</h2>
+            <p class="section-subtitle">Principiile care ne ghidează în tot ceea ce facem</p>
+            
+            <div class="mission-container">
+                <div class="mission-card mission">
+                    <div class="mission-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Misiunea Noastră</h3>
+                    <p>Să democratizăm educația financiară, transformând-o dintr-un subiect plictisitor într-o aventură captivantă accesibilă fiecărui tânăr, indiferent de background-ul socio-economic.</p>
+                </div>
+                
+                <div class="mission-card vision">
+                    <div class="mission-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Viziunea Noastră</h3>
+                    <p>Să devenim platforma de educație financiară nr. 1 pentru tineri în Europa de Est, ajutând o generație întreagă să ia decizii financiare informate și să construiască un viitor prosper.</p>
+                </div>
+                
+                <div class="mission-card values">
+                    <div class="mission-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Valorile Noastre</h3>
+                    <ul class="values-list">
+                        <li><i class="fas fa-check-circle"></i> <strong>Accesibilitate:</strong> Educație financiară pentru toți, gratuită sau la prețuri accesibile</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Engagement:</strong> Transformarea învățării într-o experiență distractivă și memorabilă</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Impact Real:</strong> Rezultate practice care schimbă vieți, nu doar teorie</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>Inovație Continuă:</strong> Adaptare constantă la nevoile noilor generații</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title">Echipa din Spatele Magiei</h2>
+            <p class="section-subtitle">Oamenii pasionați care transformă educația financiară în aventuri interactive</p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #4cc9f0, #4361ee); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            AM
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">Alexandru Moșneag</div>
+                        <div class="member-role">Fondator & CEO</div>
+                        <div class="member-desc">Fost consultant financiar cu 10+ ani experiență. A renunțat la cariera corporatistă pentru a crea FinQuest după ce și-a văzut nepotul luptându-se cu concepte financiare de bază.</div>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #fbbf24, #f87171); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            EI
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">Elena Ionescu</div>
+                        <div class="member-role">Game Design Lead</div>
+                        <div class="member-desc">Designer de jocuri cu experiență la studiouri internaționale. Crede că gamificarea este cheia pentru a face educația relevantă pentru generația Z și Alpha.</div>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-behance"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #4ade80, #3a0ca3); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            MD
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">Mihai Dobre</div>
+                        <div class="member-role">CTO & AI Specialist</div>
+                        <div class="member-desc">Expert în AI și machine learning cu PhD în educație adaptivă. A construit sistemul nostru de AI Coach care personalizează învățarea pentru fiecare utilizator.</div>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #a855f7, #ec4899); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            CD
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">Corina Dumitru</div>
+                        <div class="member-role">Head of Education</div>
+                        <div class="member-desc">Fostă profesoară de economie cu 15 ani experiență. A transformat curriculum-ul școlar în jocuri interactive, asigurându-se că acoperim toate competențele necesare.</div>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="journey-section">
+        <div class="container">
+            <h2 class="section-title">Călătoria Noastră</h2>
+            <p class="section-subtitle">Momentele cheie care ne-au definit și ne-au adus unde suntem astăzi</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">Octombrie 2020</div>
+                        <div class="timeline-title">Nașterea Ideii</div>
+                        <div class="timeline-desc">Primul prototip creat într-un hackathon educațional. Am câștigat premiul pentru "cea mai inovativă soluție".</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">Martie 2021</div>
+                        <div class="timeline-title">Primul MVP</div>
+                        <div class="timeline-desc">Lansarea primei versiuni cu 5 jocuri de bază. Am atins primii 1.000 de utilizatori în 3 luni.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">Septembrie 2021</div>
+                        <div class="timeline-title">Parteneriat cu Ministerul Educației</div>
+                        <div class="timeline-desc">FinQuest a fost integrat în 50 de școli pilot din Moldova ca parte a curriculum-ului de educație financiară.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">Aprilie 2022</div>
+                        <div class="timeline-title">Lansarea Fin-Card</div>
+                        <div class="timeline-desc">Introducerea cardului fizic gamificat care a crescut engagement-ul cu 300%.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">Ianuarie 2023</div>
+                        <div class="timeline-title">Expansiune Regională</div>
+                        <div class="timeline-desc">Lansarea în România și Ucraina, atingând peste 50.000 de utilizatori.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">Prezent</div>
+                        <div class="timeline-title">Viitorul FinQuest</div>
+                        <div class="timeline-desc">Dezvoltarea AI Coach avansat și extinderea în încă 3 țări până în 2024.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="partners-section">
+        <div class="container">
+            <h2 class="section-title">Partenerii Noștri</h2>
+            <p class="section-subtitle">Organizații care ne sprijină în misiunea noastră de a democratiza educația financiară</p>
+            
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <div style="font-weight: 700; color: var(--primary); font-size: 1.5rem;">Ministerul<br>Educației</div>
+                </div>
+                <div class="partner-logo">
+                    <div style="font-weight: 700; color: #10b981; font-size: 1.5rem;">Banca<br>Națională</div>
+                </div>
+                <div class="partner-logo">
+                    <div style="font-weight: 700; color: #f59e0b; font-size: 1.5rem;">Junior<br>Achievement</div>
+                </div>
+                <div class="partner-logo">
+                    <div style="font-weight: 700; color: #8b5cf6; font-size: 1.5rem;">Tech<br>For Youth</div>
+                </div>
+                <div class="partner-logo">
+                    <div style="font-weight: 700; color: #ec4899; font-size: 1.5rem;">Edu<br>Innovation</div>
+                </div>
+                <div class="partner-logo">
+                    <div style="font-weight: 700; color: #3b82f6; font-size: 1.5rem;">Youth<br>Finance Hub</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Vrei să faci parte din misiunea noastră?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin: 0 auto 2rem;">Fie că ești profesor, părinte sau doar pasionat de educație financiară, există un loc pentru tine în comunitatea FinQuest.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem; background-color: white; color: var(--primary);" onclick="window.location.href='contact.html'">
+                    <i class="fas fa-envelope"></i> Contactează-ne
+                </button>
+                <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem;" onclick="window.location.href='cariere.html'">
+                    <i class="fas fa-briefcase"></i> Cariere
+                </button>
+                <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem; background-color: transparent; border: 2px solid white;" onclick="window.location.href='jocuri.html'">
+                    <i class="fas fa-gamepad"></i> Încearcă FinQuest
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">FinQuest</div>
+                <p>Transformăm educația financiară într-o aventură interactivă și distractivă pentru toți.</p>
+                <div style="margin-top: 1.5rem; display: flex; gap: 1rem; font-size: 1.5rem;">
+                    <a href="#" style="color: #d1d5db;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: #d1d5db;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: #d1d5db;"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" style="color: #d1d5db;"><i class="fab fa-youtube"></i></a>
+                    <a href="#" style="color: #d1d5db;"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Navigare</h4>
+                <ul>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="invata.html">Învață cu Noi</a></li>
+                    <li><a href="jocuri.html">Jocuri</a></li>
+                    <li><a href="preturi.html">Prețuri</a></li>
+                    <li><a href="despre.html">Despre Noi</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Companie</h4>
+                <ul>
+                    <li><a href="despre.html">Despre noi</a></li>
+                    <li><a href="cariere.html">Cariere</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="presa.html">Presa</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="termeni.html">Termeni și condiții</a></li>
+                    <li><a href="confidentialitate.html">Politica de confidențialitate</a></li>
+                    <li><a href="cookies.html">Politica de cookie-uri</a></li>
+                    <li><a href="gdpr.html">GDPR</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright container">
+            <p>&copy; 2023 FinQuest. Toate drepturile rezervate. O platformă cu misiune socială.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Made with <i class="fas fa-heart" style="color: #f87171;"></i> in Moldova</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animație statistici
+            animateStats();
+            
+            // Animație timeline
+            animateTimeline();
+            
+            // Actualizează nivelul utilizatorului
+            updateUserLevel();
+            
+            // Efecte hover pentru carduri
+            document.querySelectorAll('.mission-card, .team-member').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+        
+        // Animație pentru statistici
+        function animateStats() {
+            const stats = {
+                'stat-users': 50000,
+                'stat-schools': 500,
+                'stat-games': 25,
+                'stat-countries': 3
+            };
+            
+            Object.keys(stats).forEach(statId => {
+                const element = document.getElementById(statId);
+                const target = stats[statId];
+                const increment = target / 50;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current).toLocaleString() + (statId === 'stat-countries' ? '' : '+');
+                }, 30);
+            });
+        }
+        
+        // Animație pentru timeline
+        function animateTimeline() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateX(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            timelineItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = index % 2 === 0 ? 'translateX(-50px)' : 'translateX(50px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                item.style.transitionDelay = (index * 0.2) + 's';
+                observer.observe(item);
+            });
+        }
+        
+        // Actualizează nivelul utilizatorului
+        function updateUserLevel() {
+            const userXP = parseInt(localStorage.getItem('finquest-total-xp') || '0');
+            const level = Math.floor(userXP / 100) + 1;
+            document.getElementById('user-level-display').textContent = `Level ${level}`;
+        }
+        
+        // Efect de scurgere pentru hero
+        document.querySelector('.page-hero').addEventListener('mousemove', function(e) {
+            const cards = document.querySelectorAll('.mission-card, .team-member');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            cards.forEach(card => {
+                const speed = 20;
+                const x = (mouseX * speed) - (speed / 2);
+                const y = (mouseY * speed) - (speed / 2);
+                
+                card.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+        
+        document.querySelector('.page-hero').addEventListener('mouseleave', function() {
+            const cards = document.querySelectorAll('.mission-card, .team-member');
+            cards.forEach(card => {
+                card.style.transform = 'translate(0, 0)';
+            });
+        });
+    </script>
+</body>
+</html>

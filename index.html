@@ -252,333 +252,86 @@
             color: var(--dark);
         }
         
-        .skill-tree {
+        .testimonials {
             padding: 4rem 5%;
             background-color: #f0f4ff;
         }
         
-        .tree-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .tree-node {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            width: 80%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-left: 6px solid var(--primary);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .tree-node:hover {
-            transform: scale(1.03);
-            border-left-color: var(--accent);
-        }
-        
-        .tree-node.completed {
-            border-left-color: var(--success);
-            opacity: 0.9;
-        }
-        
-        .tree-node.locked {
-            border-left-color: var(--gray);
-            opacity: 0.6;
-        }
-        
-        .node-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        
-        .node-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .node-xp {
-            background-color: var(--accent);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .node-desc {
-            color: var(--gray);
-            margin-bottom: 1rem;
-        }
-        
-        .game-preview {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-        
-        .game-tag {
-            background-color: #eef2ff;
-            color: var(--primary);
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-        
-        .play-tag {
-            background-color: var(--primary);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .play-tag:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-        }
-        
-        .gamification {
-            padding: 4rem 5%;
-            background-color: white;
-        }
-        
-        .gamification-container {
+        .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
         
-        .gamification-card {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
+        .testimonial-card {
+            background-color: white;
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
         }
         
-        .gamification-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .gamification-icon {
-            font-size: 1.8rem;
-        }
-        
-        .streak-container {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 1.5rem;
-        }
-        
-        .streak-day {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-        }
-        
-        .streak-day.active {
-            background-color: var(--success);
-        }
-        
-        .badge-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 1.5rem;
-        }
-        
-        .badge {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        
-        .badge.earned {
-            background-color: var(--warning);
-            color: var(--dark);
-        }
-        
-        .fin-card {
-            padding: 4rem 5%;
-            background-color: #f0f4ff;
-        }
-        
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 3rem;
-            margin-top: 2rem;
-        }
-        
-        .card-preview {
-            width: 320px;
-            height: 200px;
-            background: linear-gradient(135deg, #1a2a6c, #2a3c8f);
-            border-radius: 16px;
-            padding: 1.5rem;
-            color: white;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .card-preview::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-            transform: rotate(30deg);
-        }
-        
-        .card-chip {
-            width: 50px;
-            height: 40px;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-        
-        .card-number {
-            font-family: 'Courier New', monospace;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-        }
-        
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1.5rem;
-        }
-        
-        .card-info {
-            max-width: 500px;
-        }
-        
-        .card-info h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--secondary);
-        }
-        
-        .card-features {
-            list-style: none;
-        }
-        
-        .card-features li {
-            margin-bottom: 1rem;
+        .testimonial-text {
             font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .testimonial-author {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 1rem;
         }
         
-        .card-features i {
-            color: var(--primary);
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
         
-        .pricing {
+        .author-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .stats {
             padding: 4rem 5%;
             background-color: white;
         }
         
-        .pricing-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
+            text-align: center;
         }
         
-        .pricing-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            width: 100%;
-            max-width: 350px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s;
+        .stat-item-main {
+            padding: 2rem;
         }
         
-        .pricing-card.featured {
-            border-color: var(--primary);
-            transform: scale(1.05);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-        
-        .pricing-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-        
-        .price {
+        .stat-number {
             font-size: 3rem;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
         }
         
-        .price span {
+        .stat-label {
             font-size: 1.2rem;
-            color: var(--gray);
-        }
-        
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-        
-        .pricing-features li {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .pricing-features i {
-            color: var(--success);
-        }
-        
-        .pricing-features .disabled {
-            color: var(--gray);
-        }
-        
-        .pricing-features .disabled i {
             color: var(--gray);
         }
         
@@ -672,15 +425,6 @@
                 gap: 1rem;
             }
             
-            .card-container, .pricing-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
             .badge-financial {
                 padding: 4px 8px;
             }
@@ -713,10 +457,10 @@
             
             <nav>
                 <ul>
-                    <li><a href="#skill-tree">Skill Tree</a></li>
-                    <li><a href="#gamification">Gamificare</a></li>
-                    <li><a href="#fin-card">Fin-Card</a></li>
-                    <li><a href="#pricing">Prețuri</a></li>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="invata.html">Învață cu Noi</a></li>
+                    <li><a href="jocuri.html">Jocuri</a></li>
+                    <li><a href="despre.html">Prețuri</a></li>
                 </ul>
             </nav>
             
@@ -725,7 +469,7 @@
                     <i class="fas fa-trophy level-icon"></i>
                     <span>Level 12</span>
                 </div>
-                <button class="btn btn-primary">Începe acum</button>
+                <button class="btn btn-primary" onclick="window.location.href='invata.html'">Începe acum</button>
             </div>
         </div>
     </header>
@@ -734,7 +478,7 @@
         <div class="hero-content">
             <h1>Învață <span class="highlight">finanțe personale</span> prin jocuri interactive</h1>
             <p>Transformă educația financiară într-o aventură captivantă. Fiecare lecție este un joc, fiecare concept o provocare, fiecare progres o recompensă.</p>
-            <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem;">
+            <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem;" onclick="window.location.href='invata.html'">
                 <i class="fas fa-play"></i> Începe aventura
             </button>
         </div>
@@ -765,232 +509,71 @@
         </div>
     </section>
     
-    <section id="skill-tree" class="skill-tree">
+    <section class="stats">
         <div class="container">
-            <h2 class="section-title">Skill Tree - Aventura ta Financiară</h2>
-            <div class="tree-container">
-                <div class="tree-node">
-                    <div class="node-header">
-                        <div class="node-title">Bani de buzunar</div>
-                        <div class="node-xp">+50 XP</div>
-                    </div>
-                    <div class="node-desc">Jocul "Portofelul Virtual" te învață cum să gestionezi banii de buzunar prin decizii zilnice.</div>
-                    <div class="game-preview">
-                        <a href="portofelul-virtual.html" style="text-decoration: none;" onclick="event.stopPropagation()">
-                            <span class="game-tag play-tag">
-                                <i class="fas fa-play"></i> Joacă acum
-                            </span>
-                        </a>
-                        <span class="game-tag">Simulator Buget</span>
-                        <span class="game-tag">3 min</span>
-                        <span class="game-tag" id="bani-xp-badge">0 XP</span>
-                    </div>
+            <h2 class="section-title">FinQuest în Numere</h2>
+            <div class="stats-grid">
+                <div class="stat-item-main">
+                    <div class="stat-number">50,000+</div>
+                    <div class="stat-label">Utilizatori Înscriși</div>
                 </div>
-                
-                <div class="tree-node">
-                    <div class="node-header">
-                        <div class="node-title">Carduri bancare</div>
-                        <div class="node-xp">+75 XP</div>
-                    </div>
-                    <div class="node-desc">În "Aventura Cardurilor", explorezi diferite tipuri de carduri și cum să le folosești în siguranță.</div>
-                    <div class="game-preview">
-                        <span class="game-tag play-tag coming-soon">
-                            <i class="fas fa-clock"></i> În curând
-                        </span>
-                        <span class="game-tag">Joc de Rol</span>
-                        <span class="game-tag">4 min</span>
-                    </div>
+                <div class="stat-item-main">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Jocuri Interactive</div>
                 </div>
-                
-                <div class="tree-node">
-                    <div class="node-header">
-                        <div class="node-title">Economisirea</div>
-                        <div class="node-xp">+100 XP</div>
-                    </div>
-                    <div class="node-desc">"Vânătorul de Economii" este un joc de strategie în care trebuie să atingi obiective financiare prin economisire.</div>
-                    <div class="game-preview">
-                        <span class="game-tag play-tag coming-soon">
-                            <i class="fas fa-clock"></i> În curând
-                        </span>
-                        <span class="game-tag">Puzzle Strategic</span>
-                        <span class="game-tag">5 min</span>
-                    </div>
+                <div class="stat-item-main">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfacție Utilizatori</div>
                 </div>
-                
-                <div class="tree-node">
-                    <div class="node-header">
-                        <div class="node-title">Investiții mici</div>
-                        <div class="node-xp">+150 XP</div>
-                    </div>
-                    <div class="node-desc">În "Tycoon-ul Începător", faci investiții virtuale și înveți despre bursă, crypto și alți instrumente.</div>
-                    <div class="game-preview">
-                        <span class="game-tag play-tag coming-soon">
-                            <i class="fas fa-clock"></i> În curând
-                        </span>
-                        <span class="game-tag">Simulator Investiții</span>
-                        <span class="game-tag">6 min</span>
-                    </div>
-                </div>
-                
-                <div class="tree-node locked">
-                    <div class="node-header">
-                        <div class="node-title">Anti-Scam</div>
-                        <div class="node-xp">+120 XP</div>
-                    </div>
-                    <div class="node-desc">"Detectivul Financiar" te pregătește să identifici tentativele de scam prin scenarii interactive.</div>
-                    <div class="game-preview">
-                        <span class="game-tag play-tag coming-soon">
-                            <i class="fas fa-lock"></i> Blocat
-                        </span>
-                        <span class="game-tag">Joc de Detectiv</span>
-                        <span class="game-tag">4 min</span>
-                    </div>
+                <div class="stat-item-main">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Școli Partenere</div>
                 </div>
             </div>
         </div>
     </section>
     
-    <section id="gamification" class="gamification">
+    <section class="testimonials">
         <div class="container">
-            <h2 class="section-title">Gamificare Puternică</h2>
-            <div class="gamification-container">
-                <div class="gamification-card">
-                    <h3><i class="fas fa-fire gamification-icon"></i> Streak-uri Zilnice</h3>
-                    <p>Menține-ți motivatia prin învățarea zilnică. Fiecare zi aduce XP bonus!</p>
-                    <div class="streak-container">
-                        <div class="streak-day active">L</div>
-                        <div class="streak-day active">M</div>
-                        <div class="streak-day active">M</div>
-                        <div class="streak-day active">J</div>
-                        <div class="streak-day">V</div>
-                        <div class="streak-day">S</div>
-                        <div class="streak-day">D</div>
+            <h2 class="section-title">Ce Spun Utilizatorii Noștri</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "FinQuest mi-a schimbat complet perspectiva asupra banilor. Am învățat mai mult din jocurile astea decât din toate orele de economie de la școală!"
                     </div>
-                </div>
-                
-                <div class="gamification-card">
-                    <h3><i class="fas fa-medal gamification-icon"></i> Badge-uri Colecționabile</h3>
-                    <p>Câștigă insignele unice pentru realizări financiare. Strânge-le pe toate!</p>
-                    <div class="badge-container">
-                        <div class="badge earned"><i class="fas fa-piggy-bank"></i></div>
-                        <div class="badge earned"><i class="fas fa-chart-line"></i></div>
-                        <div class="badge"><i class="fas fa-shield-alt"></i></div>
-                        <div class="badge"><i class="fas fa-crown"></i></div>
-                        <div class="badge"><i class="fas fa-gem"></i></div>
-                    </div>
-                </div>
-                
-                <div class="gamification-card">
-                    <h3><i class="fas fa-trophy gamification-icon"></i> Leaderboard</h3>
-                    <p>Concurs cu prietenii și utilizatorii din toată țara. Ajungi în top?</p>
-                    <div style="margin-top: 1.5rem; background-color: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <span>1. AlexPopescu</span>
-                            <span>2450 XP</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <span>2. MariaIonescu</span>
-                            <span>1980 XP</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <span><strong>3. Tu</strong></span>
-                            <span><strong id="user-xp">0 XP</strong></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="fin-card" class="fin-card">
-        <div class="container">
-            <h2 class="section-title">Fin-Card - Trofeul tău Personalizat</h2>
-            <div class="card-container">
-                <div class="card-preview">
-                    <div class="card-chip"></div>
-                    <div class="card-number">•••• •••• •••• 4482</div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <div>
-                            <div style="font-size: 0.8rem; opacity: 0.8;">Numele titularului</div>
-                            <div>ANDREI POPESCU</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 0.8rem; opacity: 0.8;">Expiră</div>
-                            <div>08/26</div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div>
-                            <div style="font-size: 0.8rem; opacity: 0.8;">Level</div>
-                            <div style="font-size: 1.2rem; font-weight: bold;" id="card-level">1</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 0.8rem; opacity: 0.8;">XP Total</div>
-                            <div style="font-size: 1.2rem; font-weight: bold;" id="card-xp">0</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AI</div>
+                        <div class="author-info">
+                            <h4>Andrei Ionescu</h4>
+                            <p>Elev, 16 ani</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="card-info">
-                    <h3>Cardul tău inteligent pentru educație financiară</h3>
-                    <ul class="card-features">
-                        <li><i class="fas fa-qrcode"></i> QR/NFC pentru check-in zilnic și XP bonus</li>
-                        <li><i class="fas fa-gift"></i> Acces la recompense reale (discounturi, evenimente)</li>
-                        <li><i class="fas fa-chart-bar"></i> Afișează progresul tău vizibil (level, XP, badge-uri)</li>
-                        <li><i class="fas fa-mobile-alt"></i> Conexiune cu aplicația pentru actualizări în timp real</li>
-                        <li><i class="fas fa-trophy"></i> Devine un trofeu personalizat ce evoluează odată cu tine</li>
-                    </ul>
-                    <button class="btn btn-primary" style="margin-top: 1.5rem;">Comandă cardul tău</button>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <h2 class="section-title">Alege Planul Tău</h2>
-            <div class="pricing-container">
-                <div class="pricing-card">
-                    <h3>Free</h3>
-                    <div class="price">0€ <span>/ lună</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Acces la primele 5 lecții-joc</li>
-                        <li><i class="fas fa-check"></i> Streak-uri și badge-uri de bază</li>
-                        <li><i class="fas fa-check"></i> AI Coach pentru întrebări simple</li>
-                        <li><i class="fas fa-check"></i> Card simplu de hârtie (la cerere)</li>
-                        <li class="disabled"><i class="fas fa-times"></i> Simulatoare avansate</li>
-                        <li class="disabled"><i class="fas fa-times"></i> Fin-Card E-Ink personalizat</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;">Începe gratuit</button>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Ca profesor, văd că elevii mei sunt mult mai implicați când învață prin jocuri. Progresul lor în gestionarea banilor este vizibil!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MP</div>
+                        <div class="author-info">
+                            <h4>Maria Popescu</h4>
+                            <p>Profesoară de economie</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="pricing-card featured">
-                    <div style="background-color: var(--primary); color: white; padding: 8px 15px; border-radius: 20px; display: inline-block; margin-bottom: 1rem; font-weight: 600;">POPULAR</div>
-                    <h3>Premium</h3>
-                    <div class="price">5€ <span>/ lună</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Toate lecțiile-joc (50+)</li>
-                        <li><i class="fas fa-check"></i> Toate funcțiile de gamificare</li>
-                        <li><i class="fas fa-check"></i> AI Coach complet + scam analyzer</li>
-                        <li><i class="fas fa-check"></i> Fin-Card E-Ink personalizat</li>
-                        <li><i class="fas fa-check"></i> Simulatoare avansate</li>
-                        <li><i class="fas fa-check"></i> Recompense exclusive de la parteneri</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%; background-color: var(--secondary);">Alege Premium</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3>Școli</h3>
-                    <div class="price">Personalizat <span>/ clasă</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Toate funcțiile Premium</li>
-                        <li><i class="fas fa-check"></i> Dashboard pentru profesori</li>
-                        <li><i class="fas fa-check"></i> Pachete pentru clase întregi</li>
-                        <li><i class="fas fa-check"></i> Materiale didactice suplimentare</li>
-                        <li><i class="fas fa-check"></i> Competiții între clase/școli</li>
-                        <li><i class="fas fa-check"></i> Rapoarte de progres detaliate</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;">Contactează-ne</button>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Cardul FinQuest este genial! Copilul meu își verifică progresul mereu și se străduiește să câștige mai multe badge-uri. Recomand!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RD</div>
+                        <div class="author-info">
+                            <h4>Radu Dobre</h4>
+                            <p>Părinte</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1000,7 +583,7 @@
         <div class="container">
             <h2>Începe aventura ta financiară astăzi!</h2>
             <p>Alătură-te peste 50.000 de utilizatori care învață finanțe personale într-un mod distractiv și interactiv. Transformă cunoștințele financiare într-un superputere!</p>
-            <button class="btn btn-primary" style="padding: 15px 40px; font-size: 1.3rem;">
+            <button class="btn btn-primary" style="padding: 15px 40px; font-size: 1.3rem;" onclick="window.location.href='invata.html'">
                 <i class="fas fa-rocket"></i> Înscrie-te gratuit
             </button>
         </div>
@@ -1020,32 +603,32 @@
             </div>
             
             <div class="footer-links">
-                <h4>Produs</h4>
+                <h4>Navigare</h4>
                 <ul>
-                    <li><a href="#skill-tree">Skill Tree</a></li>
-                    <li><a href="#gamification">Gamificare</a></li>
-                    <li><a href="#fin-card">Fin-Card</a></li>
-                    <li><a href="#pricing">Prețuri</a></li>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="invata.html">Învață cu Noi</a></li>
+                    <li><a href="jocuri.html">Jocuri</a></li>
+                    <li><a href="preturi.html">Prețuri</a></li>
                 </ul>
             </div>
             
             <div class="footer-links">
                 <h4>Companie</h4>
                 <ul>
-                    <li><a href="#">Despre noi</a></li>
-                    <li><a href="#">Cariere</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="despre.html">Despre noi</a></li>
+                    <li><a href="cariere.html">Cariere</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
             
             <div class="footer-links">
                 <h4>Legal</h4>
                 <ul>
-                    <li><a href="#">Termeni și condiții</a></li>
-                    <li><a href="#">Politica de confidențialitate</a></li>
-                    <li><a href="#">Politica de cookie-uri</a></li>
-                    <li><a href="#">GDPR</a></li>
+                    <li><a href="termeni.html">Termeni și condiții</a></li>
+                    <li><a href="confidentialitate.html">Politica de confidențialitate</a></li>
+                    <li><a href="cookies.html">Politica de cookie-uri</a></li>
+                    <li><a href="gdpr.html">GDPR</a></li>
                 </ul>
             </div>
         </div>
@@ -1056,72 +639,23 @@
     </footer>
     
     <script>
-        // Sistem simplu de tracking pentru progres
         document.addEventListener('DOMContentLoaded', function() {
-            // Verifică dacă utilizatorul a completat jocul "Bani de buzunar"
+            // Verifică progresul utilizatorului
             const savedXP = localStorage.getItem('finquest-bani-de-buzunar-xp');
-            const savedCompleted = localStorage.getItem('finquest-bani-de-buzunar-completed');
-            
-            if (savedCompleted === 'true' && savedXP) {
-                // Marchează nodul ca completat
-                const baniNode = document.querySelector('.tree-node:first-child');
-                baniNode.classList.add('completed');
-                
-                // Actualizează badge-ul cu XP
-                document.getElementById('bani-xp-badge').textContent = `${savedXP} XP`;
-                
-                // Actualizează XP total
-                updateTotalXP(parseInt(savedXP));
+            if (savedXP) {
+                const totalXP = parseInt(localStorage.getItem('finquest-total-xp') || '0');
+                const level = Math.floor(totalXP / 100) + 1;
+                document.querySelector('.user-level span').textContent = `Level ${level}`;
             }
             
-            // Butonul "Începe acum" din hero section
-            document.querySelector('.hero .btn-primary').addEventListener('click', function() {
-                document.querySelector('#skill-tree').scrollIntoView({ behavior: 'smooth' });
-            });
-            
-            // Butoanele de navigare
+            // Navigare smooth
             document.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-        });
-        
-        // Funcție pentru actualizarea XP total
-        function updateTotalXP(xpEarned) {
-            const currentXP = parseInt(localStorage.getItem('finquest-total-xp') || '0');
-            const newTotalXP = currentXP + xpEarned;
-            
-            // Actualizează localStorage
-            localStorage.setItem('finquest-total-xp', newTotalXP.toString());
-            
-            // Actualizează afișajele
-            document.getElementById('user-xp').textContent = `${newTotalXP} XP`;
-            document.getElementById('card-xp').textContent = newTotalXP;
-            
-            // Calculează nivelul (1 nivel la fiecare 100 XP)
-            const level = Math.floor(newTotalXP / 100) + 1;
-            document.getElementById('card-level').textContent = level;
-            document.querySelector('.user-level span').textContent = `Level ${level}`;
-        }
-        
-        // Interactive elements for the skill tree
-        document.querySelectorAll('.tree-node:not(.locked)').forEach(node => {
-            node.addEventListener('click', function() {
-                if (!this.classList.contains('locked')) {
-                    const title = this.querySelector('.node-title').textContent;
-                    alert(`Începi jocul: "${title}"! Aceasta este o demonstrație. În aplicația reală, ai începe imediat jocul interactiv.`);
-                }
-            });
-        });
-        
-        // CTA buttons
-        document.querySelectorAll('.btn-primary').forEach(button => {
-            button.addEventListener('click', function() {
-                if (!this.closest('.pricing-card') && !this.closest('.hero') && !this.closest('.cta')) {
-                    alert('Felicitări! Ai început aventura ta FinQuest. În aplicația reală, ai fi redirecționat către procesul de înregistrare.');
+                if (link.getAttribute('href').startsWith('#')) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href').substring(1);
+                        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                    });
                 }
             });
         });
