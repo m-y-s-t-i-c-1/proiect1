@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +7,52 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
+            /* LIGHT MODE - PROFESIONAL & ATTRACTIV */
+            --bg-body: #f8fafc;
+            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #fef7ff 100%);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --bg-nav: rgba(255, 255, 255, 0.7);
+            --primary: #1e40af;
+            --primary-soft: #dbeafe;
+            --secondary: #f59e0b;
+            --accent: #7c3aed;
             --success: #4ade80;
             --warning: #fbbf24;
             --danger: #f87171;
             --light: #f8f9fa;
             --dark: #1e293b;
             --gray: #6b7280;
+            --text-main: #1e293b;
+            --text-secondary: #475569;
+            --shadow-soft: 0 10px 30px -10px rgba(30, 64, 175, 0.1);
+            --shadow-hard: 0 20px 40px -5px rgba(30, 64, 175, 0.15);
+            --border-card: 1px solid rgba(241, 245, 249, 0.8);
+            --nav-link-color: #334155;
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            /* DARK MODE - NEON GAMING */
+            --bg-body: #0f172a;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --bg-nav: rgba(15, 23, 42, 0.85);
+            --primary: #22d3ee;
+            --primary-soft: rgba(34, 211, 238, 0.1);
+            --secondary: #c084fc;
+            --accent: #f472b6;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --light: #1e293b;
+            --dark: #f8fafc;
+            --gray: #94a3b8;
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --shadow-soft: 0 10px 40px -10px rgba(6, 182, 212, 0.2);
+            --shadow-hard: 0 0 25px rgba(6, 182, 212, 0.3);
+            --border-card: 1px solid rgba(255, 255, 255, 0.05);
+            --nav-link-color: #e2e8f0;
         }
         
         * {
@@ -26,19 +63,90 @@
         }
         
         body {
-            background-color: #f5f7ff;
-            color: var(--dark);
+            background: var(--bg-gradient);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            transition: background-color 0.5s ease, color 0.3s ease;
+        }
+
+        /* --- BACKGROUND ANIMATION (ORBS) --- */
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.8;
+            animation: float 15s infinite alternate ease-in-out;
+            transition: background-color 0.5s ease;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(219, 234, 254, 0.6);
+            top: -100px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(253, 230, 138, 0.4);
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        [data-theme="dark"] .orb-1 {
+            background: rgba(6, 182, 212, 0.15);
+        }
+
+        [data-theme="dark"] .orb-2 {
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
         }
         
+        /* --- SCROLL REVEAL ANIMATION --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HEADER CA ÎN PAGINA PRINCIPALĂ --- */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem 5%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: var(--bg-nav);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 1rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background-color 0.5s ease, border-color 0.3s ease;
         }
         
         .container {
@@ -54,87 +162,88 @@
             align-items: center;
         }
         
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
+            transition: all 0.3s ease;
         }
         
         .logo-icon {
-            color: var(--accent);
+            color: var(--secondary);
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.2));
+            transition: all 0.3s ease;
         }
-        
-        .badge-financial {
-            background: linear-gradient(135deg, #2a3c8f, #1a2a6c);
-            border-radius: 8px;
-            padding: 6px 12px;
-            color: white;
-            font-weight: 700;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 2px solid var(--accent);
-            position: relative;
-            overflow: hidden;
+
+        @keyframes pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(139, 92, 246, 0)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 10px var(--primary)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(139, 92, 246, 0)); }
         }
-        
-        .badge-financial::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 10px 10px;
-            transform: rotate(15deg);
-            pointer-events: none;
-        }
-        
-        .badge-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .badge-line-1 {
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            color: var(--accent);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        .badge-line-2 {
-            font-size: 0.9rem;
-            letter-spacing: 1.5px;
-            color: white;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-        }
-        
+
+        /* NAVIGAȚIE CA ÎN PAGINA PRINCIPALĂ */
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.05);
+            padding: 0.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         nav a {
-            color: white;
+            color: var(--nav-link-color);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            position: relative;
+            z-index: 1;
             transition: all 0.3s;
-            padding: 5px 10px;
-            border-radius: 5px;
         }
         
         nav a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            background: var(--primary);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        [data-theme="dark"] nav a:hover {
+            color: white;
+            background: var(--primary);
+            box-shadow: 0 4px 15px rgba(34, 211, 238, 0.4);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-switch {
+            background: transparent;
+            border: 1px solid var(--primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            color: var(--primary);
+            transition: all 0.3s var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-switch:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px var(--primary);
         }
         
         .user-menu {
@@ -144,42 +253,63 @@
         }
         
         .user-level {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
-            border-radius: 20px;
+            background-color: var(--primary-soft);
+            color: var(--primary);
+            padding: 10px 18px;
+            border-radius: 12px;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
         }
         
         .level-icon {
-            color: var(--accent);
+            color: var(--secondary);
         }
-        
+
         .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s var(--transition-smooth);
             border: none;
             font-size: 1rem;
         }
         
         .btn-primary {
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+        
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s ease;
+        }
+        
+        .btn-primary:hover::after {
+            left: 100%;
         }
         
         .btn-primary:hover {
-            background-color: #3ab8dd;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
         }
         
         .btn-secondary {
-            background-color: white;
+            background-color: transparent;
             color: var(--primary);
             border: 2px solid var(--primary);
         }
@@ -187,18 +317,39 @@
         .btn-secondary:hover {
             background-color: var(--primary);
             color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.2);
         }
-        
+
+        /* --- PAGE HERO ÎMBUNĂTĂȚIT --- */
         .page-hero {
-            padding: 4rem 5%;
+            padding: 6rem 5% 4rem;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
         }
-        
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
         .page-hero h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
+            line-height: 1.1;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         
         .page-hero p {
@@ -206,26 +357,46 @@
             max-width: 700px;
             margin: 0 auto 2rem;
             opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
-        
+
+        /* --- SECTION TITLE ÎMBUNĂTĂȚIT --- */
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem;
             font-size: 2.5rem;
-            color: var(--secondary);
+            color: var(--text-main);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
         }
-        
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
         .section-subtitle {
             text-align: center;
             font-size: 1.2rem;
-            color: var(--gray);
+            color: var(--text-secondary);
             max-width: 800px;
             margin: 0 auto 3rem;
         }
         
+        /* --- CARDURI MODULE CU ANIMAȚIE REDUSĂ --- */
         .learning-modules {
-            padding: 4rem 5%;
-            background-color: white;
+            padding: 5rem 5%;
+            background-color: var(--bg-body);
         }
         
         .modules-grid {
@@ -236,43 +407,67 @@
         }
         
         .module-card {
-            background-color: white;
-            border-radius: 12px;
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s;
+            box-shadow: var(--shadow-soft);
+            border: var(--border-card);
+            transition: all 0.4s var(--transition-smooth);
             position: relative;
             overflow: hidden;
         }
         
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .module-card:hover::before {
+            opacity: 1;
+        }
+        
+        /* ANIMAȚIE REDUSĂ: translateY(-8px) în loc de -10px */
         .module-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
-            border-color: var(--accent);
+            box-shadow: var(--shadow-hard);
+            border-color: rgba(30, 64, 175, 0.2);
         }
         
         .module-card.featured {
             border-color: var(--primary);
-            background: linear-gradient(135deg, #f8fafc, #f0f7ff);
+            background: linear-gradient(135deg, var(--primary-soft), rgba(255,255,255,0.8));
         }
         
         .module-icon {
             font-size: 2.5rem;
             color: var(--primary);
             margin-bottom: 1.5rem;
+            transition: transform 0.5s ease;
+        }
+        
+        .module-card:hover .module-icon {
+            transform: scale(1.1) rotate(5deg);
         }
         
         .module-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--dark);
+            color: var(--text-main);
         }
         
         .module-desc {
-            color: var(--gray);
+            color: var(--text-secondary);
             margin-bottom: 1.5rem;
             font-size: 1rem;
+            line-height: 1.6;
         }
         
         .module-tags {
@@ -283,12 +478,17 @@
         }
         
         .module-tag {
-            background-color: #eef2ff;
+            background-color: var(--primary-soft);
             color: var(--primary);
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .module-card:hover .module-tag {
+            transform: translateY(-2px);
         }
         
         .module-difficulty {
@@ -306,35 +506,111 @@
         }
         
         .difficulty-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            background-color: #e5e7eb;
+            background-color: var(--primary-soft);
+            transition: all 0.3s ease;
         }
         
         .difficulty-dot.active {
             background-color: var(--primary);
         }
         
-        .quiz-container {
-            background-color: #f8fafc;
-            border-radius: 10px;
+        /* --- PROGRESS CONTAINER ÎMBUNĂTĂȚIT --- */
+        .progress-container {
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
             padding: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: var(--border-card);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-container:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hard);
+        }
+        
+        .progress-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .progress-bar {
+            height: 16px;
+            background-color: var(--primary-soft);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        /* --- QUIZ CONTAINER ÎMBUNĂTĂȚIT --- */
+        .quiz-container {
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2.5rem;
             margin-top: 2rem;
-            border: 2px dashed #d1d5db;
+            border: var(--border-card);
+            box-shadow: var(--shadow-soft);
             display: none;
+            transition: all 0.3s ease;
         }
         
         .quiz-container.active {
             display: block;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.5s var(--transition-smooth);
         }
         
         .quiz-question {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
+            margin-bottom: 2rem;
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 1rem;
+            background-color: var(--primary-soft);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
         }
         
         .quiz-options {
@@ -345,52 +621,55 @@
         }
         
         .quiz-option {
-            background-color: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-card);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s var(--transition-smooth);
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.2rem;
         }
         
         .quiz-option:hover {
             border-color: var(--accent);
-            background-color: #f0f7ff;
+            background-color: var(--primary-soft);
+            transform: translateX(5px);
         }
         
         .quiz-option.selected {
             border-color: var(--primary);
-            background-color: #eef2ff;
+            background-color: var(--primary-soft);
         }
         
         .quiz-option.correct {
             border-color: var(--success);
-            background-color: #f0fdf4;
+            background-color: rgba(74, 222, 128, 0.1);
         }
         
         .quiz-option.incorrect {
             border-color: var(--danger);
-            background-color: #fef2f2;
+            background-color: rgba(248, 113, 113, 0.1);
         }
         
         .option-letter {
-            background-color: #e5e7eb;
-            color: var(--dark);
-            width: 30px;
-            height: 30px;
+            background-color: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             flex-shrink: 0;
+            font-size: 1.1rem;
         }
         
         .option-text {
             flex-grow: 1;
+            font-size: 1.1rem;
         }
         
         .quiz-feedback {
@@ -398,20 +677,20 @@
             border-radius: 10px;
             margin-top: 1.5rem;
             display: none;
+            animation: fadeIn 0.5s ease;
         }
         
         .quiz-feedback.active {
             display: block;
-            animation: fadeIn 0.5s ease;
         }
         
         .quiz-feedback.correct {
-            background-color: #f0fdf4;
+            background-color: rgba(74, 222, 128, 0.1);
             border: 2px solid var(--success);
         }
         
         .quiz-feedback.incorrect {
-            background-color: #fef2f2;
+            background-color: rgba(248, 113, 113, 0.1);
             border: 2px solid var(--danger);
         }
         
@@ -433,7 +712,7 @@
         }
         
         .feedback-content {
-            color: var(--dark);
+            color: var(--text-main);
             line-height: 1.6;
         }
         
@@ -443,15 +722,16 @@
             justify-content: center;
             gap: 10px;
             margin-top: 1.5rem;
-            padding: 1rem;
-            background-color: rgba(76, 201, 240, 0.1);
+            padding: 1.2rem;
+            background-color: var(--primary-soft);
             border-radius: 10px;
             font-weight: 600;
             color: var(--primary);
+            animation: pulse 2s infinite;
         }
         
         .score-icon {
-            color: var(--accent);
+            color: var(--secondary);
             font-size: 1.5rem;
         }
         
@@ -461,48 +741,14 @@
             margin-top: 2rem;
         }
         
-        .progress-container {
-            background-color: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-            margin-bottom: 2rem;
-        }
-        
-        .progress-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .progress-bar {
-            height: 20px;
-            background-color: #e5e7eb;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        
+        /* --- RESOURCES SECTION --- */
         .resources-section {
-            padding: 4rem 5%;
-            background-color: #f0f4ff;
+            padding: 5rem 5%;
+            background-color: rgba(219, 234, 254, 0.1);
+        }
+        
+        [data-theme="dark"] .resources-section {
+            background-color: rgba(30, 41, 59, 0.3);
         }
         
         .resources-grid {
@@ -512,47 +758,87 @@
         }
         
         .resource-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 2rem;
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
             text-align: center;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-soft);
+            border: var(--border-card);
+            transition: all 0.4s var(--transition-smooth);
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hard);
         }
         
         .resource-icon {
             font-size: 3rem;
             color: var(--primary);
             margin-bottom: 1.5rem;
+            transition: transform 0.5s ease;
+        }
+        
+        .resource-card:hover .resource-icon {
+            transform: scale(1.2) rotate(10deg);
         }
         
         .resource-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--dark);
+            color: var(--text-main);
         }
         
         .resource-card p {
-            color: var(--gray);
+            color: var(--text-secondary);
             margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
         
+        /* --- CTA SECTION --- */
         .cta-section {
-            padding: 4rem 5%;
+            padding: 5rem 5%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            transform: rotate(15deg);
+            pointer-events: none;
         }
         
+        /* --- FOOTER CA ÎN PAGINA PRINCIPALĂ --- */
         footer {
-            background-color: var(--dark);
+            background: linear-gradient(135deg, var(--primary), #1e3a8a);
             color: white;
-            padding: 3rem 5% 1.5rem;
+            padding: 4rem 5% 2rem;
+            position: relative;
+            z-index: 10;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+            transition: all 0.5s ease;
         }
-        
+
+        [data-theme="dark"] footer {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+        }
+
         .footer-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
             margin-bottom: 2rem;
         }
         
@@ -565,8 +851,21 @@
         
         .footer-links h4 {
             font-size: 1.3rem;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
             color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
         }
         
         .footer-links ul {
@@ -574,47 +873,73 @@
         }
         
         .footer-links li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
         
         .footer-links a {
             color: #d1d5db;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 20px;
         }
-        
+
+        .footer-links a::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
         .footer-links a:hover {
             color: var(--accent);
+            padding-left: 25px;
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            transform: translateX(5px);
         }
         
         .copyright {
             text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid #374151;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #9ca3af;
         }
         
+        /* --- ANIMAȚII SI EFECTE --- */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .page-hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
                 gap: 1rem;
             }
             
-            .logo-container {
-                flex-direction: column;
-                gap: 0.5rem;
-                text-align: center;
-            }
-            
             nav ul {
-                gap: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
+                display: none;
             }
             
             .modules-grid {
@@ -626,42 +951,72 @@
                 gap: 1rem;
             }
             
-            .badge-financial {
-                padding: 4px 8px;
+            .page-hero h1 {
+                font-size: 2.2rem;
             }
             
-            .badge-line-1 {
-                font-size: 0.7rem;
+            .page-hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-hero h1 {
+                font-size: 1.8rem;
             }
             
-            .badge-line-2 {
-                font-size: 0.8rem;
+            .page-hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .user-menu {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .module-card {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
+    <div class="background-shapes">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
     <header>
         <div class="container nav-container">
-            <div class="logo-container">
-                <div class="logo">
-                    <i class="fas fa-coins logo-icon"></i>
-                    <span>FinQuest</span>
-                </div>
-                <div class="badge-financial">
-                    <div class="badge-content">
-                        <div class="badge-line badge-line-1">FINANCIAL</div>
-                        <div class="badge-line badge-line-2">EDUCATION</div>
-                    </div>
-                </div>
+            <div class="logo">
+                <i class="fas fa-coins logo-icon"></i>
+                <span>FinQuest</span>
             </div>
             
             <nav>
                 <ul>
                     <li><a href="index.html">Acasă</a></li>
-                    <li><a href="invata.html">Învață cu Noi</a></li>
+                    <li><a href="invata.html">Învață</a></li>
                     <li><a href="jocuri.html">Jocuri</a></li>
-                    <li><a href="preturi.html">Prețuri</a></li>
+                    <li><a href="preturi.html">Ranking</a></li>
                 </ul>
             </nav>
             
@@ -670,16 +1025,19 @@
                     <i class="fas fa-trophy level-icon"></i>
                     <span id="user-level-display">Level 1</span>
                 </div>
-                <button class="btn btn-primary" onclick="window.location.href='jocuri.html'">Începe un Joc</button>
+                <button id="theme-toggle" class="theme-switch">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="btn btn-primary" onclick="window.location.href='jocuri.html'">Start Level 1</button>
             </div>
         </div>
     </header>
     
     <section class="page-hero">
         <div class="container">
-            <h1>Învață Finanțe Personale Pas cu Pas</h1>
-            <p>Răspunde la întrebări practice, primești feedback instant și acumulezi XP pentru fiecare răspuns corect!</p>
-            <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem;" onclick="startRandomQuiz()">
+            <h1 class="reveal">Învață Finanțe Personale Pas cu Pas</h1>
+            <p class="reveal">Răspunde la întrebări practice, primești feedback instant și acumulezi XP pentru fiecare răspuns corect!</p>
+            <button class="btn btn-primary pulse-animation reveal" style="padding: 15px 30px; font-size: 1.2rem; position: relative; z-index: 2;" onclick="startRandomQuiz()">
                 <i class="fas fa-brain"></i> Începe un Quiz Aleatoriu
             </button>
         </div>
@@ -687,10 +1045,10 @@
     
     <section class="learning-modules">
         <div class="container">
-            <h2 class="section-title">Module de Învățare Interactive</h2>
-            <p class="section-subtitle">Alege un subiect care te interesează și răspunde la întrebări practice. Fiecare răspuns corect îți aduce XP și îți îmbunătățește abilitățile financiare!</p>
+            <h2 class="section-title reveal">Module de Învățare Interactive</h2>
+            <p class="section-subtitle reveal">Alege un subiect care te interesează și răspunde la întrebări practice. Fiecare răspuns corect îți aduce XP și îți îmbunătățește abilitățile financiare!</p>
             
-            <div class="progress-container">
+            <div class="progress-container reveal">
                 <div class="progress-title">
                     <i class="fas fa-chart-line"></i>
                     <span>Progresul Tău de Învățare</span>
@@ -707,7 +1065,7 @@
             
             <div class="modules-grid">
                 <!-- Modul 1: Buget și Cheltuieli -->
-                <div class="module-card featured" data-module="budget">
+                <div class="module-card featured reveal" data-module="budget">
                     <div class="module-icon">
                         <i class="fas fa-chart-pie"></i>
                     </div>
@@ -734,7 +1092,7 @@
                 </div>
                 
                 <!-- Modul 2: Credit și Împrumuturi -->
-                <div class="module-card" data-module="credit">
+                <div class="module-card reveal" data-module="credit">
                     <div class="module-icon">
                         <i class="fas fa-credit-card"></i>
                     </div>
@@ -761,7 +1119,7 @@
                 </div>
                 
                 <!-- Modul 3: Investiții și Economii -->
-                <div class="module-card" data-module="investments">
+                <div class="module-card reveal" data-module="investments">
                     <div class="module-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
@@ -788,7 +1146,7 @@
                 </div>
                 
                 <!-- Modul 4: Decizii Financiare -->
-                <div class="module-card" data-module="decisions">
+                <div class="module-card reveal" data-module="decisions">
                     <div class="module-icon">
                         <i class="fas fa-balance-scale"></i>
                     </div>
@@ -822,11 +1180,11 @@
     
     <section class="resources-section">
         <div class="container">
-            <h2 class="section-title">Resurse Suplimentare</h2>
-            <p class="section-subtitle">Completează-ți cunoștințele cu aceste resurse gratuite și utile.</p>
+            <h2 class="section-title reveal">Resurse Suplimentare</h2>
+            <p class="section-subtitle reveal">Completează-ți cunoștințele cu aceste resurse gratuite și utile.</p>
             
             <div class="resources-grid">
-                <div class="resource-card">
+                <div class="resource-card reveal">
                     <div class="resource-icon">
                         <i class="fas fa-calculator"></i>
                     </div>
@@ -837,7 +1195,7 @@
                     </button>
                 </div>
                 
-                <div class="resource-card">
+                <div class="resource-card reveal">
                     <div class="resource-icon">
                         <i class="fas fa-file-invoice-dollar"></i>
                     </div>
@@ -848,7 +1206,7 @@
                     </button>
                 </div>
                 
-                <div class="resource-card">
+                <div class="resource-card reveal">
                     <div class="resource-icon">
                         <i class="fas fa-video"></i>
                     </div>
@@ -864,9 +1222,9 @@
     
     <section class="cta-section">
         <div class="container">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Vrei să testezi cunoștințele într-un mod distractiv?</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin: 0 auto 2rem;">Joacă jocurile noastre interactive și transformă educația financiară într-o aventură!</p>
-            <button class="btn btn-primary" style="padding: 15px 40px; font-size: 1.3rem; background-color: white; color: var(--primary);" onclick="window.location.href='jocuri.html'">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; position: relative; z-index: 2;" class="reveal">Vrei să testezi cunoștințele într-un mod distractiv?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin: 0 auto 2rem; position: relative; z-index: 2;" class="reveal">Joacă jocurile noastre interactive și transformă educația financiară într-o aventură!</p>
+            <button class="btn btn-primary pulse-animation reveal" style="padding: 15px 40px; font-size: 1.3rem; background-color: white; color: var(--primary); position: relative; z-index: 2;" onclick="window.location.href='jocuri.html'">
                 <i class="fas fa-gamepad"></i> Descoperă Jocurile
             </button>
         </div>
@@ -876,12 +1234,12 @@
         <div class="container footer-container">
             <div class="footer-about">
                 <div class="footer-logo">FinQuest</div>
-                <p>Transformăm educația financiară într-o aventură interactivă și distractivă pentru toți.</p>
+                <p style="color: #dbeafe; line-height: 1.7;">Transformăm educația financiară într-o aventură interactivă și distractivă pentru toți, de la copii la adulți.</p>
                 <div style="margin-top: 1.5rem; display: flex; gap: 1rem; font-size: 1.5rem;">
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-facebook"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-youtube"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
             
@@ -1073,8 +1431,56 @@
         let totalQuestionsAnswered = 0;
         let userXP = parseInt(localStorage.getItem('finquest-learning-xp') || '0');
 
-        // Inițializare la încărcarea paginii
+        // --- THEME TOGGLE LOGIC ---
+        const toggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = toggleBtn.querySelector('i');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('finquest-theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('finquest-theme', newTheme);
+            updateIcon(newTheme);
+            
+            // Animație la schimbarea temei
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 300);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeIcon.style.color = '#fbbf24';
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                themeIcon.style.color = '#f59e0b';
+            }
+        }
+
+        // --- SCROLL REVEAL ANIMATION ---
         document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+            // Inițializare date utilizator
             updateUserLevel();
             updateProgress();
             
@@ -1151,7 +1557,7 @@
             quizContainer.innerHTML = `
                 <div class="quiz-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                     <h3 style="margin: 0; color: var(--primary);">${moduleNames[currentModule]}</h3>
-                    <div style="background-color: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-weight: 600;">
+                    <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 8px 20px; border-radius: 20px; font-weight: 600;">
                         Întrebarea ${currentQuestionIndex + 1}/${questions.length}
                     </div>
                 </div>
@@ -1284,16 +1690,16 @@
                 <div style="text-align: center; padding: 2rem;">
                     <div style="font-size: 4rem; margin-bottom: 1rem;">${emoji}</div>
                     <h2 style="color: var(--primary); margin-bottom: 1rem;">Quiz Finalizat!</h2>
-                    <div style="font-size: 3rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                    <div style="font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1rem;">
                         ${score}/${questions.length} corecte
                     </div>
-                    <div style="font-size: 1.5rem; margin-bottom: 2rem; color: var(--gray);">
+                    <div style="font-size: 1.5rem; margin-bottom: 2rem; color: var(--text-secondary);">
                         ${percentage}% acuratețe
                     </div>
-                    <div style="background-color: #f0f7ff; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                    <div style="background-color: var(--primary-soft); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; border: var(--border-card);">
                         <h3 style="color: var(--secondary); margin-bottom: 1rem;">${message}</h3>
-                        <p style="color: var(--gray);">Ai câștigat <strong>${score * 10} XP</strong> din acest quiz!</p>
-                        <p style="color: var(--gray);">XP total acumulat: <strong>${userXP} XP</strong></p>
+                        <p style="color: var(--text-secondary);">Ai câștigat <strong>${score * 10} XP</strong> din acest quiz!</p>
+                        <p style="color: var(--text-secondary);">XP total acumulat: <strong>${userXP} XP</strong></p>
                     </div>
                     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                         <button class="btn btn-primary" onclick="startModuleQuiz('${currentModule}')">
@@ -1356,24 +1762,6 @@
         function openVideoLessons() {
             alert('Lecțiile video vor fi adăugate în următoarea actualizare!');
         }
-
-        // Animație de intrare pentru module
-        document.addEventListener('DOMContentLoaded', function() {
-            const modules = document.querySelectorAll('.module-card');
-            modules.forEach((module, index) => {
-                setTimeout(() => {
-                    module.style.opacity = '0';
-                    module.style.transform = 'translateY(20px)';
-                    module.style.display = 'block';
-                    
-                    setTimeout(() => {
-                        module.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                        module.style.opacity = '1';
-                        module.style.transform = 'translateY(0)';
-                    }, 100);
-                }, index * 100);
-            });
-        });
     </script>
 </body>
 </html>
