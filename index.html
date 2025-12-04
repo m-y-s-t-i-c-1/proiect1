@@ -1,21 +1,50 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinQuest - Educație Financiară prin Jocuri</title>
+    <title>FinQuest - Educație Financiară Next-Gen</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* --- CONFIGURARE VARIABILE & TEME --- */
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
-            --success: #4ade80;
-            --warning: #fbbf24;
-            --danger: #f87171;
-            --light: #f8f9fa;
-            --dark: #1e293b;
-            --gray: #6b7280;
+            /* LIGHT MODE - PALETA VIOLET PAL (LAVENDER DREAMS) */
+            --bg-body: #fdfcff;
+            --bg-card: #ffffff;
+            --bg-nav: rgba(255, 255, 255, 0.85);
+            --primary: #8b5cf6; /* Violet */
+            --primary-soft: #ddd6fe; /* Violet foarte deschis */
+            --secondary: #6d28d9; /* Violet închis */
+            --accent: #d946ef; /* Magenta pal */
+            --text-main: #1e293b;
+            --text-secondary: #64748b;
+            --shadow-soft: 0 10px 40px -10px rgba(139, 92, 246, 0.15);
+            --shadow-hard: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --glow: 0 0 0 transparent;
+            --border-card: 1px solid rgba(139, 92, 246, 0.1);
+            --nav-link-bg: rgba(139, 92, 246, 0.05);
+            --nav-link-color: #6d28d9;
+            --hero-overlay: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(245, 243, 255, 0.8));
+        }
+
+        /* DARK MODE - PALETA NEON GAMING (CYBERPUNK) */
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-nav: rgba(15, 23, 42, 0.85);
+            --primary: #06b6d4; /* Neon Cyan */
+            --primary-soft: rgba(6, 182, 212, 0.2);
+            --secondary: #a855f7; /* Neon Purple */
+            --accent: #22d3ee; /* Electric Blue */
+            --text-main: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --shadow-soft: 0 10px 40px -10px rgba(6, 182, 212, 0.3);
+            --shadow-hard: 0 0 20px rgba(6, 182, 212, 0.2);
+            --glow: 0 0 15px var(--primary), 0 0 30px var(--primary);
+            --border-card: 1px solid rgba(255, 255, 255, 0.1);
+            --nav-link-bg: rgba(255, 255, 255, 0.05);
+            --nav-link-color: #e2e8f0;
+            --hero-overlay: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.6));
         }
         
         * {
@@ -23,22 +52,27 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.4s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         
         body {
-            background-color: #f5f7ff;
-            color: var(--dark);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
+        /* --- HEADER & NAVBAR STILIZAT --- */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem 5%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: var(--bg-nav);
+            backdrop-filter: blur(12px); /* Efect de sticlă mată */
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
         
         .container {
@@ -65,78 +99,91 @@
             align-items: center;
             gap: 10px;
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent; /* Text gradient */
         }
         
         .logo-icon {
-            color: var(--accent);
+            color: var(--primary);
+            font-size: 2rem;
+            filter: drop-shadow(0 0 5px var(--primary));
         }
-        
-        .badge-financial {
-            background: linear-gradient(135deg, #2a3c8f, #1a2a6c);
-            border-radius: 8px;
-            padding: 6px 12px;
-            color: white;
-            font-weight: 700;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 2px solid var(--accent);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .badge-financial::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 10px 10px;
-            transform: rotate(15deg);
-            pointer-events: none;
-        }
-        
-        .badge-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .badge-line-1 {
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            color: var(--accent);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        .badge-line-2 {
-            font-size: 0.9rem;
-            letter-spacing: 1.5px;
-            color: white;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-        }
-        
+
+        /* Navigare tip "Capsulă" */
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1rem;
+            background: var(--bg-body);
+            padding: 0.5rem;
+            border-radius: 50px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
         }
         
         nav a {
-            color: white;
+            color: var(--nav-link-color);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            padding: 5px 10px;
-            border-radius: 5px;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            display: block;
+            background-color: transparent;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
         
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: -1;
+            opacity: 0;
+            transform: scaleX(0.8);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 30px;
+        }
+
         nav a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        nav a:hover::before {
+            opacity: 1;
+            transform: scaleX(1);
         }
         
+        /* --- THEME TOGGLE SWITCH --- */
+        .theme-switch {
+            background: var(--nav-link-bg);
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+        }
+        
+        .theme-switch:hover {
+            transform: rotate(15deg) scale(1.1);
+            background: var(--primary-soft);
+        }
+
+        /* --- BUTOANE & UI ELEMENTS --- */
         .user-menu {
             display: flex;
             align-items: center;
@@ -144,298 +191,262 @@
         }
         
         .user-level {
-            background-color: rgba(255, 255, 255, 0.2);
+            background: var(--nav-link-bg);
             padding: 8px 15px;
             border-radius: 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .level-icon {
-            color: var(--accent);
+            font-weight: 700;
+            color: var(--secondary);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 10px rgba(var(--primary), 0.2);
         }
         
         .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
             border: none;
             font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
         
         .btn-primary {
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Efect Neon Glow pe Dark Mode */
+        [data-theme="dark"] .btn-primary {
+             box-shadow: 0 0 15px var(--primary), 0 0 5px var(--secondary);
         }
         
         .btn-primary:hover {
-            background-color: #3ab8dd;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
         }
-        
+
+        /* --- HERO SECTION --- */
         .hero {
-            padding: 4rem 5%;
-            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            padding: 6rem 5%;
+            /* Imagine tematică: Abstract/Digital Finance */
+            background: var(--hero-overlay), url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2832&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed; /* Efect Parallax */
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .hero-content {
             max-width: 800px;
             text-align: center;
-            margin: 0 auto;
+            z-index: 2;
         }
         
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 4rem;
             margin-bottom: 1.5rem;
-            color: var(--secondary);
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--text-main), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
         
+        [data-theme="dark"] .hero h1 {
+            background: linear-gradient(135deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
         .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: var(--gray);
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-secondary);
         }
         
-        .highlight {
-            color: var(--primary);
-            font-weight: 700;
+        /* --- CARDS & FEATURES (Efecte de adâncime) --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            font-size: 2.8rem;
+            color: var(--text-main);
+            position: relative;
+            display: inline-block;
+            width: 100%;
         }
         
         .features {
-            padding: 4rem 5%;
-            background-color: white;
+            padding: 5rem 5%;
+            background-color: var(--bg-body);
         }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-            color: var(--secondary);
-        }
-        
+
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
         }
         
         .feature-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-top: 5px solid var(--primary);
+            background-color: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: var(--border-card);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-15px) scale(1.02); /* Efect 3D la hover */
+            box-shadow: var(--shadow-hard);
+            border-color: var(--primary);
         }
         
         .feature-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 1.5rem;
             color: var(--primary);
+            background: var(--primary-soft);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.5s;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--primary);
+            color: white;
+            transform: rotateY(180deg); /* Rotire 3D la iconiță */
         }
         
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--dark);
+            color: var(--text-main);
         }
         
-        .testimonials {
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+
+        /* --- STATS SECTION --- */
+        .stats {
             padding: 4rem 5%;
-            background-color: #f0f4ff;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(6, 182, 212, 0.05));
         }
-        
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        [data-theme="dark"] .stat-number {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials {
+            padding: 5rem 5%;
+            background-color: var(--bg-body);
         }
         
         .testimonial-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            background-color: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-soft);
+            border: var(--border-card);
+            position: relative;
         }
         
+        .testimonial-card::before {
+            content: '"';
+            font-size: 5rem;
+            color: var(--primary-soft);
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: serif;
+        }
+
         .testimonial-text {
             font-size: 1.1rem;
             font-style: italic;
             margin-bottom: 1.5rem;
-            color: var(--gray);
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
         }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .author-info h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.2rem;
-        }
-        
-        .author-info p {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .stats {
-            padding: 4rem 5%;
-            background-color: white;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-        
-        .stat-item-main {
-            padding: 2rem;
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            font-size: 1.2rem;
-            color: var(--gray);
-        }
-        
+
+        /* --- CTA SECTION --- */
         .cta {
-            padding: 5rem 5%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Elemente decorative abstracte */
+        .cta::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
         
-        .cta h2 {
-            font-size: 2.8rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .cta p {
-            font-size: 1.3rem;
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-            opacity: 0.9;
-        }
-        
+        /* --- FOOTER --- */
         footer {
-            background-color: var(--dark);
+            background-color: #0f172a; /* Always dark for footer */
             color: white;
-            padding: 3rem 5% 1.5rem;
-        }
-        
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            padding: 4rem 5% 1.5rem;
+            border-top: 5px solid var(--primary);
         }
         
         .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--accent);
+            font-size: 2rem;
+            background: linear-gradient(to right, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
         }
-        
-        .footer-links h4 {
-            font-size: 1.3rem;
-            margin-bottom: 1.2rem;
-            color: var(--accent);
-        }
-        
-        .footer-links ul {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-links a {
-            color: #d1d5db;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
+
         .footer-links a:hover {
             color: var(--accent);
+            padding-left: 5px; /* Efect mic de glisare */
         }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid #374151;
-            color: #9ca3af;
-        }
-        
+
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .logo-container {
-                flex-direction: column;
-                gap: 0.5rem;
-                text-align: center;
-            }
-            
             nav ul {
-                gap: 1rem;
+                display: none; /* Ascundem meniul pe mobil pentru simplificare */
             }
-            
-            .badge-financial {
-                padding: 4px 8px;
-            }
-            
-            .badge-line-1 {
-                font-size: 0.7rem;
-            }
-            
-            .badge-line-2 {
-                font-size: 0.8rem;
-            }
+            .hero h1 { font-size: 2.5rem; }
+            .nav-container { gap: 1rem; flex-direction: column;}
         }
     </style>
 </head>
@@ -444,66 +455,75 @@
         <div class="container nav-container">
             <div class="logo-container">
                 <div class="logo">
-                    <i class="fas fa-coins logo-icon"></i>
+                    <i class="fas fa-cube logo-icon"></i>
                     <span>FinQuest</span>
-                </div>
-                <div class="badge-financial">
-                    <div class="badge-content">
-                        <div class="badge-line badge-line-1">FINANCIAL</div>
-                        <div class="badge-line badge-line-2">EDUCATION</div>
-                    </div>
                 </div>
             </div>
             
             <nav>
                 <ul>
                     <li><a href="index.html">Acasă</a></li>
-                    <li><a href="invata.html">Învață cu Noi</a></li>
+                    <li><a href="invata.html">Învață</a></li>
                     <li><a href="jocuri.html">Jocuri</a></li>
-                    <li><a href="despre.html">Prețuri</a></li>
+                    <li><a href="preturi.html">Prețuri</a></li>
                 </ul>
             </nav>
             
             <div class="user-menu">
+                <button id="theme-toggle" class="theme-switch" aria-label="Schimbă tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+
                 <div class="user-level">
-                    <i class="fas fa-trophy level-icon"></i>
-                    <span>Level 12</span>
+                    <i class="fas fa-crown level-icon" style="color: gold; margin-right: 5px;"></i>
+                    <span>LVL 12</span>
                 </div>
-                <button class="btn btn-primary" onclick="window.location.href='invata.html'">Începe acum</button>
+                <button class="btn btn-primary" onclick="window.location.href='invata.html'">Start</button>
             </div>
         </div>
     </header>
     
     <section class="hero">
         <div class="hero-content">
-            <h1>Învață <span class="highlight">finanțe personale</span> prin jocuri interactive</h1>
-            <p>Transformă educația financiară într-o aventură captivantă. Fiecare lecție este un joc, fiecare concept o provocare, fiecare progres o recompensă.</p>
-            <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem;" onclick="window.location.href='invata.html'">
-                <i class="fas fa-play"></i> Începe aventura
-            </button>
+            <h1>Level Up la <span style="color: var(--primary);">Buzunarul Tău</span></h1>
+            <p>Transformă educația financiară într-un RPG. Colectează monede, învinge monștrii "Datorii" și devino un maestru al investițiilor.</p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="btn btn-primary" style="padding: 15px 35px; font-size: 1.2rem;">
+                    <i class="fas fa-play"></i> Joacă Acum
+                </button>
+                <button class="btn" style="background: var(--bg-card); border: 1px solid var(--text-secondary); color: var(--text-main);">
+                    Vezi Demo
+                </button>
+            </div>
         </div>
     </section>
     
     <section class="features">
         <div class="container">
-            <h2 class="section-title">Cum funcționează FinQuest</h2>
+            <h2 class="section-title">Power-Ups Pentru Tine</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <i class="fas fa-gamepad feature-icon"></i>
-                    <h3>Învață prin Jocuri</h3>
-                    <p>Lecțiile scurte de 3 minute sunt înlocuite cu jocuri interactive care te ajută să înțelegi concepte financiare complexe într-un mod distractiv.</p>
+                    <div class="feature-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Gamification Total</h3>
+                    <p>Nu citești manuale, ci treci misiuni. Fiecare concept financiar este un nivel într-un joc interactiv 3D.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <i class="fas fa-robot feature-icon"></i>
-                    <h3>AI Coach Personal</h3>
-                    <p>Asistentul nostru AI răspunde la întrebări, recomandă lecții personalizate și analizează mesaje suspecte cu un sistem de "Scam Score".</p>
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Financial Coach</h3>
+                    <p>Un asistent virtual care îți analizează cheltuielile și îți dă sfaturi în timp real. Te protejează de SCAM-uri.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <i class="fas fa-id-card feature-icon"></i>
-                    <h3>Fin-Card Fizic</h3>
-                    <p>Cardul tău personalizat cu QR/NFC devine un trofeu care îți oferă XP bonus, acces la recompense reale și îți afișează progresul vizibil.</p>
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Fin-Card NFC</h3>
+                    <p>Cardul tău fizic cu tehnologie NFC. Plătește și primești XP instant pentru fiecare decizie financiară bună.</p>
                 </div>
             </div>
         </div>
@@ -511,23 +531,23 @@
     
     <section class="stats">
         <div class="container">
-            <h2 class="section-title">FinQuest în Numere</h2>
-            <div class="stats-grid">
+            <h2 class="section-title">Leaderboard Global</h2>
+            <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); text-align: center; gap: 2rem;">
                 <div class="stat-item-main">
-                    <div class="stat-number">50,000+</div>
-                    <div class="stat-label">Utilizatori Înscriși</div>
+                    <div class="stat-number">50k+</div>
+                    <div class="stat-label">Jucători</div>
                 </div>
                 <div class="stat-item-main">
                     <div class="stat-number">25+</div>
-                    <div class="stat-label">Jocuri Interactive</div>
+                    <div class="stat-label">Misiuni</div>
                 </div>
                 <div class="stat-item-main">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">Satisfacție Utilizatori</div>
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">Win Rate</div>
                 </div>
                 <div class="stat-item-main">
                     <div class="stat-number">500+</div>
-                    <div class="stat-label">Școli Partenere</div>
+                    <div class="stat-label">Școli</div>
                 </div>
             </div>
         </div>
@@ -535,43 +555,29 @@
     
     <section class="testimonials">
         <div class="container">
-            <h2 class="section-title">Ce Spun Utilizatorii Noștri</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
+            <h2 class="section-title">Ce zic jucătorii</h2>
+            <div class="features-grid"> <div class="testimonial-card">
                     <div class="testimonial-text">
-                        "FinQuest mi-a schimbat complet perspectiva asupra banilor. Am învățat mai mult din jocurile astea decât din toate orele de economie de la școală!"
+                        "Efectiv e ca și cum aș juca un MMORPG, dar la final am bani reali în buzunar. Grafica e genială!"
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">AI</div>
-                        <div class="author-info">
-                            <h4>Andrei Ionescu</h4>
-                            <p>Elev, 16 ani</p>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="User" style="width: 50px; height: 50px; border-radius: 50%;">
+                        <div>
+                            <h4>Alex Popa</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Level 24 Investor</p>
                         </div>
                     </div>
                 </div>
-                
-                <div class="testimonial-card">
+
+                 <div class="testimonial-card">
                     <div class="testimonial-text">
-                        "Ca profesor, văd că elevii mei sunt mult mai implicați când învață prin jocuri. Progresul lor în gestionarea banilor este vizibil!"
+                        "Fiul meu a învățat să economisească pentru un laptop nou în doar 3 luni folosind FinQuest."
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MP</div>
-                        <div class="author-info">
-                            <h4>Maria Popescu</h4>
-                            <p>Profesoară de economie</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "Cardul FinQuest este genial! Copilul meu își verifică progresul mereu și se străduiește să câștige mai multe badge-uri. Recomand!"
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">RD</div>
-                        <div class="author-info">
-                            <h4>Radu Dobre</h4>
-                            <p>Părinte</p>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=100&q=80" alt="User" style="width: 50px; height: 50px; border-radius: 50%;">
+                        <div>
+                            <h4>Maria S.</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Părinte</p>
                         </div>
                     </div>
                 </div>
@@ -581,84 +587,76 @@
     
     <section class="cta">
         <div class="container">
-            <h2>Începe aventura ta financiară astăzi!</h2>
-            <p>Alătură-te peste 50.000 de utilizatori care învață finanțe personale într-un mod distractiv și interactiv. Transformă cunoștințele financiare într-un superputere!</p>
-            <button class="btn btn-primary" style="padding: 15px 40px; font-size: 1.3rem;" onclick="window.location.href='invata.html'">
-                <i class="fas fa-rocket"></i> Înscrie-te gratuit
+            <h2>Ready Player One?</h2>
+            <p style="max-width: 600px; margin: 0 auto 2rem; opacity: 0.9; font-size: 1.2rem;">
+                Nu lăsa inflația să-ți scadă HP-ul. Intră în joc și preia controlul finanțelor tale.
+            </p>
+            <button class="btn" style="background: white; color: var(--primary); padding: 15px 40px; font-weight: 800; font-size: 1.2rem;">
+                <i class="fas fa-rocket"></i> CREATE ACCOUNT
             </button>
         </div>
     </section>
     
     <footer>
-        <div class="container footer-container">
+        <div class="container footer-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
             <div class="footer-about">
                 <div class="footer-logo">FinQuest</div>
-                <p>Transformăm educația financiară într-o aventură interactivă și distractivă pentru toți.</p>
+                <p style="color: #94a3b8;">Viitorul educației financiare este aici.</p>
                 <div style="margin-top: 1.5rem; display: flex; gap: 1rem; font-size: 1.5rem;">
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-facebook"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-youtube"></i></a>
+                    <a href="#" style="color: #cbd5e1;"><i class="fab fa-discord"></i></a>
+                    <a href="#" style="color: #cbd5e1;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: #cbd5e1;"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             
             <div class="footer-links">
-                <h4>Navigare</h4>
-                <ul>
-                    <li><a href="index.html">Acasă</a></li>
-                    <li><a href="invata.html">Învață cu Noi</a></li>
-                    <li><a href="jocuri.html">Jocuri</a></li>
-                    <li><a href="preturi.html">Prețuri</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-links">
-                <h4>Companie</h4>
-                <ul>
-                    <li><a href="despre.html">Despre noi</a></li>
-                    <li><a href="cariere.html">Cariere</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-links">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="termeni.html">Termeni și condiții</a></li>
-                    <li><a href="confidentialitate.html">Politica de confidențialitate</a></li>
-                    <li><a href="cookies.html">Politica de cookie-uri</a></li>
-                    <li><a href="gdpr.html">GDPR</a></li>
+                <h4 style="margin-bottom: 1rem; color: #38bdf8;">Platformă</h4>
+                <ul style="list-style: none;">
+                    <li><a href="#" style="color: #cbd5e1; text-decoration: none; display: block; margin-bottom: 0.5rem;">Jocuri</a></li>
+                    <li><a href="#" style="color: #cbd5e1; text-decoration: none; display: block; margin-bottom: 0.5rem;">Leaderboard</a></li>
+                    <li><a href="#" style="color: #cbd5e1; text-decoration: none; display: block; margin-bottom: 0.5rem;">Magazin XP</a></li>
                 </ul>
             </div>
         </div>
-        
-        <div class="copyright container">
-            <p>&copy; 2023 FinQuest. Toate drepturile rezervate.</p>
+        <div class="copyright container" style="text-align: center; padding-top: 2rem; color: #64748b; font-size: 0.9rem;">
+            &copy; 2024 FinQuest. Designed for the Future.
         </div>
     </footer>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verifică progresul utilizatorului
-            const savedXP = localStorage.getItem('finquest-bani-de-buzunar-xp');
-            if (savedXP) {
-                const totalXP = parseInt(localStorage.getItem('finquest-total-xp') || '0');
-                const level = Math.floor(totalXP / 100) + 1;
-                document.querySelector('.user-level span').textContent = `Level ${level}`;
-            }
+        // Logica pentru schimbarea temei Light/Dark
+        const toggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = toggleBtn.querySelector('i');
+        const htmlElement = document.documentElement;
+
+        // Verificăm dacă există o preferință salvată
+        const savedTheme = localStorage.getItem('finquest-theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             
-            // Navigare smooth
-            document.querySelectorAll('nav a').forEach(link => {
-                if (link.getAttribute('href').startsWith('#')) {
-                    link.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute('href').substring(1);
-                        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-                    });
-                }
-            });
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('finquest-theme', newTheme);
+            
+            updateIcon(newTheme);
         });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeIcon.style.color = '#fbbf24'; // Soare galben
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                themeIcon.style.color = '#8b5cf6'; // Lună violet
+            }
+        }
     </script>
 </body>
 </html>
