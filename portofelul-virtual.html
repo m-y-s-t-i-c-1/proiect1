@@ -32,11 +32,41 @@
             display: flex;
             flex-direction: column;
         }
-
-                .game-header-left {
+        
+        .game-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .game-header-left {
             display: flex;
             align-items: center;
             gap: 15px;
+        }
+        
+        .game-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .game-icon {
+            color: var(--accent);
         }
         
         .badge-financial-game {
@@ -65,34 +95,23 @@
             pointer-events: none;
         }
         
-        .game-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .badge-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge-line-1 {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: #4cc9f0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .badge-line-2 {
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
             color: white;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        .header-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .game-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-        
-        .game-icon {
-            color: var(--accent);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
         }
         
         .game-stats {
@@ -113,6 +132,12 @@
         .stat-value {
             font-weight: 700;
             font-size: 1.2rem;
+        }
+        
+        .currency {
+            font-size: 0.8rem;
+            font-weight: normal;
+            margin-left: 2px;
         }
         
         .game-container {
@@ -544,6 +569,12 @@
                 gap: 1rem;
             }
             
+            .game-header-left {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
             .game-stats {
                 width: 100%;
                 justify-content: center;
@@ -560,11 +591,23 @@
             .options-container {
                 grid-template-columns: 1fr;
             }
+            
+            .badge-financial-game {
+                padding: 4px 8px;
+            }
+            
+            .badge-line-1 {
+                font-size: 0.7rem;
+            }
+            
+            .badge-line-2 {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
-        <header class="game-header">
+    <header class="game-header">
         <div class="header-content">
             <div class="game-header-left">
                 <div class="game-title">
@@ -601,7 +644,7 @@
             <aside class="game-sidebar">
                 <div class="wallet-card">
                     <div class="wallet-title">PORTOFELUL TĂU</div>
-                    <div class="wallet-amount">50 <small>RON</small></div>
+                    <div class="wallet-amount">50 <span class="currency">MDL</span></div>
                     <div class="wallet-controls">
                         <button class="btn btn-secondary" id="addMoney">
                             <i class="fas fa-plus"></i> Primește bani
@@ -632,8 +675,8 @@
                         <i class="fas fa-bullseye"></i>
                         <span>Obiectivul Săptămânii</span>
                     </div>
-                    <div class="goal-amount">20 RON</div>
-                    <div class="goal-desc">Economisește 20 RON din banii de buzunar pentru a cumpăra un joc nou.</div>
+                    <div class="goal-amount">20 MDL</div>
+                    <div class="goal-desc">Economisește 20 MDL din banii de buzunar pentru a cumpăra un joc nou.</div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="savingsFill" style="width: 0%"></div>
                     </div>
@@ -668,6 +711,16 @@
     </main>
     
     <script>
+        // Funcție pentru amestecarea aleatoare a unui array (Fisher-Yates shuffle)
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
         // Game state
         const gameState = {
             wallet: 50,
@@ -680,7 +733,7 @@
             timer: null,
             weeklyGoal: 20,
             transactions: [
-                { description: "Bani de buzunar săptămânal", amount: 50, type: "income" }
+                { description: "Bani de buzunar săptămânal", amount: 50, type: "income", currency: "MDL" }
             ]
         };
         
@@ -689,7 +742,7 @@
             {
                 id: 1,
                 title: "Săptămâna Începe!",
-                message: "Bună! Eu sunt Alex, antrenorul tău financiar. Ai primit 50 RON pentru săptămâna aceasta. Cum vei gestiona acești bani?",
+                message: "Bună! Eu sunt Alex, antrenorul tău financiar. Ai primit 50 MDL pentru săptămâna aceasta. Cum vei gestiona acești bani?",
                 character: "fas fa-user-tie",
                 characterName: "Alex - Antrenor Financiar",
                 options: [
@@ -714,7 +767,7 @@
                     },
                     {
                         id: "c",
-                        text: "Îmi fac un plan: 20 RON economii, 30 RON cheltuieli",
+                        text: "Îmi fac un plan: 20 MDL economii, 30 MDL cheltuieli",
                         description: "Un echilibru între economisire și cheltuieli rezonabile",
                         correct: true,
                         feedback: "Excelent! Acesta este un plan echilibrat. Economisești pentru obiectivele tale, dar îți și permiți să te bucuri de prezent. Acesta este principiul de bază al unui buget sănătos!",
@@ -728,7 +781,7 @@
             {
                 id: 2,
                 title: "Prietenul Te Cheamă la Cinema",
-                message: "Prietenul tău te invită la cinema. Biletul costă 15 RON, iar popcorn și suc încă 10 RON. Ce faci?",
+                message: "Prietenul tău te invită la cinema. Biletul costă 15 MDL, iar popcorn și suc încă 10 MDL. Ce faci?",
                 character: "fas fa-film",
                 characterName: "Decizie Socială",
                 options: [
@@ -743,10 +796,10 @@
                     },
                     {
                         id: "b",
-                        text: "Merg și cheltui tot: 25 RON",
+                        text: "Merg și cheltui tot: 25 MDL",
                         description: "Te distrezi, dar cheltui o sumă mare dintr-o dată",
                         correct: false,
-                        feedback: "Cheltuind 25 RON dintr-o dată, îți reduci semnificativ bugetul pentru restul săptămânii. Poate poți găsi o alternativă mai ieftină?",
+                        feedback: "Cheltuind 25 MDL dintr-o dată, îți reduci semnificativ bugetul pentru restul săptămânii. Poate poți găsi o alternativă mai ieftină?",
                         walletChange: -25,
                         xp: 5
                     },
@@ -765,7 +818,7 @@
             {
                 id: 3,
                 title: "Vezi un Joc Nou la Magazin",
-                message: "La magazin vezi un joc nou care costă 45 RON. Îl dorești mult, dar depășește bugetul tău. Cum procedezi?",
+                message: "La magazin vezi un joc nou care costă 45 MDL. Îl dorești mult, dar depășește bugetul tău. Cum procedezi?",
                 character: "fas fa-shopping-cart",
                 characterName: "Tentația Cumpărăturilor",
                 options: [
@@ -802,14 +855,14 @@
             {
                 id: 4,
                 title: "Oferă Specială la Magazinul de Dulciuri",
-                message: "Magazinul de dulciuri are o ofertă: 3 ciocolate la prețul a 2. Costul unei ciocolate este de 5 RON. Ce alegi?",
+                message: "Magazinul de dulciuri are o ofertă: 3 ciocolate la prețul a 2. Costul unei ciocolate este de 5 MDL. Ce alegi?",
                 character: "fas fa-candy-cane",
                 characterName: "Oferte și Reduceri",
                 options: [
                     {
                         id: "a",
-                        text: "Cumpăr oferta: 3 ciocolate cu 10 RON",
-                        description: "Economisești 5 RON față de prețul individual",
+                        text: "Cumpăr oferta: 3 ciocolate cu 10 MDL",
+                        description: "Economisești 5 MDL față de prețul individual",
                         correct: false,
                         feedback: "Ofertele sunt tentante, dar dacă cumperi mai mult decât ai nevoie, de fapt cheltui mai mult, nu economisești.",
                         walletChange: -10,
@@ -818,7 +871,7 @@
                     {
                         id: "b",
                         text: "Nu cumpăr nimic",
-                        description: "Economisești cei 10 RON complet",
+                        description: "Economisești cei 10 MDL complet",
                         correct: false,
                         feedback: "Dacă îți dorești o ciocolată, poți să-ți permiți una. Refuzul total nu este întotdeauna cea mai bună soluție.",
                         walletChange: 0,
@@ -826,7 +879,7 @@
                     },
                     {
                         id: "c",
-                        text: "Cumpăr o singură ciocolată cu 5 RON",
+                        text: "Cumpăr o singură ciocolată cu 5 MDL",
                         description: "Îți satisfaci pofta, dar cheltui responsabil",
                         correct: true,
                         feedback: "Foarte bine! Cumpărând doar ceea ce ai nevoie cu adevărat, eviți cheltuielile inutile. Ofertele sunt bune doar dacă cumperi ceea ce ai consuma oricum.",
@@ -839,7 +892,7 @@
             {
                 id: 5,
                 title: "Primești Ofertă de Muncă",
-                message: "Un vecin îți oferă 15 RON să cureți frunzele din grădina lui. Accepti?",
+                message: "Un vecin îți oferă 15 MDL să cureți frunzele din grădina lui. Accepti?",
                 character: "fas fa-leaf",
                 characterName: "Oportunitate de Câștig",
                 options: [
@@ -883,7 +936,7 @@
                 options: [
                     {
                         id: "a",
-                        text: "Cumpăr cel mai scump cadou: 30 RON",
+                        text: "Cumpăr cel mai scump cadou: 30 MDL",
                         description: "Îți arăți aprecierea, dar cheltui mult",
                         correct: false,
                         feedback: "Valoarea unui cadou nu este dată de preț, ci de gândul din spatele lui. Prietenii adevărați apreciază intenția, nu costul.",
@@ -904,7 +957,7 @@
                         text: "Îi fac un cadou personalizat manual",
                         description: "Îți arăți aprecierea într-un mod creativ și personal",
                         correct: true,
-                        feedback: "Perfect! Cadourile făcute manual sunt adesea mai apreciate decât cele scumpe pentru că arată că ai investit timp și gândire. Costă doar 5 RON pentru materiale!",
+                        feedback: "Perfect! Cadourile făcute manual sunt adesea mai apreciate decât cele scumpe pentru că arată că ai investit timp și gândire. Costă doar 5 MDL pentru materiale!",
                         walletChange: -5,
                         xp: 30
                     }
@@ -999,12 +1052,17 @@
             gameState.currentStep = index;
             const scenario = scenarios[index];
             
+            // Amestecă opțiunile în ordine aleatorie
+            const shuffledOptions = shuffleArray(scenario.options);
+            
             let optionsHTML = '';
-            scenario.options.forEach(option => {
+            shuffledOptions.forEach(option => {
+                // Iconițe diferite pentru fiecare opțiune (în funcție de ID-ul original pentru identificare)
+                const iconClass = option.id === 'a' ? 'apple-alt' : option.id === 'b' ? 'book' : 'check-circle';
                 optionsHTML += `
                     <div class="option" data-id="${option.id}">
                         <div class="option-icon">
-                            <i class="fas fa-${option.id === 'a' ? 'apple-alt' : option.id === 'b' ? 'book' : 'check-circle'}"></i>
+                            <i class="fas fa-${iconClass}"></i>
                         </div>
                         <div class="option-text">${option.text}</div>
                         <div class="option-desc">${option.description}</div>
@@ -1091,7 +1149,8 @@
                 gameState.transactions.push({
                     description: description,
                     amount: Math.abs(selectedOption.walletChange),
-                    type: type
+                    type: type,
+                    currency: "MDL"
                 });
             }
             
@@ -1119,7 +1178,7 @@
             decisionsDisplay.textContent = `${gameState.decisions}/${gameState.maxDecisions}`;
             
             // Update wallet display in the wallet card
-            document.querySelector('.wallet-amount').innerHTML = `${gameState.wallet} <small>RON</small>`;
+            document.querySelector('.wallet-amount').innerHTML = `${gameState.wallet} <span class="currency">MDL</span>`;
             
             // Update savings progress
             const savingsPercentage = Math.min(100, (gameState.savings / gameState.weeklyGoal) * 100);
@@ -1152,7 +1211,7 @@
                 
                 item.innerHTML = `
                     <div class="history-description">${transaction.description}</div>
-                    <div class="history-amount ${amountClass}">${amountSign}${transaction.amount} RON</div>
+                    <div class="history-amount ${amountClass}">${amountSign}${transaction.amount} ${transaction.currency || 'MDL'}</div>
                 `;
                 
                 historyList.appendChild(item);
@@ -1197,8 +1256,8 @@
                         <div class="complete-text">Ai completat jocul "Portofelul Virtual" și ai demonstrat că știi să gestionezi banii de buzunar responsabil.</div>
                         <div class="complete-text"><strong>Rezultate finale:</strong></div>
                         <div class="complete-text">XP total: ${gameState.xp} puncte</div>
-                        <div class="complete-text">Economii acumulate: ${gameState.savings} RON din 20 RON țintă</div>
-                        <div class="complete-text">Bani rămași în portofel: ${gameState.wallet} RON</div>
+                        <div class="complete-text">Economii acumulate: ${gameState.savings} MDL din 20 MDL țintă</div>
+                        <div class="complete-text">Bani rămași în portofel: ${gameState.wallet} MDL</div>
                         <div class="action-buttons" style="margin-top: 2rem;">
                             <button class="btn btn-primary action-btn" id="playAgainBtn">
                                 <i class="fas fa-redo"></i> Joacă din nou
@@ -1219,8 +1278,8 @@
                         <div class="complete-text">Ai reușit să completezi ${gameState.decisions} din ${scenarios.length} decizii.</div>
                         <div class="complete-text"><strong>Rezultate finale:</strong></div>
                         <div class="complete-text">XP total: ${gameState.xp} puncte</div>
-                        <div class="complete-text">Economii acumulate: ${gameState.savings} RON din 20 RON țintă</div>
-                        <div class="complete-text">Bani rămași în portofel: ${gameState.wallet} RON</div>
+                        <div class="complete-text">Economii acumulate: ${gameState.savings} MDL din 20 MDL țintă</div>
+                        <div class="complete-text">Bani rămași în portofel: ${gameState.wallet} MDL</div>
                         <div class="action-buttons" style="margin-top: 2rem;">
                             <button class="btn btn-primary action-btn" id="playAgainBtn">
                                 <i class="fas fa-redo"></i> Joacă din nou
@@ -1261,7 +1320,7 @@
             gameState.decisions = 0;
             gameState.timeLeft = 180;
             gameState.transactions = [
-                { description: "Bani de buzunar săptămânal", amount: 50, type: "income" }
+                { description: "Bani de buzunar săptămânal", amount: 50, type: "income", currency: "MDL" }
             ];
             
             // Reinitialize game
@@ -1284,7 +1343,8 @@
             gameState.transactions.push({
                 description: "Bani adăugați manual",
                 amount: 10,
-                type: "income"
+                type: "income",
+                currency: "MDL"
             });
             updateGameStats();
             updateTransactionHistory();
