@@ -1,21 +1,58 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Despre Noi - FinQuest</title>
+    <title>Descoperă Misiunea Noastră - FinQuest</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
+            /* LIGHT MODE - PROFESIONAL & ATTRACTIV */
+            --bg-body: #f8fafc;
+            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #fef7ff 100%);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --bg-nav: rgba(255, 255, 255, 0.7);
+            --primary: #1e40af;
+            --primary-soft: #dbeafe;
+            --secondary: #f59e0b;
+            --accent: #7c3aed;
             --success: #4ade80;
             --warning: #fbbf24;
             --danger: #f87171;
             --light: #f8f9fa;
             --dark: #1e293b;
             --gray: #6b7280;
+            --text-main: #1e293b;
+            --text-secondary: #475569;
+            --shadow-soft: 0 10px 30px -10px rgba(30, 64, 175, 0.1);
+            --shadow-hard: 0 20px 40px -5px rgba(30, 64, 175, 0.15);
+            --border-card: 1px solid rgba(241, 245, 249, 0.8);
+            --nav-link-color: #334155;
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            /* DARK MODE - NEON GAMING */
+            --bg-body: #0f172a;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --bg-nav: rgba(15, 23, 42, 0.85);
+            --primary: #22d3ee;
+            --primary-soft: rgba(34, 211, 238, 0.1);
+            --secondary: #c084fc;
+            --accent: #f472b6;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --light: #1e293b;
+            --dark: #f8fafc;
+            --gray: #94a3b8;
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --shadow-soft: 0 10px 40px -10px rgba(6, 182, 212, 0.2);
+            --shadow-hard: 0 0 25px rgba(6, 182, 212, 0.3);
+            --border-card: 1px solid rgba(255, 255, 255, 0.05);
+            --nav-link-color: #e2e8f0;
         }
         
         * {
@@ -26,19 +63,78 @@
         }
         
         body {
-            background-color: #f5f7ff;
-            color: var(--dark);
+            background: var(--bg-gradient);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            transition: background-color 0.5s ease, color 0.3s ease;
+        }
+
+        /* --- BACKGROUND ANIMATION (ORBS) --- */
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.8;
+            animation: float 15s infinite alternate ease-in-out;
+            transition: background-color 0.5s ease;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(219, 234, 254, 0.6);
+            top: -100px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(253, 230, 138, 0.4);
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        [data-theme="dark"] .orb-1 {
+            background: rgba(6, 182, 212, 0.15);
+        }
+
+        [data-theme="dark"] .orb-2 {
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
         }
         
+        /* --- HEADER CA ÎN PAGINA PRINCIPALĂ --- */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem 5%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: var(--bg-nav);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 1rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background-color 0.5s ease, border-color 0.3s ease;
         }
         
         .container {
@@ -54,87 +150,88 @@
             align-items: center;
         }
         
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
+            transition: all 0.3s ease;
         }
         
         .logo-icon {
-            color: var(--accent);
+            color: var(--secondary);
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.2));
+            transition: all 0.3s ease;
         }
-        
-        .badge-financial {
-            background: linear-gradient(135deg, #2a3c8f, #1a2a6c);
-            border-radius: 8px;
-            padding: 6px 12px;
-            color: white;
-            font-weight: 700;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 2px solid var(--accent);
-            position: relative;
-            overflow: hidden;
+
+        @keyframes pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(139, 92, 246, 0)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 10px var(--primary)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(139, 92, 246, 0)); }
         }
-        
-        .badge-financial::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 10px 10px;
-            transform: rotate(15deg);
-            pointer-events: none;
-        }
-        
-        .badge-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .badge-line-1 {
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            color: var(--accent);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        .badge-line-2 {
-            font-size: 0.9rem;
-            letter-spacing: 1.5px;
-            color: white;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-        }
-        
+
+        /* NAVIGAȚIE CA ÎN PAGINA PRINCIPALĂ */
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.05);
+            padding: 0.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         nav a {
-            color: white;
+            color: var(--nav-link-color);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            position: relative;
+            z-index: 1;
             transition: all 0.3s;
-            padding: 5px 10px;
-            border-radius: 5px;
         }
         
         nav a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            background: var(--primary);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        [data-theme="dark"] nav a:hover {
+            color: white;
+            background: var(--primary);
+            box-shadow: 0 4px 15px rgba(34, 211, 238, 0.4);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-switch {
+            background: transparent;
+            border: 1px solid var(--primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            color: var(--primary);
+            transition: all 0.3s var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-switch:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px var(--primary);
         }
         
         .user-menu {
@@ -144,493 +241,363 @@
         }
         
         .user-level {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
-            border-radius: 20px;
+            background-color: var(--primary-soft);
+            color: var(--primary);
+            padding: 10px 18px;
+            border-radius: 12px;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
         }
         
         .level-icon {
-            color: var(--accent);
+            color: var(--secondary);
         }
-        
+
         .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s var(--transition-smooth);
             border: none;
             font-size: 1rem;
         }
         
         .btn-primary {
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+        
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s ease;
+        }
+        
+        .btn-primary:hover::after {
+            left: 100%;
         }
         
         .btn-primary:hover {
-            background-color: #3ab8dd;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .page-hero {
-            padding: 6rem 5% 4rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .page-hero::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50,50 Q25,25 50,0 Q75,25 50,50 Q25,75 0,50 Q25,25 50,50 Q75,75 100,50 Q75,25 50,50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
-            background-size: 200px 200px;
-            animation: float 20s linear infinite;
-        }
-        
-        @keyframes float {
-            0% { background-position: 0 0; }
-            100% { background-position: 200px 200px; }
-        }
-        
-        .page-hero .container {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .page-hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease;
-        }
-        
-        .page-hero p {
-            font-size: 1.3rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease;
-        }
-        
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item-hero {
-            text-align: center;
-        }
-        
-        .stat-number-hero {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label-hero {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-            color: var(--secondary);
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--gray);
-            max-width: 800px;
-            margin: 0 auto 3rem;
-        }
-        
-        .our-story {
-            padding: 5rem 5%;
-            background-color: white;
-        }
-        
-        .story-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-        
-        .story-text h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--secondary);
-        }
-        
-        .story-text p {
-            font-size: 1.1rem;
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-        }
-        
-        .story-image {
-            position: relative;
-        }
-        
-        .story-img {
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .story-badge {
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
             background: linear-gradient(135deg, var(--accent), var(--primary));
-            color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 180px;
         }
-        
-        .badge-number {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+
+        /* --- INTERACTIVE STORY CONTAINER --- */
+        .story-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 5%;
+            position: relative;
         }
-        
-        .badge-text {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        .mission-vision {
-            padding: 5rem 5%;
-            background-color: #f0f4ff;
-        }
-        
-        .mission-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-        }
-        
-        .mission-card {
-            background-color: white;
-            border-radius: 15px;
-            padding: 3rem 2rem;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease;
+
+        .story-content {
+            max-width: 900px;
+            width: 100%;
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-hard);
+            border: var(--border-card);
             position: relative;
             overflow: hidden;
+            min-height: 600px;
         }
-        
-        .mission-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .mission-card::before {
-            content: "";
+
+        .story-content::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
         }
-        
-        .mission-card.mission::before {
-            background: linear-gradient(90deg, var(--accent), var(--primary));
+
+        .story-step {
+            display: none;
+            animation: fadeIn 0.8s ease forwards;
         }
-        
-        .mission-card.vision::before {
-            background: linear-gradient(90deg, var(--success), #10b981);
+
+        .story-step.active {
+            display: block;
         }
-        
-        .mission-card.values::before {
-            background: linear-gradient(90deg, var(--warning), #f59e0b);
+
+        .story-step.fade-out {
+            animation: fadeOut 0.5s ease forwards;
         }
-        
-        .mission-icon {
-            font-size: 3.5rem;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        .step-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .step-icon {
+            font-size: 4rem;
+            color: var(--primary);
             margin-bottom: 1.5rem;
+            animation: floatIcon 3s ease-in-out infinite;
         }
-        
-        .mission-card.mission .mission-icon {
-            color: var(--accent);
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
-        
-        .mission-card.vision .mission-icon {
-            color: var(--success);
-        }
-        
-        .mission-card.values .mission-icon {
-            color: var(--warning);
-        }
-        
-        .mission-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-        
-        .mission-card p {
-            color: var(--gray);
-            line-height: 1.7;
-        }
-        
-        .values-list {
-            list-style: none;
-            text-align: left;
-            margin-top: 1.5rem;
-        }
-        
-        .values-list li {
+
+        .step-title {
+            font-size: 2.5rem;
+            color: var(--text-main);
             margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .step-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .step-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-main);
+            margin-bottom: 3rem;
+        }
+
+        .step-body p {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: textReveal 0.6s ease forwards;
+        }
+
+        .step-body p:nth-child(1) { animation-delay: 0.2s; }
+        .step-body p:nth-child(2) { animation-delay: 0.4s; }
+        .step-body p:nth-child(3) { animation-delay: 0.6s; }
+        .step-body p:nth-child(4) { animation-delay: 0.8s; }
+        .step-body p:nth-child(5) { animation-delay: 1s; }
+
+        @keyframes textReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--primary-soft);
+            opacity: 0;
+            animation: textReveal 0.6s ease 1.2s forwards;
+        }
+
+        .step-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-card);
+        }
+
+        .step-progress {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary-soft);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .progress-dot.active {
+            background-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .progress-dot.completed {
+            background-color: var(--success);
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- INTERACTIVE ELEMENTS --- */
+        .interactive-element {
+            background-color: var(--primary-soft);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .interactive-element:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .interactive-element h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
-        .values-list i {
-            color: var(--warning);
+
+        .interactive-element p {
+            margin-bottom: 0;
+            color: var(--text-secondary);
         }
-        
-        .team-section {
-            padding: 5rem 5%;
-            background-color: white;
-        }
-        
-        .team-grid {
+
+        .choice-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-        
-        .team-member {
-            background-color: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .team-member:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-        }
-        
-        .member-image {
-            height: 250px;
-            background-color: #e5e7eb;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .member-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .team-member:hover .member-img {
-            transform: scale(1.05);
-        }
-        
-        .member-info {
-            padding: 2rem;
-        }
-        
-        .member-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-        
-        .member-role {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        
-        .member-desc {
-            color: var(--gray);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        
-        .member-social {
-            display: flex;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin: 2rem 0;
         }
-        
-        .member-social a {
-            color: var(--gray);
-            font-size: 1.2rem;
-            transition: color 0.3s;
-        }
-        
-        .member-social a:hover {
-            color: var(--primary);
-        }
-        
-        .journey-section {
-            padding: 5rem 5%;
-            background-color: #f0f4ff;
-        }
-        
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 3rem auto 0;
-        }
-        
-        .timeline::before {
-            content: "";
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--accent), var(--primary));
-        }
-        
-        .timeline-item {
-            margin-bottom: 3rem;
-            position: relative;
-            width: 45%;
-        }
-        
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
-        
-        .timeline-item:nth-child(even) {
-            left: 55%;
-        }
-        
-        .timeline-dot {
-            position: absolute;
-            right: -15px;
-            top: 20px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            border: 4px solid white;
-            box-shadow: 0 0 0 3px var(--primary);
-        }
-        
-        .timeline-item:nth-child(even) .timeline-dot {
-            left: -15px;
-            right: auto;
-        }
-        
-        .timeline-content {
-            background-color: white;
+
+        .choice-option {
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-card);
+            border-radius: 12px;
             padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-        
-        .timeline-year {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .timeline-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--dark);
-        }
-        
-        .timeline-desc {
-            color: var(--gray);
-            font-size: 0.95rem;
-        }
-        
-        .partners-section {
-            padding: 5rem 5%;
-            background-color: white;
-        }
-        
-        .partners-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .partner-logo {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .partner-logo:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .partner-logo img {
-            max-width: 150px;
-            max-height: 70px;
-            filter: grayscale(100%);
-            opacity: 0.7;
-            transition: filter 0.3s, opacity 0.3s;
-        }
-        
-        .partner-logo:hover img {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
-        
-        .cta-section {
-            padding: 5rem 5%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-align: center;
         }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 5% 1.5rem;
+
+        .choice-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-soft);
         }
-        
+
+        .choice-option.selected {
+            border-color: var(--primary);
+            background-color: var(--primary-soft);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .choice-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .choice-text {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* --- FINAL STEP --- */
+        .final-step-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .completion-icon {
+            font-size: 5rem;
+            color: var(--success);
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .completion-message {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .completion-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .completion-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* --- FOOTER CA ÎN PAGINA PRINCIPALĂ --- */
+        footer {
+            background: linear-gradient(135deg, var(--primary), #1e3a8a);
+            color: white;
+            padding: 4rem 5% 2rem;
+            position: relative;
+            z-index: 10;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+            transition: all 0.5s ease;
+        }
+
+        [data-theme="dark"] footer {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+        }
+
         .footer-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
             margin-bottom: 2rem;
         }
         
@@ -643,8 +610,21 @@
         
         .footer-links h4 {
             font-size: 1.3rem;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
             color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
         }
         
         .footer-links ul {
@@ -652,132 +632,130 @@
         }
         
         .footer-links li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
         
         .footer-links a {
             color: #d1d5db;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 20px;
         }
-        
+
+        .footer-links a::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
         .footer-links a:hover {
             color: var(--accent);
+            padding-left: 25px;
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            transform: translateX(5px);
         }
         
         .copyright {
             text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid #374151;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #9ca3af;
         }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
+
+        /* --- RESPONSIVE DESIGN --- */
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
                 gap: 1rem;
             }
             
-            .logo-container {
-                flex-direction: column;
-                gap: 0.5rem;
-                text-align: center;
-            }
-            
             nav ul {
-                gap: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .page-hero h1 {
-                font-size: 2.5rem;
+                display: none;
             }
             
             .story-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                padding: 2rem;
+                min-height: 500px;
             }
             
-            .story-badge {
-                position: relative;
-                bottom: auto;
-                right: auto;
-                margin-top: 2rem;
-                width: 100%;
-            }
-            
-            .timeline::before {
-                left: 20px;
-            }
-            
-            .timeline-item {
-                width: 100%;
-                left: 0 !important;
-                padding-left: 50px;
-            }
-            
-            .timeline-dot {
-                left: 10px !important;
-                right: auto !important;
-            }
-            
-            .hero-stats {
-                gap: 1.5rem;
-            }
-            
-            .stat-number-hero {
+            .step-title {
                 font-size: 2rem;
             }
             
-            .badge-financial {
-                padding: 4px 8px;
+            .step-body {
+                font-size: 1rem;
             }
             
-            .badge-line-1 {
-                font-size: 0.7rem;
+            .step-actions {
+                flex-direction: column;
+                gap: 1.5rem;
             }
             
-            .badge-line-2 {
-                font-size: 0.8rem;
+            .completion-stats {
+                gap: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .user-menu {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .btn-primary {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .story-content {
+                padding: 1.5rem;
+            }
+            
+            .step-title {
+                font-size: 1.8rem;
+            }
+            
+            .step-icon {
+                font-size: 3rem;
+            }
+            
+            .choice-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <div class="background-shapes">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
     <header>
         <div class="container nav-container">
-            <div class="logo-container">
-                <div class="logo">
-                    <i class="fas fa-coins logo-icon"></i>
-                    <span>FinQuest</span>
-                </div>
-                <div class="badge-financial">
-                    <div class="badge-content">
-                        <div class="badge-line badge-line-1">FINANCIAL</div>
-                        <div class="badge-line badge-line-2">EDUCATION</div>
-                    </div>
-                </div>
+            <div class="logo">
+                <i class="fas fa-coins logo-icon"></i>
+                <span>FinQuest</span>
             </div>
             
             <nav>
                 <ul>
                     <li><a href="index.html">Acasă</a></li>
-                    <li><a href="invata.html">Învață cu Noi</a></li>
+                    <li><a href="invata.html">Învață</a></li>
                     <li><a href="jocuri.html">Jocuri</a></li>
-                    <li><a href="preturi.html">Prețuri</a></li>
-                    <li><a href="despre.html" style="background-color: rgba(255, 255, 255, 0.2);">Despre Noi</a></li>
+                    <li><a href="preturi.html">Ranking</a></li>
+                    <li><a href="despre.html">Despre</a></li>
                 </ul>
             </nav>
             
@@ -786,301 +764,307 @@
                     <i class="fas fa-trophy level-icon"></i>
                     <span id="user-level-display">Level 1</span>
                 </div>
-                <button class="btn btn-primary" onclick="window.location.href='jocuri.html'">Începe Aventura</button>
+                <button id="theme-toggle" class="theme-switch">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="btn btn-primary" onclick="window.location.href='jocuri.html'">Start Level 1</button>
             </div>
         </div>
     </header>
     
-    <section class="page-hero">
-        <div class="container">
-            <h1>Redefinim Educația Financiară pentru Generația Viitoare</h1>
-            <p>FinQuest a apărut din convingerea că educația financiară trebuie să fie accesibilă, engaging și relevantă pentru toți. Transformăm concepte financiare complexe în aventuri interactive memorabile.</p>
-            
-            <div class="hero-stats">
-                <div class="stat-item-hero">
-                    <div class="stat-number-hero" id="stat-users">50,000+</div>
-                    <div class="stat-label-hero">Tineri Înscriși</div>
+    <main class="story-container">
+        <div class="story-content">
+            <!-- Step 1: Introduction -->
+            <div class="story-step active" id="step1">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h1 class="step-title">Descoperă Misiunea Noastră</h1>
+                    <p class="step-subtitle">O călătorie interactivă în lumea educației financiare pentru tinerii din Moldova</p>
                 </div>
-                <div class="stat-item-hero">
-                    <div class="stat-number-hero" id="stat-schools">500+</div>
-                    <div class="stat-label-hero">Școli Partenere</div>
+                
+                <div class="step-body">
+                    <p>Suntem un grup de tineri antreprenori dedicați construcției unui viitor luminos pentru adolescenții din Republica Moldova.</p>
+                    
+                    <div class="interactive-element" onclick="revealMore('problem')">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Ce problemă am identificat?</h4>
+                        <p id="problem-text" style="display: none;">Observăm o problemă serioasă: nivelul scăzut de educație financiară în rândul tinerilor, care îi împiedică să ia decizii economice corecte și să își creeze un viitor financiar stabil.</p>
+                        <p id="problem-more" style="display: none; margin-top: 1rem;">Din acest motiv, proiectul nostru este adresat tinerilor cu vârsta cuprinsă între 12 și 20 de ani, o perioadă esențială pentru formarea unor obiceiuri sănătoase legate de economisire și gestionarea banilor.</p>
+                    </div>
+                    
+                    <p id="target-audience" style="display: none;">Tocmai de aceea ne-am concentrat pe această grupă de vârstă - pentru că aici se formează obiceiurile financiare care vor defini întreaga lor viață.</p>
                 </div>
-                <div class="stat-item-hero">
-                    <div class="stat-number-hero" id="stat-games">25+</div>
-                    <div class="stat-label-hero">Jocuri Interactive</div>
+                
+                <div class="signature" id="signature1" style="display: none;">
+                    Victoria Cibuc
                 </div>
-                <div class="stat-item-hero">
-                    <div class="stat-number-hero" id="stat-countries">3</div>
-                    <div class="stat-label-hero">Țări Active</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="our-story">
-        <div class="container">
-            <h2 class="section-title">Povestea Noastră</h2>
-            <p class="section-subtitle">De la o idee simplă la o platformă care transformă modul în care tinerii învață despre bani</p>
-            
-            <div class="story-content">
-                <div class="story-text">
-                    <h2>De ce am creat FinQuest?</h2>
-                    <p>În 2020, un studiu al Băncii Mondiale a arătat că <strong>68% din tinerii din Moldova</strong> nu au cunoștințe financiare de bază. Am realizat că sistemul educațional tradițional nu reușește să pregătească elevii pentru deciziile financiare reale din viața de adult.</p>
-                    <p>FinQuest a luat naștere într-un hackathon pentru inovații educaționale. Echipa noastră – un mix de educatori, game designeri și experți financiari – a creat primul prototip: un joc simplu despre gestionarea banilor de buzunar.</p>
-                    <p>Reacția a fost incredibilă. Elevii care se plictiseau la orele de economie erau acum încântați să "joace" cu concepte precum bugetul, economiile și investițiile.</p>
-                    <p>Astăzi, FinQuest este mai mult decât o platformă – este o mișcare care redefinește educația financiară pentru generația digitală.</p>
-                </div>
-                <div class="story-image">
-                    <div class="story-img-placeholder" style="width: 100%; height: 400px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
-                        <div style="text-align: center; padding: 2rem;">
-                            <i class="fas fa-lightbulb" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.8;"></i>
-                            <p>Prima idee FinQuest - Hackathon 2020</p>
+                
+                <div class="step-actions">
+                    <button class="btn btn-primary" onclick="nextStep(2)" id="nextBtn1" style="display: none;">
+                        <i class="fas fa-arrow-right"></i> Continuă Călătoria
+                    </button>
+                    <div class="step-progress">
+                        <div class="progress-dots">
+                            <div class="progress-dot active"></div>
+                            <div class="progress-dot"></div>
+                            <div class="progress-dot"></div>
+                            <div class="progress-dot"></div>
+                            <div class="progress-dot"></div>
                         </div>
-                    </div>
-                    <div class="story-badge">
-                        <div class="badge-number">2020</div>
-                        <div class="badge-text">Anul Întemeierii</div>
+                        <div class="progress-text">Pasul 1 din 5</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <section class="mission-vision">
-        <div class="container">
-            <h2 class="section-title">Misiunea, Viziunea și Valorile Noastre</h2>
-            <p class="section-subtitle">Principiile care ne ghidează în tot ceea ce facem</p>
             
-            <div class="mission-container">
-                <div class="mission-card mission">
-                    <div class="mission-icon">
+            <!-- Step 2: The Problem -->
+            <div class="story-step" id="step2">
+                <div class="step-header">
+                    <div class="step-icon">
                         <i class="fas fa-bullseye"></i>
                     </div>
-                    <h3>Misiunea Noastră</h3>
-                    <p>Să democratizăm educația financiară, transformând-o dintr-un subiect plictisitor într-o aventură captivantă accesibilă fiecărui tânăr, indiferent de background-ul socio-economic.</p>
+                    <h2 class="step-title">Scopul Principal</h2>
+                    <p class="step-subtitle">Soluția noastră pentru problemele financiare ale tinerilor</p>
                 </div>
                 
-                <div class="mission-card vision">
-                    <div class="mission-icon">
-                        <i class="fas fa-eye"></i>
+                <div class="step-body">
+                    <p>Scopul principal al proiectului este de a găsi o soluție practică și eficientă pentru economisirea, administrarea și valorificarea resurselor financiare ale tinerilor.</p>
+                    
+                    <div class="choice-container">
+                        <div class="choice-option" onclick="selectOption(this, 'option1')">
+                            <div class="choice-icon">
+                                <i class="fas fa-calendar-times"></i>
+                            </div>
+                            <div class="choice-text">Economisesc doar ocazional</div>
+                        </div>
+                        <div class="choice-option" onclick="selectOption(this, 'option2')">
+                            <div class="choice-icon">
+                                <i class="fas fa-receipt"></i>
+                            </div>
+                            <div class="choice-text">Cheltuieli mici, dar frecvente</div>
+                        </div>
+                        <div class="choice-option" onclick="selectOption(this, 'option3')">
+                            <div class="choice-icon">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <div class="choice-text">Lipsă unui plan clar</div>
+                        </div>
                     </div>
-                    <h3>Viziunea Noastră</h3>
-                    <p>Să devenim platforma de educație financiară nr. 1 pentru tineri în Europa de Est, ajutând o generație întreagă să ia decizii financiare informate și să construiască un viitor prosper.</p>
+                    
+                    <p id="problem-details" style="display: none;">Mulți dintre ei economisesc doar ocazional, din lipsa unui plan clar și din cauza cheltuielilor mici, dar frecvente, care se adună rapid.</p>
+                    
+                    <p id="solution-approach" style="display: none;">Considerăm că tinerii au nevoie de îndrumare pentru a transforma economisirea într-o rutină, de exemplu prin punerea deoparte a unei sume fixe la începutul fiecărei luni și prin utilizarea unor metode eficiente precum bugetul lunar sau economiile automate.</p>
                 </div>
                 
-                <div class="mission-card values">
-                    <div class="mission-icon">
-                        <i class="fas fa-heart"></i>
+                <div class="signature" id="signature2" style="display: none;">
+                    Victoria Cibuc
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-primary" onclick="prevStep(1)">
+                        <i class="fas fa-arrow-left"></i> Înapoi
+                    </button>
+                    <div class="step-progress">
+                        <div class="progress-dots">
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot active"></div>
+                            <div class="progress-dot"></div>
+                            <div class="progress-dot"></div>
+                            <div class="progress-dot"></div>
+                        </div>
+                        <div class="progress-text">Pasul 2 din 5</div>
                     </div>
-                    <h3>Valorile Noastre</h3>
-                    <ul class="values-list">
-                        <li><i class="fas fa-check-circle"></i> <strong>Accesibilitate:</strong> Educație financiară pentru toți, gratuită sau la prețuri accesibile</li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Engagement:</strong> Transformarea învățării într-o experiență distractivă și memorabilă</li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Impact Real:</strong> Rezultate practice care schimbă vieți, nu doar teorie</li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Inovație Continuă:</strong> Adaptare constantă la nevoile noilor generații</li>
-                    </ul>
+                    <button class="btn btn-primary" onclick="nextStep(3)" id="nextBtn2" style="display: none;">
+                        <i class="fas fa-arrow-right"></i> Continuă
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <section class="team-section">
-        <div class="container">
-            <h2 class="section-title">Echipa din Spatele Magiei</h2>
-            <p class="section-subtitle">Oamenii pasionați care transformă educația financiară în aventuri interactive</p>
             
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-image">
-                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #4cc9f0, #4361ee); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                            AM
-                        </div>
+            <!-- Step 3: The Solution -->
+            <div class="story-step" id="step3">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i class="fas fa-gamepad"></i>
                     </div>
-                    <div class="member-info">
-                        <div class="member-name">Alexandru Moșneag</div>
-                        <div class="member-role">Fondator & CEO</div>
-                        <div class="member-desc">Fost consultant financiar cu 10+ ani experiență. A renunțat la cariera corporatistă pentru a crea FinQuest după ce și-a văzut nepotul luptându-se cu concepte financiare de bază.</div>
-                        <div class="member-social">
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                        </div>
-                    </div>
+                    <h2 class="step-title">Soluția Noastră</h2>
+                    <p class="step-subtitle">Transformăm educația financiară într-o aventură interactivă</p>
                 </div>
                 
-                <div class="team-member">
-                    <div class="member-image">
-                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #fbbf24, #f87171); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                            EI
-                        </div>
+                <div class="step-body">
+                    <p>Pentru a face procesul de învățare atractiv, soluția noastră este modernă și interactivă: transformăm educația financiară într-o adevărată aventură.</p>
+                    
+                    <div class="interactive-element" onclick="revealPlatforms()">
+                        <h4><i class="fas fa-mobile-alt"></i> Unde implementăm soluția?</h4>
+                        <p id="platforms-text" style="display: none;">Prin jocuri mobile și prin utilizarea rețelelor de socializare preferate de tineri, prezentăm concepte financiare esențiale într-un mod simplu, captivant și ușor de înțeles.</p>
                     </div>
-                    <div class="member-info">
-                        <div class="member-name">Elena Ionescu</div>
-                        <div class="member-role">Game Design Lead</div>
-                        <div class="member-desc">Designer de jocuri cu experiență la studiouri internaționale. Crede că gamificarea este cheia pentru a face educația relevantă pentru generația Z și Alpha.</div>
-                        <div class="member-social">
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-behance"></i></a>
-                        </div>
-                    </div>
+                    
+                    <p id="learning-approach" style="display: none;">Vrem ca tinerii să învețe fără a simți presiune, ci prin activități care le mențin atenția și interesul.</p>
                 </div>
                 
-                <div class="team-member">
-                    <div class="member-image">
-                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #4ade80, #3a0ca3); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                            MD
+                <div class="step-actions">
+                    <button class="btn btn-primary" onclick="prevStep(2)">
+                        <i class="fas fa-arrow-left"></i> Înapoi
+                    </button>
+                    <div class="step-progress">
+                        <div class="progress-dots">
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot active"></div>
+                            <div class="progress-dot"></div>
+                            <div class="progress-dot"></div>
                         </div>
+                        <div class="progress-text">Pasul 3 din 5</div>
                     </div>
-                    <div class="member-info">
-                        <div class="member-name">Mihai Dobre</div>
-                        <div class="member-role">CTO & AI Specialist</div>
-                        <div class="member-desc">Expert în AI și machine learning cu PhD în educație adaptivă. A construit sistemul nostru de AI Coach care personalizează învățarea pentru fiecare utilizator.</div>
-                        <div class="member-social">
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <div class="member-image">
-                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #a855f7, #ec4899); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                            CD
-                        </div>
-                    </div>
-                    <div class="member-info">
-                        <div class="member-name">Corina Dumitru</div>
-                        <div class="member-role">Head of Education</div>
-                        <div class="member-desc">Fostă profesoară de economie cu 15 ani experiență. A transformat curriculum-ul școlar în jocuri interactive, asigurându-se că acoperim toate competențele necesare.</div>
-                        <div class="member-social">
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fas fa-graduation-cap"></i></a>
-                        </div>
-                    </div>
+                    <button class="btn btn-primary" onclick="nextStep(4)" id="nextBtn3" style="display: none;">
+                        <i class="fas fa-arrow-right"></i> Continuă
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <section class="journey-section">
-        <div class="container">
-            <h2 class="section-title">Călătoria Noastră</h2>
-            <p class="section-subtitle">Momentele cheie care ne-au definit și ne-au adus unde suntem astăzi</p>
             
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">Octombrie 2020</div>
-                        <div class="timeline-title">Nașterea Ideii</div>
-                        <div class="timeline-desc">Primul prototip creat într-un hackathon educațional. Am câștigat premiul pentru "cea mai inovativă soluție".</div>
+            <!-- Step 4: Implementation -->
+            <div class="story-step" id="step4">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i class="fas fa-handshake"></i>
                     </div>
+                    <h2 class="step-title">Implementarea</h2>
+                    <p class="step-subtitle">Modelul nostru de colaborare și impact</p>
                 </div>
                 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">Martie 2021</div>
-                        <div class="timeline-title">Primul MVP</div>
-                        <div class="timeline-desc">Lansarea primei versiuni cu 5 jocuri de bază. Am atins primii 1.000 de utilizatori în 3 luni.</div>
+                <div class="step-body">
+                    <p>Modelul nostru de implementare se bazează pe colaborare și impact. Proiectul este susținut de parteneri care înțeleg importanța educației financiare.</p>
+                    
+                    <div class="interactive-element" onclick="revealSponsor()">
+                        <h4><i class="fas fa-hand-holding-usd"></i> Cine ne sprijină?</h4>
+                        <p id="sponsor-text" style="display: none;">Un sponsor potrivit este maib, o instituție financiară care sprijină inițiativele dedicate dezvoltării tinerilor și educației viitorilor săi clienți.</p>
                     </div>
+                    
+                    <p id="schools-text" style="display: none;">În școli, programul nostru este realizat cu ajutorul profesorilor voluntari cărora le oferim materiale, instruire și resurse necesare pentru o educație financiară de calitate, adaptată la ceea ce învață elevii la ore.</p>
                 </div>
                 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">Septembrie 2021</div>
-                        <div class="timeline-title">Parteneriat cu Ministerul Educației</div>
-                        <div class="timeline-desc">FinQuest a fost integrat în 50 de școli pilot din Moldova ca parte a curriculum-ului de educație financiară.</div>
-                    </div>
+                <div class="signature" id="signature3" style="display: none;">
+                    Victoria Cibuc
                 </div>
                 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">Aprilie 2022</div>
-                        <div class="timeline-title">Lansarea Fin-Card</div>
-                        <div class="timeline-desc">Introducerea cardului fizic gamificat care a crescut engagement-ul cu 300%.</div>
+                <div class="step-actions">
+                    <button class="btn btn-primary" onclick="prevStep(3)">
+                        <i class="fas fa-arrow-left"></i> Înapoi
+                    </button>
+                    <div class="step-progress">
+                        <div class="progress-dots">
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot active"></div>
+                            <div class="progress-dot"></div>
+                        </div>
+                        <div class="progress-text">Pasul 4 din 5</div>
                     </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">Ianuarie 2023</div>
-                        <div class="timeline-title">Expansiune Regională</div>
-                        <div class="timeline-desc">Lansarea în România și Ucraina, atingând peste 50.000 de utilizatori.</div>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">Prezent</div>
-                        <div class="timeline-title">Viitorul FinQuest</div>
-                        <div class="timeline-desc">Dezvoltarea AI Coach avansat și extinderea în încă 3 țări până în 2024.</div>
-                    </div>
+                    <button class="btn btn-primary" onclick="nextStep(5)" id="nextBtn4" style="display: none;">
+                        <i class="fas fa-arrow-right"></i> Continuă
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <section class="partners-section">
-        <div class="container">
-            <h2 class="section-title">Partenerii Noștri</h2>
-            <p class="section-subtitle">Organizații care ne sprijină în misiunea noastră de a democratiza educația financiară</p>
             
-            <div class="partners-grid">
-                <div class="partner-logo">
-                    <div style="font-weight: 700; color: var(--primary); font-size: 1.5rem;">Ministerul<br>Educației</div>
+            <!-- Step 5: Final Vision -->
+            <div class="story-step" id="step5">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2 class="step-title">Viziunea Finală</h2>
+                    <p class="step-subtitle">Construim viitorul financiar al generațiilor viitoare</p>
                 </div>
-                <div class="partner-logo">
-                    <div style="font-weight: 700; color: #10b981; font-size: 1.5rem;">Banca<br>Națională</div>
+                
+                <div class="step-body">
+                    <p>Ne dorim ca tinerii să înțeleagă mai bine și partea legată de investiții, riscuri și oportunități, pentru ca în viitor să poată lua decizii inspirate și sigure.</p>
+                    
+                    <p id="belief-text">Suntem convinși că economiile mici, dar regulate, pot aduce rezultate mari, iar educația financiară este cheia încrederii și independenței personale.</p>
+                    
+                    <div class="interactive-element" onclick="revealFinalGoal()">
+                        <h4><i class="fas fa-trophy"></i> Scopul nostru final</h4>
+                        <p id="final-goal-text" style="display: none;">Scopul nostru final este creșterea numărului de tineri cu cunoștințe financiare solide, construind astfel o generație mai pregătită, mai responsabilă și mai încrezătoare în modul în care își repartizează și valorifică resursele.</p>
+                    </div>
+                    
+                    <p id="partnership-text" style="display: none;">Împreună cu partenerii noștri, construim bazele unei culturi financiare sănătoase, începând cu cea mai importantă parte a viitorului: copiii.</p>
                 </div>
-                <div class="partner-logo">
-                    <div style="font-weight: 700; color: #f59e0b; font-size: 1.5rem;">Junior<br>Achievement</div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-primary" onclick="prevStep(4)">
+                        <i class="fas fa-arrow-left"></i> Înapoi
+                    </button>
+                    <div class="step-progress">
+                        <div class="progress-dots">
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot completed"></div>
+                            <div class="progress-dot active"></div>
+                        </div>
+                        <div class="progress-text">Pasul 5 din 5</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="completeStory()" id="completeBtn">
+                        <i class="fas fa-check-circle"></i> Completează Călătoria
+                    </button>
                 </div>
-                <div class="partner-logo">
-                    <div style="font-weight: 700; color: #8b5cf6; font-size: 1.5rem;">Tech<br>For Youth</div>
-                </div>
-                <div class="partner-logo">
-                    <div style="font-weight: 700; color: #ec4899; font-size: 1.5rem;">Edu<br>Innovation</div>
-                </div>
-                <div class="partner-logo">
-                    <div style="font-weight: 700; color: #3b82f6; font-size: 1.5rem;">Youth<br>Finance Hub</div>
+            </div>
+            
+            <!-- Completion Screen -->
+            <div class="story-step" id="completion">
+                <div class="final-step-content">
+                    <div class="completion-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    
+                    <h2 class="step-title">Ai completat călătoria!</h2>
+                    
+                    <div class="completion-message">
+                        Acum știi exact care este misiunea noastră și cum transformăm educația financiară într-o aventură interactivă pentru tinerii din Moldova.
+                    </div>
+                    
+                    <div class="completion-stats">
+                        <div class="completion-stat">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Pași parcursi</div>
+                        </div>
+                        <div class="completion-stat">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Misiune înțeleasă</div>
+                        </div>
+                        <div class="completion-stat">
+                            <div class="stat-number">1</div>
+                            <div class="stat-label">Generație transformată</div>
+                        </div>
+                    </div>
+                    
+                    <div class="completion-message" style="font-style: italic; margin-top: 2rem;">
+                        "Împreună construim bazele unei culturi financiare sănătoase pentru viitorul Moldovei."
+                    </div>
+                    
+                    <div style="margin-top: 3rem;">
+                        <button class="btn btn-primary" onclick="window.location.href='jocuri.html'" style="margin-right: 1rem;">
+                            <i class="fas fa-gamepad"></i> Începe Aventura
+                        </button>
+                        <button class="btn btn-primary" onclick="window.location.href='invata.html'" style="background: transparent; border: 2px solid var(--primary); color: var(--primary);">
+                            <i class="fas fa-graduation-cap"></i> Începe să Înveți
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    
-    <section class="cta-section">
-        <div class="container">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Vrei să faci parte din misiunea noastră?</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin: 0 auto 2rem;">Fie că ești profesor, părinte sau doar pasionat de educație financiară, există un loc pentru tine în comunitatea FinQuest.</p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem; background-color: white; color: var(--primary);" onclick="window.location.href='contact.html'">
-                    <i class="fas fa-envelope"></i> Contactează-ne
-                </button>
-                <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem;" onclick="window.location.href='cariere.html'">
-                    <i class="fas fa-briefcase"></i> Cariere
-                </button>
-                <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem; background-color: transparent; border: 2px solid white;" onclick="window.location.href='jocuri.html'">
-                    <i class="fas fa-gamepad"></i> Încearcă FinQuest
-                </button>
-            </div>
-        </div>
-    </section>
+    </main>
     
     <footer>
         <div class="container footer-container">
             <div class="footer-about">
                 <div class="footer-logo">FinQuest</div>
-                <p>Transformăm educația financiară într-o aventură interactivă și distractivă pentru toți.</p>
+                <p style="color: #dbeafe; line-height: 1.7;">Transformăm educația financiară într-o aventură interactivă și distractivă pentru tinerii din Republica Moldova.</p>
                 <div style="margin-top: 1.5rem; display: flex; gap: 1rem; font-size: 1.5rem;">
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-facebook"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-youtube"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-youtube"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
             
@@ -1090,7 +1074,7 @@
                     <li><a href="index.html">Acasă</a></li>
                     <li><a href="invata.html">Învață cu Noi</a></li>
                     <li><a href="jocuri.html">Jocuri</a></li>
-                    <li><a href="preturi.html">Prețuri</a></li>
+                    <li><a href="preturi.html">Ranking</a></li>
                     <li><a href="despre.html">Despre Noi</a></li>
                 </ul>
             </div>
@@ -1119,111 +1103,342 @@
         
         <div class="copyright container">
             <p>&copy; 2023 FinQuest. Toate drepturile rezervate. O platformă cu misiune socială.</p>
-            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Made with <i class="fas fa-heart" style="color: #f87171;"></i> in Moldova</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Made with <i class="fas fa-heart" style="color: #f87171;"></i> in Republica Moldova</p>
         </div>
     </footer>
     
     <script>
+        // --- THEME TOGGLE LOGIC ---
+        const toggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = toggleBtn.querySelector('i');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('finquest-theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('finquest-theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeIcon.style.color = '#fbbf24';
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                themeIcon.style.color = '#f59e0b';
+            }
+        }
+
+        // --- INTERACTIVE STORY LOGIC ---
+        let currentStep = 1;
+        let selectedOptions = {};
+
+        // Initialize first step
         document.addEventListener('DOMContentLoaded', function() {
-            // Animație statistici
-            animateStats();
-            
-            // Animație timeline
-            animateTimeline();
-            
-            // Actualizează nivelul utilizatorului
             updateUserLevel();
             
-            // Efecte hover pentru carduri
-            document.querySelectorAll('.mission-card, .team-member').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
+            // Auto-start first interaction after a delay
+            setTimeout(() => {
+                revealMore('problem');
+            }, 1000);
         });
-        
-        // Animație pentru statistici
-        function animateStats() {
-            const stats = {
-                'stat-users': 50000,
-                'stat-schools': 500,
-                'stat-games': 25,
-                'stat-countries': 3
-            };
-            
-            Object.keys(stats).forEach(statId => {
-                const element = document.getElementById(statId);
-                const target = stats[statId];
-                const increment = target / 50;
-                let current = 0;
+
+        function revealMore(elementId) {
+            if (elementId === 'problem') {
+                document.getElementById('problem-text').style.display = 'block';
                 
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(timer);
-                    }
-                    element.textContent = Math.floor(current).toLocaleString() + (statId === 'stat-countries' ? '' : '+');
-                }, 30);
-            });
+                setTimeout(() => {
+                    document.getElementById('problem-more').style.display = 'block';
+                }, 800);
+                
+                setTimeout(() => {
+                    document.getElementById('target-audience').style.display = 'block';
+                }, 1600);
+                
+                setTimeout(() => {
+                    document.getElementById('signature1').style.display = 'block';
+                    document.getElementById('nextBtn1').style.display = 'block';
+                    
+                    // Add XP for interaction
+                    addXP(10);
+                }, 2400);
+            }
         }
-        
-        // Animație pentru timeline
-        function animateTimeline() {
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateX(0)';
-                    }
-                });
-            }, {
-                threshold: 0.1
+
+        function selectOption(element, optionId) {
+            // Remove selected class from all options
+            document.querySelectorAll('.choice-option').forEach(opt => {
+                opt.classList.remove('selected');
             });
             
-            timelineItems.forEach((item, index) => {
-                item.style.opacity = '0';
-                item.style.transform = index % 2 === 0 ? 'translateX(-50px)' : 'translateX(50px)';
-                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                item.style.transitionDelay = (index * 0.2) + 's';
-                observer.observe(item);
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            selectedOptions['step2'] = optionId;
+            
+            // Reveal more content
+            setTimeout(() => {
+                document.getElementById('problem-details').style.display = 'block';
+            }, 500);
+            
+            setTimeout(() => {
+                document.getElementById('solution-approach').style.display = 'block';
+            }, 1000);
+            
+            setTimeout(() => {
+                document.getElementById('signature2').style.display = 'block';
+                document.getElementById('nextBtn2').style.display = 'block';
+                
+                // Add XP for interaction
+                addXP(15);
+            }, 1500);
+        }
+
+        function revealPlatforms() {
+            document.getElementById('platforms-text').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('learning-approach').style.display = 'block';
+                document.getElementById('nextBtn3').style.display = 'block';
+                
+                // Add XP for interaction
+                addXP(10);
+            }, 800);
+        }
+
+        function revealSponsor() {
+            document.getElementById('sponsor-text').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('schools-text').style.display = 'block';
+                document.getElementById('signature3').style.display = 'block';
+                document.getElementById('nextBtn4').style.display = 'block';
+                
+                // Add XP for interaction
+                addXP(10);
+            }, 800);
+        }
+
+        function revealFinalGoal() {
+            document.getElementById('final-goal-text').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('partnership-text').style.display = 'block';
+                
+                // Add XP for interaction
+                addXP(15);
+            }, 800);
+        }
+
+        function nextStep(stepNumber) {
+            const currentStepElement = document.getElementById(`step${currentStep}`);
+            currentStepElement.classList.remove('active');
+            currentStepElement.classList.add('fade-out');
+            
+            setTimeout(() => {
+                currentStepElement.style.display = 'none';
+                currentStepElement.classList.remove('fade-out');
+                
+                const nextStepElement = document.getElementById(`step${stepNumber}`);
+                nextStepElement.style.display = 'block';
+                
+                setTimeout(() => {
+                    nextStepElement.classList.add('active');
+                    currentStep = stepNumber;
+                    
+                    // Update progress dots
+                    updateProgressDots();
+                    
+                    // Add XP for progressing
+                    addXP(20);
+                    
+                    // Auto-scroll to top of step
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+            }, 500);
+        }
+
+        function prevStep(stepNumber) {
+            const currentStepElement = document.getElementById(`step${currentStep}`);
+            currentStepElement.classList.remove('active');
+            currentStepElement.classList.add('fade-out');
+            
+            setTimeout(() => {
+                currentStepElement.style.display = 'none';
+                currentStepElement.classList.remove('fade-out');
+                
+                const prevStepElement = document.getElementById(`step${stepNumber}`);
+                prevStepElement.style.display = 'block';
+                
+                setTimeout(() => {
+                    prevStepElement.classList.add('active');
+                    currentStep = stepNumber;
+                    
+                    // Update progress dots
+                    updateProgressDots();
+                    
+                    // Auto-scroll to top of step
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+            }, 500);
+        }
+
+        function completeStory() {
+            const currentStepElement = document.getElementById(`step${currentStep}`);
+            currentStepElement.classList.remove('active');
+            currentStepElement.classList.add('fade-out');
+            
+            setTimeout(() => {
+                currentStepElement.style.display = 'none';
+                currentStepElement.classList.remove('fade-out');
+                
+                const completionElement = document.getElementById('completion');
+                completionElement.style.display = 'block';
+                
+                setTimeout(() => {
+                    completionElement.classList.add('active');
+                    
+                    // Add significant XP for completion
+                    addXP(100);
+                    
+                    // Celebrate completion
+                    celebrateCompletion();
+                }, 50);
+            }, 500);
+        }
+
+        function updateProgressDots() {
+            const dots = document.querySelectorAll('.progress-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active', 'completed');
+                if (index + 1 === currentStep) {
+                    dot.classList.add('active');
+                } else if (index + 1 < currentStep) {
+                    dot.classList.add('completed');
+                }
             });
         }
-        
-        // Actualizează nivelul utilizatorului
+
+        function addXP(amount) {
+            const currentXP = parseInt(localStorage.getItem('finquest-total-xp') || '0');
+            const newXP = currentXP + amount;
+            localStorage.setItem('finquest-total-xp', newXP.toString());
+            updateUserLevel();
+            
+            // Show XP notification
+            showXPNotification(amount);
+        }
+
+        function showXPNotification(amount) {
+            const notification = document.createElement('div');
+            notification.innerHTML = `+${amount} XP`;
+            notification.style.position = 'fixed';
+            notification.style.top = '100px';
+            notification.style.right = '20px';
+            notification.style.background = 'linear-gradient(135deg, var(--primary), var(--accent))';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '20px';
+            notification.style.fontWeight = 'bold';
+            notification.style.boxShadow = '0 4px 15px rgba(30, 64, 175, 0.3)';
+            notification.style.zIndex = '10000';
+            notification.style.animation = 'fadeIn 0.3s ease, fadeOut 0.3s ease 2s forwards';
+            notification.style.opacity = '0';
+            
+            // Add CSS for animations if not already present
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes fadeIn {
+                        from { opacity: 0; transform: translateY(-20px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                    @keyframes fadeOut {
+                        from { opacity: 1; transform: translateY(0); }
+                        to { opacity: 0; transform: translateY(-20px); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Trigger reflow to start animation
+            notification.offsetHeight;
+            notification.style.opacity = '1';
+            
+            // Remove after animation
+            setTimeout(() => {
+                notification.remove();
+            }, 2300);
+        }
+
+        function celebrateCompletion() {
+            // Create celebration elements
+            const celebration = document.createElement('div');
+            celebration.style.position = 'fixed';
+            celebration.style.top = '0';
+            celebration.style.left = '0';
+            celebration.style.width = '100%';
+            celebration.style.height = '100%';
+            celebration.style.pointerEvents = 'none';
+            celebration.style.zIndex = '9999';
+            
+            // Add confetti
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.background = getRandomColor();
+                confetti.style.borderRadius = '50%';
+                confetti.style.top = '-20px';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animation = `fall ${Math.random() * 2 + 1}s linear forwards`;
+                
+                // Add animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        to {
+                            transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                celebration.appendChild(confetti);
+            }
+            
+            document.body.appendChild(celebration);
+            
+            // Remove after animation
+            setTimeout(() => {
+                celebration.remove();
+            }, 3000);
+        }
+
+        function getRandomColor() {
+            const colors = ['#1e40af', '#f59e0b', '#7c3aed', '#4ade80', '#f472b6'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
         function updateUserLevel() {
             const userXP = parseInt(localStorage.getItem('finquest-total-xp') || '0');
             const level = Math.floor(userXP / 100) + 1;
             document.getElementById('user-level-display').textContent = `Level ${level}`;
         }
-        
-        // Efect de scurgere pentru hero
-        document.querySelector('.page-hero').addEventListener('mousemove', function(e) {
-            const cards = document.querySelectorAll('.mission-card, .team-member');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            cards.forEach(card => {
-                const speed = 20;
-                const x = (mouseX * speed) - (speed / 2);
-                const y = (mouseY * speed) - (speed / 2);
-                
-                card.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        });
-        
-        document.querySelector('.page-hero').addEventListener('mouseleave', function() {
-            const cards = document.querySelectorAll('.mission-card, .team-member');
-            cards.forEach(card => {
-                card.style.transform = 'translate(0, 0)';
-            });
-        });
     </script>
 </body>
 </html>
