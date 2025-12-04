@@ -11,7 +11,7 @@
             --bg-body: #f8fafc;
             --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #fef7ff 100%);
             --bg-card: rgba(255, 255, 255, 0.95);
-            --bg-nav: rgba(255, 255, 255, 0.7);
+            --bg-nav: rgba(255, 255, 255, 0.95);
             --primary: #1e40af;
             --primary-soft: #dbeafe;
             --secondary: #f59e0b;
@@ -35,8 +35,8 @@
             /* DARK MODE - NEON GAMING */
             --bg-body: #0f172a;
             --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --bg-nav: rgba(15, 23, 42, 0.85);
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --bg-nav: rgba(15, 23, 42, 0.95);
             --primary: #22d3ee;
             --primary-soft: rgba(34, 211, 238, 0.1);
             --secondary: #c084fc;
@@ -51,7 +51,7 @@
             --text-secondary: #94a3b8;
             --shadow-soft: 0 10px 40px -10px rgba(6, 182, 212, 0.2);
             --shadow-hard: 0 0 25px rgba(6, 182, 212, 0.3);
-            --border-card: 1px solid rgba(255, 255, 255, 0.05);
+            --border-card: 1px solid rgba(255, 255, 255, 0.1);
             --nav-link-color: #e2e8f0;
         }
         
@@ -136,7 +136,7 @@
             transform: translateY(0);
         }
 
-        /* --- HEADER CA ÎN PAGINA PRINCIPALĂ --- */
+        /* --- HEADER IMPROVED --- */
         header {
             background: var(--bg-nav);
             backdrop-filter: blur(15px);
@@ -147,6 +147,7 @@
             z-index: 1000;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             transition: background-color 0.5s ease, border-color 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
         
         .container {
@@ -160,6 +161,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
         
         .logo {
@@ -189,8 +191,13 @@
             100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(139, 92, 246, 0)); }
         }
 
-        /* NAVIGAȚIE CA ÎN PAGINA PRINCIPALĂ */
-        nav ul {
+        /* NAVIGAȚIE MOBILĂ CORECTĂ */
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-menu {
             display: flex;
             list-style: none;
             gap: 0.5rem;
@@ -200,7 +207,7 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
         
-        nav a {
+        .nav-menu a {
             color: var(--nav-link-color);
             text-decoration: none;
             font-weight: 600;
@@ -212,16 +219,51 @@
             transition: all 0.3s;
         }
         
-        nav a:hover {
+        .nav-menu a:hover {
             color: white;
             background: var(--primary);
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
         }
 
-        [data-theme="dark"] nav a:hover {
+        [data-theme="dark"] .nav-menu a:hover {
             color: white;
             background: var(--primary);
             box-shadow: 0 4px 15px rgba(34, 211, 238, 0.4);
+        }
+
+        /* HAMBURGER MENU FOR MOBILE */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 25px;
+            justify-content: space-between;
+            z-index: 1001;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+        
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
         }
 
         /* --- THEME TOGGLE --- */
@@ -250,6 +292,7 @@
             display: flex;
             align-items: center;
             gap: 1.5rem;
+            z-index: 1001;
         }
         
         .user-level {
@@ -796,6 +839,126 @@
             line-height: 1.6;
         }
         
+        /* --- SECȚIUNEA NOUĂ: CE AI VREA SĂ MAI AFLI? --- */
+        .feedback-section {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--primary-soft), transparent);
+            position: relative;
+        }
+        
+        [data-theme="dark"] .feedback-section {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), transparent);
+        }
+        
+        .feedback-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .feedback-title {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+        
+        .feedback-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .feedback-form {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: var(--border-card);
+            box-shadow: var(--shadow-hard);
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 1.1rem;
+        }
+        
+        .feedback-textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 1.5rem;
+            font-size: 1rem;
+            border: 2px solid rgba(30, 64, 175, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-main);
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="dark"] .feedback-textarea {
+            background: rgba(30, 41, 59, 0.8);
+            border: 2px solid rgba(34, 211, 238, 0.2);
+        }
+        
+        .feedback-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+        
+        .feedback-textarea::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+        
+        .submit-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.4);
+        }
+        
+        .submit-btn i {
+            transition: transform 0.3s ease;
+        }
+        
+        .submit-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        .form-note {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
         /* --- CTA SECTION --- */
         .cta-section {
             padding: 5rem 5%;
@@ -925,21 +1088,90 @@
             100% { transform: scale(1); }
         }
 
-        /* --- RESPONSIVE DESIGN --- */
+        /* --- OVERLAY PENTRU MENIUL MOBIL --- */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+
+        /* --- RESPONSIVE DESIGN IMPROVED --- */
         @media (max-width: 1024px) {
             .page-hero h1 {
                 font-size: 2.8rem;
+            }
+            
+            .feedback-title {
+                font-size: 2.4rem;
             }
         }
 
         @media (max-width: 768px) {
             .nav-container {
-                flex-direction: column;
+                flex-direction: row;
                 gap: 1rem;
             }
             
-            nav ul {
-                display: none;
+            /* HAMBURGER MENU STYLES */
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--bg-nav);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+                border-radius: 0;
+                border: none;
+                transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1000;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .nav-menu li {
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            .nav-menu a {
+                display: block;
+                text-align: center;
+                padding: 1rem;
+                border-radius: 12px;
+                font-size: 1.1rem;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-menu a:hover {
+                background: var(--primary);
+            }
+            
+            .overlay.active {
+                display: block;
             }
             
             .modules-grid {
@@ -966,6 +1198,44 @@
             .resources-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .user-menu {
+                gap: 1rem;
+            }
+            
+            .btn-primary {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .theme-switch {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            /* Responsive pentru secțiunea feedback */
+            .feedback-section {
+                padding: 4rem 5%;
+            }
+            
+            .feedback-title {
+                font-size: 2rem;
+            }
+            
+            .feedback-subtitle {
+                font-size: 1rem;
+                padding: 0 15px;
+            }
+            
+            .feedback-form {
+                padding: 2rem;
+                margin: 0 10px;
+            }
+            
+            .feedback-textarea {
+                min-height: 150px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -982,11 +1252,14 @@
             }
             
             .user-menu {
-                flex-direction: column;
-                gap: 1rem;
-                width: 100%;
+                gap: 0.8rem;
             }
-
+            
+            .user-level {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
             .btn-primary, .btn-secondary {
                 width: 100%;
                 text-align: center;
@@ -994,6 +1267,20 @@
             
             .module-card {
                 padding: 1.5rem;
+            }
+            
+            .feedback-title {
+                font-size: 1.8rem;
+            }
+            
+            .feedback-form {
+                padding: 1.5rem;
+            }
+            
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 30px;
             }
         }
     </style>
@@ -1004,6 +1291,9 @@
         <div class="orb orb-2"></div>
     </div>
 
+    <!-- Overlay pentru meniul mobil -->
+    <div class="overlay" id="overlay"></div>
+
     <header>
         <div class="container nav-container">
             <div class="logo">
@@ -1011,8 +1301,16 @@
                 <span>FinQuest</span>
             </div>
             
+            <!-- Hamburger Menu Button -->
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- Navigația principală -->
             <nav>
-                <ul>
+                <ul class="nav-menu" id="nav-menu">
                     <li><a href="index.html">Acasă</a></li>
                     <li><a href="invata.html">Învață</a></li>
                     <li><a href="jocuri.html">Jocuri</a></li>
@@ -1220,6 +1518,44 @@
         </div>
     </section>
     
+    <!-- NOUA SECȚIUNE: CE AI VREA SĂ MAI AFLI? -->
+    <section class="feedback-section reveal">
+        <div class="container feedback-container">
+            <h2 class="feedback-title">Ce ai vrea să mai afli?</h2>
+            <p class="feedback-subtitle">
+                Spune-ne ce subiecte financiare te interesează sau ce aștepți să adăugăm în platformă. 
+                Feedback-ul tău ne ajută să creăm conținut mai bun pentru tine!
+            </p>
+            
+            <div class="feedback-form">
+                <form id="feedbackForm">
+                    <div class="form-group">
+                        <label for="feedback">
+                            <i class="fas fa-lightbulb" style="color: var(--accent); margin-right: 8px;"></i>
+                            Ce subiecte financiare te interesează?
+                        </label>
+                        <textarea 
+                            id="feedback" 
+                            class="feedback-textarea" 
+                            placeholder="De exemplu: Investiții în criptomonede, Cum să fac un buget, Strategii de economisire, Cum să încep să investesc cu sume mici..."
+                            required
+                        ></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        Trimite sugestia
+                    </button>
+                    
+                    <p class="form-note">
+                        <i class="fas fa-info-circle"></i>
+                        Vom analiza toate sugestiile și vom dezvolta conținut bazat pe cerințele comunității.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+    
     <section class="cta-section">
         <div class="container">
             <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; position: relative; z-index: 2;" class="reveal">Vrei să testezi cunoștințele într-un mod distractiv?</h2>
@@ -1280,7 +1616,7 @@
     </footer>
     
     <script>
-        // Datele pentru quiz-uri
+        // Datele pentru quiz-uri (COREECTATE - răspunsurile și explicațiile se potrivesc)
         const quizData = {
             budget: [
                 {
@@ -1291,8 +1627,8 @@
                         "Estimez cheltuielile aproximativ și sper că nu depășesc veniturile",
                         "Cheltuială după cheltuială, fără un plan prestabilit"
                     ],
-                    correct: 1,
-                    explanation: "Cel mai eficient este să folosești o aplicație de bugetare (50% din succes). Aceasta automatizează procesul, îți oferă statistici vizuale și te alertează când ești pe punctul de a depăși bugetul. Combină cu plicurile fizice (30%) pentru discipline și o estimare realistă bazată pe cheltuielile anterioare (20%)."
+                    correct: 1, // Corect: aplicația de bugetare
+                    explanation: "Folosirea unei aplicații de bugetare este cea mai eficientă metodă pentru urmărirea cheltuielilor. Automatizează procesul, îți oferă statistici vizuale și te alertează când ești pe punctul de a depăși bugetul. Combină cu notarea cheltuielilor manual pentru discipline și o estimare realistă bazată pe cheltuielile anterioare pentru rezultate optime."
                 },
                 {
                     question: "Cum decizi cât să economisești în fiecare lună?",
@@ -1302,8 +1638,8 @@
                         "Pun deoparte o sumă fixă înainte de orice altă cheltuială",
                         "Economisesc doar pentru obiective specifice (vacanță, mașină etc.)"
                     ],
-                    correct: 2,
-                    explanation: "EXCELENT! Regula 50/30/20 este un sistem verificat: 50% pentru necesități (chirie, utilități, mâncare), 30% pentru dorințe (distracție, haine), 20% pentru economii și datorii. Punerea deoparte a economiilor PRIMA dată (pay yourself first) asigură că nu cheltui banii destinați economiilor."
+                    correct: 1, // Corect: regula 50/30/20
+                    explanation: "Regula 50/30/20 este un sistem verificat și eficient pentru gestionarea banilor: 50% pentru necesități (chirie, utilități, mâncare), 30% pentru dorințe (distracție, haine), 20% pentru economii și reducerea datoriilor. Această metodă asigură o alocare echilibrată a resurselor financiare."
                 },
                 {
                     question: "Cum construiești un fond de urgență și cât ar trebui să fie?",
@@ -1313,8 +1649,8 @@
                         "Doar ce pot pune deoparte după toate cheltuielile",
                         "Nu am nevoie de fond de urgență, am card de credit"
                     ],
-                    correct: 0,
-                    explanation: "PERFECT! Un fond de urgență de 3-6 luni de cheltuieli esențiale este standardul de aur. Începi cu un obiectiv mic (1.000€ sau o lună de cheltuieli), apoi crești treptat. Cardul de credit NU înlocuiește un fond de urgență - adaugă doar datorii în momente critice."
+                    correct: 0, // Corect: 3-6 luni de cheltuieli
+                    explanation: "Un fond de urgență de 3-6 luni de cheltuieli esențiale este standardul recomandat de experții financiari. Începe cu un obiectiv mic (1.000€ sau o lună de cheltuieli), apoi crește treptat. Cardul de credit NU înlocuiește un fond de urgență - poate adăuga doar datorii în momente critice."
                 }
             ],
             credit: [
@@ -1326,8 +1662,8 @@
                         "Aleg creditul cu cea mai scurtă perioadă de rambursare",
                         "Merg la banca cea mai apropiată de casă"
                     ],
-                    correct: 1,
-                    explanation: "BRAVO! Costul real al unui credit = Dobânda Totală + comisioane + asigurări + alte taxe. Folosește un calculator de credite online pentru a compara RATA ANUALĂ EFECTIVĂ (RAE) - acesta include toate costurile. O rată lunară mică poate ascunde o perioadă lungă și costuri totale enorme!"
+                    correct: 1, // Corect: calculează toate costurile
+                    explanation: "Pentru a compara corect creditele, trebuie să calculezi costul total real = Dobânda Totală + comisioane + asigurări + alte taxe. Folosește un calculator de credite online pentru a compara RATA ANUALĂ EFECTIVĂ (RAE) - acest indicator include toate costurile. O rată lunară mică poate ascunde o perioadă lungă și costuri totale enorme!"
                 },
                 {
                     question: "Cum îți dai seama dacă îți permiți un credit?",
@@ -1337,8 +1673,8 @@
                         "Îmi permit dacă banca aprobă cererea",
                         "Mă uit doar la avansul necesar"
                     ],
-                    correct: 1,
-                    explanation: "CORECT! Regula de aur: rata creditului NU trebuie să depășească 30-35% din venitul net lunar. Dar atenție! Calculează și celelalte datorii existente. Dacă totalul datoriilor depășește 40% din venit, risci să devii supraindatorat. Banca poate aproba mai mult decât îți permiți realist."
+                    correct: 1, // Corect: 30-35% din venit
+                    explanation: "Regula de aur pentru evaluarea capacității de îndatorare: rata creditului NU trebuie să depășească 30-35% din venitul net lunar. Atenție însă! Calculează și celelalte datorii existente. Dacă totalul datoriilor depășește 40% din venit, riscul de supraîndatorare crește semnificativ."
                 },
                 {
                     question: "Cum îți îmbunătățești scorul de credit și cum îl verifici?",
@@ -1348,8 +1684,8 @@
                         "Fac cereri multiple de credit pentru a vedea ce oferte primesc",
                         "Scorul de credit nu contează în România"
                     ],
-                    correct: 0,
-                    explanation: "EXCELENT STRATEGIE! Scorul tău de credit se îmbunătățește prin: plăți la timp (35% din scor), utilizare mică a creditului disponibil (30%), istoric lung de credit (15%), tipuri variate de credit (10%), cereri rare de credit nou (10%). În România, poți verifica scorul gratuit o dată pe an la Biroul de Credit."
+                    correct: 0, // Corect: plăți la timp și verificare
+                    explanation: "Scorul de credit se îmbunătățește prin: plăți la timp (35% din scor), utilizare mică a creditului disponibil (30%), istoric lung de credit (15%), tipuri variate de credit (10%), cereri rare de credit nou (10%). În România, poți verifica scorul gratuit o dată pe an la Biroul de Credit."
                 }
             ],
             investments: [
@@ -1361,8 +1697,8 @@
                         "Dobânda compusă e relevantă doar pentru investiții de peste 10 ani",
                         "E un concept matematic care nu are aplicație practică"
                     ],
-                    correct: 1,
-                    explanation: "AI ÎNȚELES MAGIA! Dobânda compusă = 'cea mai puternică forță din univers' (Einstein). Banii tăi generează dobândă, apoi dobânda generează propria dobândă. Exemplu: 1.000€ cu 7% anual devin 1.967€ în 10 ani, 3.870€ în 20 ani, 7.612€ în 30 ani - fără să adaugi nimic! Începe DEVREME pentru efect maxim."
+                    correct: 1, // Corect: dobânda la dobândă
+                    explanation: "Dobânda compusă, descrisă de Einstein ca 'cea mai puternică forță din univers', funcționează pe principiul 'dobânzii la dobândă'. Banii tăi generează dobândă, apoi dobânda generează propria dobândă. Exemplu: 1.000€ cu 7% anual devin 1.967€ în 10 ani, 3.870€ în 20 ani, 7.612€ în 30 ani - fără să adaugi nimic! Începe cât mai devreme pentru efect maxim."
                 },
                 {
                     question: "Cum îți diversifici economiile prin investiții simple?",
@@ -1372,8 +1708,8 @@
                         "Îmi țin toți banii în contul de economii la bancă",
                         "Investesc doar în ce înțeleg perfect"
                     ],
-                    correct: 1,
-                    explanation: "FOARTE BINE! Diversificarea = 'nu pune toate ouăle în același coș'. Distribuie investițiile pe: clase de active diferite (acțiuni, obligațiuni), sectoare diferite (tehnologie, sănătate), regiuni geografice, monede. Fondurile indexate sunt excelente pentru începători - diversificare instantă la cost mic."
+                    correct: 1, // Corect: diversificare pe clase de active
+                    explanation: "Diversificarea corectă înseamnă distribuirea investițiilor pe: clase de active diferite (acțiuni, obligațiuni, imobiliare), sectoare diferite (tehnologie, sănătate, energie), regiuni geografice, și monede. Fondurile indexate sunt excelente pentru începători - oferă diversificare instantanee la costuri mici de administrare."
                 },
                 {
                     question: "Cum influențează inflația banii tăi și cum te protejezi de ea?",
@@ -1383,8 +1719,8 @@
                         "Protejarea împotriva inflației necesită investiții care depășesc rata inflației",
                         "Ambele variante 1 și 3 sunt corecte"
                     ],
-                    correct: 3,
-                    explanation: "PERFECT RĂSPUNS! Inflația de 3% anual înseamnă că 100€ astăzi vor valora doar 74€ în 10 ani (putere de cumpărare). Conturile de economii cu 1% dobândă înseamnă PIERDERE reală. Soluții: investiții în acțiuni (randament istoric 7-10%), obligațiuni indexate la inflație, imobiliare. Minimul: investiții care depășesc inflația!"
+                    correct: 3, // Corect: ambele variante
+                    explanation: "Ambele afirmații sunt corecte! Inflația de 3% anual înseamnă că 100€ astăzi vor valora doar 74€ în 10 ani din punct de vedere al puterii de cumpărare. Conturile de economii cu dobânzi sub inflație înseamnă PIERDERE reală. Soluții: investiții în acțiuni (randament istoric 7-10%), obligațiuni indexate la inflație, imobiliare. Minimul: investiții care depășesc rata inflației!"
                 }
             ],
             decisions: [
@@ -1396,8 +1732,8 @@
                         "Închirierea e mereu o aruncare de bani pe fereastră",
                         "Aleg ce îmi permite creditul, indiferent de calcul"
                     ],
-                    correct: 1,
-                    explanation: "ANALIZĂ CORECTĂ! Regula 5: cumpără DOAR dacă vei sta minim 5 ani în aceeași locuință. Calculează raportul preț-chirie: dacă prețul de cumpărare depășește 20x chiria anuală, închirierea poate fi mai inteligentă. Banii economisiți pot fi investiți altfel. Nu uita: proprietatea are costuri ascunse (reparații, taxe, asigurări)."
+                    correct: 1, // Corect: analiză complexă
+                    explanation: "Decizia între cumpărare și închiriere necesită o analiză complexă. Regula 5: cumpără DOAR dacă vei sta minim 5 ani în aceeași locuință. Calculează raportul preț-chirie: dacă prețul de cumpărare depășește 20x chiria anuală, închirierea poate fi mai inteligentă. Banii economisiți pot fi investiți altfel pentru randamente mai bune. Nu uita: proprietatea are costuri ascunse (reparații, taxe, asigurări)."
                 },
                 {
                     question: "Cum stabilești dacă o achiziție mare este o investiție sau o cheltuială?",
@@ -1407,8 +1743,8 @@
                         "Doar imobiliarele și acțiunile sunt investiții",
                         "Dacă o folosesc zilnic, e investiție"
                     ],
-                    correct: 0,
-                    explanation: "EXACT! Investiția = active care generează venituri sau apreciere în valoare. Cheltuiala = bunuri care se depreciază. Mașină nouă = cheltuială (pierde 20% valoare în primul an). Curs de specializare = investiție (crește veniturile viitoare). Calcul ROI (Return on Investment): (câștiguri - costuri) / costuri × 100."
+                    correct: 0, // Corect: păstrează sau crește valoarea
+                    explanation: "O investiție adevărată este un activ care generează venituri sau apreciere în valoare în timp. O cheltuială este un bun care se depreciază. Exemplu: o mașină nouă = cheltuială (pierde 20% din valoare în primul an). Un curs de specializare = investiție (crește veniturile viitoare). Calculează ROI (Return on Investment): (câștiguri - costuri) / costuri × 100."
                 },
                 {
                     question: "Cum negociezi un salariu sau o ofertă de job?",
@@ -1418,8 +1754,8 @@
                         "Cer 50% mai mult decât salariul actual fără justificare",
                         "Spun ce salariu am la jobul actual și cer puțin peste"
                     ],
-                    correct: 1,
-                    explanation: "STRATEGIE PROFESIONISTĂ! Pașii: 1) Cercetează range-ul salarial (Glassdoor, interviuri). 2) Evidențiază valoarea adăugată (proiecte, economii, eficiență). 3) Negociază PACHETUL TOTAL: salariu + bonusuri + beneficii (asigurări medicale, training) + work-life balance. 4) Nu dezvălui salariul actual - focusează-te pe valoarea pe care o aduci. 5) Practică negocierea!"
+                    correct: 1, // Corect: strategie profesionistă
+                    explanation: "Pașii pentru o negociere profesională a salariului: 1) Cercetează range-ul salarial pentru poziție (Glassdoor, interviuri cu alți candidați). 2) Evidențiază valoarea adăugată (proiecte realizate, economii generate, eficiență adusă). 3) Negociază PACHETUL TOTAL: salariu + bonusuri + beneficii (asigurări medicale, training) + work-life balance. 4) Nu dezvălui salariul actual - focusează-te pe valoarea pe care o aduci companiei."
                 }
             ]
         };
@@ -1468,6 +1804,34 @@
             }
         }
 
+        // --- MOBILE MENU TOGGLE ---
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
         // --- SCROLL REVEAL ANIMATION ---
         document.addEventListener('DOMContentLoaded', function() {
             const observer = new IntersectionObserver((entries) => {
@@ -1495,6 +1859,44 @@
                         this.style.transform = 'translateY(0)';
                     }
                 });
+            });
+            
+            // FEEDBACK FORM HANDLING
+            const feedbackForm = document.getElementById('feedbackForm');
+            
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const feedbackTextarea = document.getElementById('feedback');
+                const feedback = feedbackTextarea.value.trim();
+                
+                if (!feedback) {
+                    alert('Te rog completează câmpul cu sugestia ta!');
+                    return;
+                }
+                
+                // Animare buton
+                const submitBtn = feedbackForm.querySelector('.submit-btn');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Sugestia a fost trimisă!';
+                submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                submitBtn.disabled = true;
+                
+                // Reset form
+                feedbackTextarea.value = '';
+                
+                // Mesaj de mulțumire
+                setTimeout(() => {
+                    alert('Mulțumim pentru sugestie! Vom analiza propunerea ta și vom încerca să dezvoltăm conținut pe această temă.');
+                    
+                    // Reset buton după 3 secunde
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.style.background = '';
+                        submitBtn.disabled = false;
+                    }, 3000);
+                }, 500);
             });
         });
 
@@ -1762,6 +2164,16 @@
         function openVideoLessons() {
             alert('Lecțiile video vor fi adăugate în următoarea actualizare!');
         }
+
+        // --- CLOSE MENU ON RESIZE ---
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
     </script>
 </body>
 </html>
