@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +7,52 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
+            /* LIGHT MODE - PROFESIONAL & ATTRACTIV */
+            --bg-body: #f8fafc;
+            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #fef7ff 100%);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --bg-nav: rgba(255, 255, 255, 0.98);
+            --primary: #1e40af;
+            --primary-soft: #dbeafe;
+            --secondary: #f59e0b;
+            --accent: #7c3aed;
             --success: #4ade80;
             --warning: #fbbf24;
             --danger: #f87171;
             --light: #f8f9fa;
             --dark: #1e293b;
             --gray: #6b7280;
+            --text-main: #1e293b;
+            --text-secondary: #475569;
+            --shadow-soft: 0 10px 30px -10px rgba(30, 64, 175, 0.1);
+            --shadow-hard: 0 20px 40px -5px rgba(30, 64, 175, 0.15);
+            --border-card: 1px solid rgba(241, 245, 249, 0.8);
+            --nav-link-color: #334155;
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            /* DARK MODE - NEON GAMING */
+            --bg-body: #0f172a;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --bg-nav: rgba(15, 23, 42, 0.85);
+            --primary: #22d3ee;
+            --primary-soft: rgba(34, 211, 238, 0.1);
+            --secondary: #c084fc;
+            --accent: #f472b6;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --light: #1e293b;
+            --dark: #f8fafc;
+            --gray: #94a3b8;
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --shadow-soft: 0 10px 40px -10px rgba(6, 182, 212, 0.2);
+            --shadow-hard: 0 0 25px rgba(6, 182, 212, 0.3);
+            --border-card: 1px solid rgba(255, 255, 255, 0.05);
+            --nav-link-color: #e2e8f0;
         }
         
         * {
@@ -26,19 +63,90 @@
         }
         
         body {
-            background-color: #f5f7ff;
-            color: var(--dark);
+            background: var(--bg-gradient);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            transition: background-color 0.5s ease, color 0.3s ease;
+        }
+
+        /* --- BACKGROUND ANIMATION (ORBS) --- */
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.8;
+            animation: float 15s infinite alternate ease-in-out;
+            transition: background-color 0.5s ease;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(219, 234, 254, 0.6);
+            top: -100px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(253, 230, 138, 0.4);
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        [data-theme="dark"] .orb-1 {
+            background: rgba(6, 182, 212, 0.15);
+        }
+
+        [data-theme="dark"] .orb-2 {
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
         }
         
+        /* --- SCROLL REVEAL ANIMATION --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem 5%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: var(--bg-nav);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 1rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background-color 0.5s ease, border-color 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
         
         .container {
@@ -65,24 +173,34 @@
             align-items: center;
             gap: 10px;
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
+            transition: all 0.3s ease;
         }
         
         .logo-icon {
-            color: var(--accent);
+            color: var(--secondary);
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.2));
+            transition: all 0.3s ease;
         }
         
         .badge-financial {
-            background: linear-gradient(135deg, #2a3c8f, #1a2a6c);
-            border-radius: 8px;
-            padding: 6px 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            padding: 8px 16px;
             color: white;
             font-weight: 700;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
         
         .badge-financial::before {
@@ -120,21 +238,29 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.5rem;
         }
         
         nav a {
-            color: white;
+            color: var(--nav-link-color);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            padding: 5px 10px;
-            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s var(--transition-smooth);
+            padding: 8px 16px;
+            border-radius: 8px;
         }
         
         nav a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            background: var(--primary-soft);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
+        }
+
+        [data-theme="dark"] nav a:hover {
+            color: white;
+            background: var(--primary);
+            box-shadow: 0 4px 15px rgba(34, 211, 238, 0.4);
         }
         
         .user-menu {
@@ -144,75 +270,220 @@
         }
         
         .user-level {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
-            border-radius: 20px;
+            background-color: var(--primary-soft);
+            color: var(--primary);
+            padding: 10px 18px;
+            border-radius: 12px;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
         }
         
         .level-icon {
-            color: var(--accent);
+            color: var(--secondary);
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-switch {
+            background: transparent;
+            border: 1px solid var(--primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            color: var(--primary);
+            transition: all 0.3s var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-switch:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px var(--primary);
         }
         
         .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s var(--transition-smooth);
             border: none;
             font-size: 1rem;
         }
         
         .btn-primary {
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+        
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s ease;
+        }
+        
+        .btn-primary:hover::after {
+            left: 100%;
         }
         
         .btn-primary:hover {
-            background-color: #3ab8dd;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
         }
-        
-        .page-hero {
-            padding: 4rem 5%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            text-align: center;
+
+        /* --- HERO SECTION CU IMAGINE --- */
+        .hero-learning {
+            padding: 6rem 5% 4rem;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .page-hero h1 {
-            font-size: 3rem;
+
+        .hero-content {
+            flex: 1;
+            padding-right: 3rem;
+            z-index: 2;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-hard);
+            transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-image:hover img {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+        }
+
+        .hero-learning h1 {
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--text-main), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 4px 8px rgba(30, 64, 175, 0.1);
         }
-        
-        .page-hero p {
+
+        .hero-learning p {
             font-size: 1.3rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            opacity: 0.9;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
         }
-        
-        .skill-tree {
-            padding: 4rem 5%;
-            background-color: #f0f4ff;
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
         }
-        
+
+        .floating-element {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-soft);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-soft);
+            animation: floatElement 20s infinite ease-in-out;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+            width: 50px;
+            height: 50px;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatElement {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(20px) rotate(-5deg); }
+        }
+
+        /* --- SECTIUNI PRINCIPALE --- */
+        .skill-tree, .gamification, .learning-methods {
+            padding: 5rem 5%;
+        }
+
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             font-size: 2.5rem;
-            color: var(--secondary);
+            color: var(--text-main);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
         }
-        
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
         .section-subtitle {
             text-align: center;
             font-size: 1.2rem;
-            color: var(--gray);
+            color: var(--text-secondary);
             max-width: 800px;
             margin: 0 auto 3rem;
         }
@@ -227,145 +498,191 @@
         }
         
         .tree-node {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
             margin: 1.5rem 0;
-            width: 80%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            box-shadow: var(--shadow-soft);
             border-left: 6px solid var(--primary);
-            transition: all 0.3s;
+            transition: all 0.4s var(--transition-smooth);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tree-node::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .tree-node:hover::before {
+            transform: translateX(100%);
         }
         
         .tree-node:hover {
-            transform: scale(1.03);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hard);
             border-left-color: var(--accent);
         }
         
         .tree-node.completed {
             border-left-color: var(--success);
-            opacity: 0.9;
+            opacity: 0.95;
         }
         
         .tree-node.locked {
             border-left-color: var(--gray);
-            opacity: 0.6;
+            opacity: 0.7;
+            cursor: not-allowed;
         }
         
         .node-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
         
         .node-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--dark);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
         }
         
         .node-xp {
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 4px 12px;
+            padding: 8px 20px;
             border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
         }
         
         .node-desc {
-            color: var(--gray);
-            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
         }
         
         .game-preview {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
             margin-top: 1rem;
         }
         
         .game-tag {
-            background-color: #eef2ff;
+            background-color: var(--primary-soft);
             color: var(--primary);
-            padding: 5px 10px;
-            border-radius: 5px;
+            padding: 8px 16px;
+            border-radius: 8px;
             font-size: 0.9rem;
             font-weight: 600;
+            transition: all 0.3s ease;
         }
         
         .play-tag {
-            background-color: var(--primary);
-            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white !important;
             cursor: pointer;
-            transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
+            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
         }
         
         .play-tag:hover {
-            background-color: var(--secondary);
             transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(30, 64, 175, 0.3);
         }
         
         .coming-soon {
             background-color: var(--gray);
-        }
-        
-        .gamification {
-            padding: 4rem 5%;
-            background-color: white;
+            color: white !important;
         }
         
         .gamification-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
             margin-top: 2rem;
         }
         
         .gamification-card {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-soft);
+            border: var(--border-card);
+            transition: all 0.4s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gamification-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .gamification-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hard);
         }
         
         .gamification-card h3 {
             font-size: 1.6rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            color: var(--text-main);
         }
         
         .gamification-icon {
             font-size: 1.8rem;
+            color: var(--primary);
         }
         
         .streak-container {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             margin-top: 1.5rem;
         }
         
         .streak-day {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.2);
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background-color: var(--primary-soft);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-weight: 700;
+            color: var(--text-main);
+            transition: all 0.3s ease;
         }
         
         .streak-day.active {
-            background-color: var(--success);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+            transform: scale(1.1);
         }
         
         .badge-container {
@@ -376,95 +693,155 @@
         }
         
         .badge {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--primary-soft);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
         }
         
         .badge.earned {
-            background-color: var(--warning);
-            color: var(--dark);
+            background: linear-gradient(135deg, var(--secondary), var(--warning));
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .badge:hover {
+            transform: translateY(-5px) scale(1.1);
         }
         
         .leaderboard {
             margin-top: 1.5rem;
-            background-color: rgba(255,255,255,0.1);
-            padding: 1rem;
-            border-radius: 10px;
+            background-color: var(--primary-soft);
+            padding: 1.5rem;
+            border-radius: 12px;
         }
         
         .leaderboard-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 8px;
-            border-radius: 5px;
-            background-color: rgba(255,255,255,0.05);
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background-color: rgba(255,255,255,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .leaderboard-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-soft);
         }
         
         .leaderboard-item.current {
-            background-color: rgba(255,255,255,0.15);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
             font-weight: bold;
-        }
-        
-        .learning-methods {
-            padding: 4rem 5%;
-            background-color: #f0f4ff;
         }
         
         .methods-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
         }
         
         .method-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 2rem;
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
             text-align: center;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-soft);
+            border: var(--border-card);
+            transition: all 0.4s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(30, 64, 175, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .method-card:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .method-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hard);
         }
         
         .method-icon {
             font-size: 3rem;
             color: var(--primary);
             margin-bottom: 1.5rem;
+            transition: all 0.5s ease;
+        }
+        
+        .method-card:hover .method-icon {
+            transform: rotate(360deg) scale(1.2);
         }
         
         .method-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--dark);
+            color: var(--text-main);
         }
         
         .method-card p {
-            color: var(--gray);
+            color: var(--text-secondary);
             margin-bottom: 1.5rem;
+            line-height: 1.7;
         }
         
         .cta-section {
-            padding: 4rem 5%;
+            padding: 5rem 5%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            transform: rotate(15deg);
+            pointer-events: none;
         }
         
         footer {
             background-color: var(--dark);
             color: white;
-            padding: 3rem 5% 1.5rem;
+            padding: 4rem 5% 2rem;
+            position: relative;
+            z-index: 10;
         }
         
         .footer-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
             margin-bottom: 2rem;
         }
         
@@ -477,8 +854,21 @@
         
         .footer-links h4 {
             font-size: 1.3rem;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
             color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
         }
         
         .footer-links ul {
@@ -486,48 +876,125 @@
         }
         
         .footer-links li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
         
         .footer-links a {
             color: #d1d5db;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 20px;
         }
-        
+
+        .footer-links a::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
         .footer-links a:hover {
             color: var(--accent);
+            padding-left: 25px;
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            transform: translateX(5px);
         }
         
         .copyright {
             text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid #374151;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #9ca3af;
         }
         
+        /* --- ANIMATII SI EFECTE SUPLIMENTARE --- */
+        .particle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+            animation: particleFloat 20s linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .hero-learning {
+                flex-direction: column;
+                text-align: center;
+                padding: 4rem 5% 3rem;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 3rem;
+            }
+
+            .hero-learning h1 {
+                font-size: 2.8rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
             }
             
             .logo-container {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 1rem;
                 text-align: center;
             }
             
             nav ul {
                 gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             .tree-node {
-                width: 95%;
+                width: 100%;
+                padding: 1.5rem;
             }
             
             .badge-financial {
-                padding: 4px 8px;
+                padding: 6px 12px;
             }
             
             .badge-line-1 {
@@ -537,10 +1004,65 @@
             .badge-line-2 {
                 font-size: 0.8rem;
             }
+
+            .hero-learning h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-learning p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .gamification-container,
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-elements {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-learning h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-learning p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .node-title {
+                font-size: 1.3rem;
+            }
+
+            .user-menu {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .btn-primary {
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="background-shapes">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
     <header>
         <div class="container nav-container">
             <div class="logo-container">
@@ -568,35 +1090,55 @@
             <div class="user-menu">
                 <div class="user-level">
                     <i class="fas fa-trophy level-icon"></i>
-                    <span>Level 12</span>
+                    <span id="user-level-text">Level 1</span>
                 </div>
+                <button id="theme-toggle" class="theme-switch">
+                    <i class="fas fa-moon"></i>
+                </button>
                 <button class="btn btn-primary" onclick="window.location.href='jocuri.html'">Începe un Joc</button>
             </div>
         </div>
     </header>
     
-    <section class="page-hero">
-        <div class="container">
+    <section class="hero-learning reveal">
+        <div class="floating-elements">
+            <div class="floating-element"><i class="fas fa-coins"></i></div>
+            <div class="floating-element"><i class="fas fa-chart-line"></i></div>
+            <div class="floating-element"><i class="fas fa-piggy-bank"></i></div>
+        </div>
+        
+        <div class="hero-content">
             <h1>Învață Finanțe Personale într-un Mod Distractiv</h1>
-            <p>Descoperă cum transformăm educația financiară într-o aventură interactivă prin jocuri, provocări și recompense.</p>
-            <button class="btn btn-primary" style="padding: 15px 30px; font-size: 1.2rem;" onclick="window.location.href='jocuri.html'">
-                <i class="fas fa-play"></i> Vezi Toate Jocurile
-            </button>
+            <p>Descoperă cum transformăm educația financiară într-o aventură interactivă prin jocuri, provocări și recompense. Parcurge skill tree-ul și devine expert financiar!</p>
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button class="btn btn-primary pulse-animation" onclick="window.location.href='jocuri.html'">
+                    <i class="fas fa-play"></i> Începe Aventura
+                </button>
+                <button class="btn" style="background: transparent; border: 2px solid var(--primary); color: var(--primary);" onclick="scrollToSection('skill-tree')">
+                    <i class="fas fa-arrow-down"></i> Explorează
+                </button>
+            </div>
+        </div>
+        
+        <div class="hero-image reveal">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                 alt="Educație financiară interactivă" 
+                 onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'">
         </div>
     </section>
     
-    <section class="skill-tree">
+    <section id="skill-tree" class="skill-tree">
         <div class="container">
-            <h2 class="section-title">Skill Tree - Calea Ta de Învățare</h2>
-            <p class="section-subtitle">Parcurge lecțiile în ordine sau alege ce te interesează. Fiecare joc completat îți aduce XP și deblochează noi provocări!</p>
+            <h2 class="section-title reveal">Skill Tree - Calea Ta de Învățare</h2>
+            <p class="section-subtitle reveal">Parcurge lecțiile în ordine sau alege ce te interesează. Fiecare joc completat îți aduce XP și deblochează noi provocări!</p>
             
             <div class="tree-container">
-                <div class="tree-node">
+                <div class="tree-node reveal">
                     <div class="node-header">
                         <div class="node-title">Bani de buzunar</div>
                         <div class="node-xp">+50 XP</div>
                     </div>
-                    <div class="node-desc">Jocul "Portofelul Virtual" te învață cum să gestionezi banii de buzunar prin decizii zilnice.</div>
+                    <div class="node-desc">Jocul "Portofelul Virtual" te învață cum să gestionezi banii de buzunar prin decizii zilnice și simulări interactive.</div>
                     <div class="game-preview">
                         <a href="portofelul-virtual.html" class="game-tag play-tag">
                             <i class="fas fa-play"></i> Joacă acum
@@ -607,12 +1149,12 @@
                     </div>
                 </div>
                 
-                <div class="tree-node">
+                <div class="tree-node reveal">
                     <div class="node-header">
                         <div class="node-title">Carduri bancare</div>
                         <div class="node-xp">+75 XP</div>
                     </div>
-                    <div class="node-desc">În "Aventura Cardurilor", explorezi diferite tipuri de carduri și cum să le folosești în siguranță.</div>
+                    <div class="node-desc">În "Aventura Cardurilor", explorezi diferite tipuri de carduri și cum să le folosești în siguranță în scenarii din viața reală.</div>
                     <div class="game-preview">
                         <span class="game-tag play-tag coming-soon">
                             <i class="fas fa-clock"></i> În curând
@@ -622,12 +1164,12 @@
                     </div>
                 </div>
                 
-                <div class="tree-node">
+                <div class="tree-node reveal">
                     <div class="node-header">
                         <div class="node-title">Economisirea</div>
                         <div class="node-xp">+100 XP</div>
                     </div>
-                    <div class="node-desc">"Vânătorul de Economii" este un joc de strategie în care trebuie să atingi obiective financiare prin economisire.</div>
+                    <div class="node-desc">"Vânătorul de Economii" este un joc de strategie în care trebuie să atingi obiective financiare prin economisire inteligentă.</div>
                     <div class="game-preview">
                         <span class="game-tag play-tag coming-soon">
                             <i class="fas fa-clock"></i> În curând
@@ -637,12 +1179,12 @@
                     </div>
                 </div>
                 
-                <div class="tree-node">
+                <div class="tree-node reveal">
                     <div class="node-header">
                         <div class="node-title">Investiții mici</div>
                         <div class="node-xp">+150 XP</div>
                     </div>
-                    <div class="node-desc">În "Tycoon-ul Începător", faci investiții virtuale și înveți despre bursă, crypto și alți instrumente.</div>
+                    <div class="node-desc">În "Tycoon-ul Începător", faci investiții virtuale și înveți despre bursă, crypto și alți instrumente financiare.</div>
                     <div class="game-preview">
                         <span class="game-tag play-tag coming-soon">
                             <i class="fas fa-clock"></i> În curând
@@ -652,12 +1194,12 @@
                     </div>
                 </div>
                 
-                <div class="tree-node locked">
+                <div class="tree-node locked reveal">
                     <div class="node-header">
                         <div class="node-title">Anti-Scam</div>
                         <div class="node-xp">+120 XP</div>
                     </div>
-                    <div class="node-desc">"Detectivul Financiar" te pregătește să identifici tentativele de scam prin scenarii interactive.</div>
+                    <div class="node-desc">"Detectivul Financiar" te pregătește să identifici tentativele de scam prin scenarii interactive și teste de detectare.</div>
                     <div class="game-preview">
                         <span class="game-tag play-tag coming-soon">
                             <i class="fas fa-lock"></i> Blocat
@@ -672,27 +1214,27 @@
     
     <section class="gamification">
         <div class="container">
-            <h2 class="section-title">Gamificare Puternică</h2>
-            <p class="section-subtitle">Transformă învățarea într-o competiție captivantă cu sistemul nostru de recompense și provocări.</p>
+            <h2 class="section-title reveal">Gamificare Puternică</h2>
+            <p class="section-subtitle reveal">Transformă învățarea într-o competiție captivantă cu sistemul nostru de recompense și provocări.</p>
             
             <div class="gamification-container">
-                <div class="gamification-card">
+                <div class="gamification-card reveal">
                     <h3><i class="fas fa-fire gamification-icon"></i> Streak-uri Zilnice</h3>
-                    <p>Menține-ți motivatia prin învățarea zilnică. Fiecare zi aduce XP bonus!</p>
-                    <div class="streak-container">
-                        <div class="streak-day active">L</div>
-                        <div class="streak-day active">M</div>
-                        <div class="streak-day active">M</div>
-                        <div class="streak-day active">J</div>
-                        <div class="streak-day">V</div>
-                        <div class="streak-day">S</div>
-                        <div class="streak-day">D</div>
+                    <p>Menține-ți motivatia prin învățarea zilnică. Fiecare zi aduce XP bonus și recompense speciale!</p>
+                    <div class="streak-container" id="streak-container">
+                        <div class="streak-day" data-day="1">L</div>
+                        <div class="streak-day" data-day="2">M</div>
+                        <div class="streak-day" data-day="3">M</div>
+                        <div class="streak-day" data-day="4">J</div>
+                        <div class="streak-day" data-day="5">V</div>
+                        <div class="streak-day" data-day="6">S</div>
+                        <div class="streak-day" data-day="7">D</div>
                     </div>
                 </div>
                 
-                <div class="gamification-card">
+                <div class="gamification-card reveal">
                     <h3><i class="fas fa-medal gamification-icon"></i> Badge-uri Colecționabile</h3>
-                    <p>Câștigă insignele unice pentru realizări financiare. Strânge-le pe toate!</p>
+                    <p>Câștigă insignele unice pentru realizări financiare. Strânge-le pe toate pentru recompense maxime!</p>
                     <div class="badge-container">
                         <div class="badge earned"><i class="fas fa-piggy-bank"></i></div>
                         <div class="badge earned"><i class="fas fa-chart-line"></i></div>
@@ -702,28 +1244,28 @@
                     </div>
                 </div>
                 
-                <div class="gamification-card">
+                <div class="gamification-card reveal">
                     <h3><i class="fas fa-trophy gamification-icon"></i> Leaderboard</h3>
-                    <p>Concurs cu prietenii și utilizatorii din toată țara. Ajungi în top?</p>
+                    <p>Concurs cu prietenii și utilizatorii din toată țara. Ajungi în top pentru premii exclusive!</p>
                     <div class="leaderboard">
                         <div class="leaderboard-item">
-                            <span>1. AlexPopescu</span>
+                            <span><i class="fas fa-crown" style="color: gold; margin-right: 8px;"></i> AlexPopescu</span>
                             <span>2450 XP</span>
                         </div>
                         <div class="leaderboard-item">
-                            <span>2. MariaIonescu</span>
+                            <span><i class="fas fa-medal" style="color: silver; margin-right: 8px;"></i> MariaIonescu</span>
                             <span>1980 XP</span>
                         </div>
                         <div class="leaderboard-item current">
-                            <span><strong>3. Tu</strong></span>
+                            <span><i class="fas fa-user" style="margin-right: 8px;"></i> <strong>Tu</strong></span>
                             <span><strong id="user-xp">0 XP</strong></span>
                         </div>
                         <div class="leaderboard-item">
-                            <span>4. IonVasile</span>
+                            <span><i class="fas fa-star" style="color: bronze; margin-right: 8px;"></i> IonVasile</span>
                             <span>1520 XP</span>
                         </div>
                         <div class="leaderboard-item">
-                            <span>5. ElenaMarin</span>
+                            <span><i class="fas fa-star" style="color: var(--primary); margin-right: 8px;"></i> ElenaMarin</span>
                             <span>1380 XP</span>
                         </div>
                     </div>
@@ -734,34 +1276,34 @@
     
     <section class="learning-methods">
         <div class="container">
-            <h2 class="section-title">Metode Noastre de Învățare</h2>
-            <p class="section-subtitle">Combinăm cele mai eficiente tehnici educative pentru a asigura o experiență de învățare memorabilă.</p>
+            <h2 class="section-title reveal">Metode Noastre de Învățare</h2>
+            <p class="section-subtitle reveal">Combinăm cele mai eficiente tehnici educative pentru a asigura o experiență de învățare memorabilă și eficientă.</p>
             
             <div class="methods-grid">
-                <div class="method-card">
+                <div class="method-card reveal">
                     <div class="method-icon">
                         <i class="fas fa-gamepad"></i>
                     </div>
                     <h3>Jocuri Interactive</h3>
-                    <p>Simulări și scenarii din viața reală care te învață prin experimentare directă.</p>
+                    <p>Simulări și scenarii din viața reală care te învață prin experimentare directă și feedback instant.</p>
                     <div class="game-tag">Experiențială</div>
                 </div>
                 
-                <div class="method-card">
+                <div class="method-card reveal">
                     <div class="method-icon">
                         <i class="fas fa-robot"></i>
                     </div>
                     <h3>AI Personalizat</h3>
-                    <p>Asistent inteligent care se adaptează la nivelul tău și recomandă conținut personalizat.</p>
+                    <p>Asistent inteligent care se adaptează la nivelul tău și recomandă conținut personalizat pentru progres optim.</p>
                     <div class="game-tag">Adaptivă</div>
                 </div>
                 
-                <div class="method-card">
+                <div class="method-card reveal">
                     <div class="method-icon">
                         <i class="fas fa-users"></i>
                     </div>
                     <h3>Învățare Socială</h3>
-                    <p>Competiții și colaborări cu alți utilizatori pentru o experiență mai angajantă.</p>
+                    <p>Competiții și colaborări cu alți utilizatori pentru o experiență mai angajantă și motivantă.</p>
                     <div class="game-tag">Socială</div>
                 </div>
             </div>
@@ -770,9 +1312,9 @@
     
     <section class="cta-section">
         <div class="container">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Ești gata să începi?</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin: 0 auto 2rem;">Alege primul tău joc și începe să câștigi XP pentru a urca în clasament!</p>
-            <button class="btn btn-primary" style="padding: 15px 40px; font-size: 1.3rem; background-color: white; color: var(--primary);" onclick="window.location.href='jocuri.html'">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; position: relative; z-index: 2;">Ești gata să începi?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin: 0 auto 2rem; position: relative; z-index: 2;">Alege primul tău joc și începe să câștigi XP pentru a urca în clasament și să devii expert financiar!</p>
+            <button class="btn btn-primary pulse-animation" style="padding: 15px 40px; font-size: 1.3rem; position: relative; z-index: 2;" onclick="window.location.href='jocuri.html'">
                 <i class="fas fa-play"></i> Vezi Toate Jocurile
             </button>
         </div>
@@ -782,12 +1324,12 @@
         <div class="container footer-container">
             <div class="footer-about">
                 <div class="footer-logo">FinQuest</div>
-                <p>Transformăm educația financiară într-o aventură interactivă și distractivă pentru toți.</p>
+                <p style="color: #d1d5db; line-height: 1.7;">Transformăm educația financiară într-o aventură interactivă și distractivă pentru toți, de la copii la adulți.</p>
                 <div style="margin-top: 1.5rem; display: flex; gap: 1rem; font-size: 1.5rem;">
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-facebook"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" style="color: #d1d5db;"><i class="fab fa-youtube"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" style="color: #d1d5db; transition: color 0.3s ease;"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
             
@@ -828,6 +1370,55 @@
     </footer>
     
     <script>
+        // --- 1. THEME TOGGLE LOGIC ---
+        const toggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = toggleBtn.querySelector('i');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('finquest-theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('finquest-theme', newTheme);
+            updateIcon(newTheme);
+            
+            // Animație la schimbarea temei
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 300);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeIcon.style.color = '#fbbf24';
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                themeIcon.style.color = '#f59e0b';
+            }
+        }
+
+        // --- 2. SCROLL REVEAL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // --- 3. SISTEM DE XP SI PROGRES ---
         document.addEventListener('DOMContentLoaded', function() {
             // Verifică progresul utilizatorului
             const savedXP = localStorage.getItem('finquest-bani-de-buzunar-xp');
@@ -847,6 +1438,18 @@
             
             // Actualizează nivelul utilizatorului
             updateUserLevel();
+            
+            // Actualizează streak-ul zilnic
+            updateStreak();
+            
+            // Animație particule
+            createParticles();
+            
+            // Animație cursor hover pe carduri
+            initCardHoverEffects();
+            
+            // Contor animat pentru XP
+            animateXPCounters();
         });
         
         function updateTotalXP(xpEarned) {
@@ -863,13 +1466,144 @@
         function updateUserLevel() {
             const totalXP = parseInt(localStorage.getItem('finquest-total-xp') || '0');
             const level = Math.floor(totalXP / 100) + 1;
-            document.querySelector('.user-level span').textContent = `Level ${level}`;
+            document.getElementById('user-level-text').textContent = `Level ${level}`;
+            
+            // Animație pentru nivel nou
+            if (level > 1) {
+                const userLevel = document.querySelector('.user-level');
+                userLevel.classList.add('pulse-animation');
+                setTimeout(() => {
+                    userLevel.classList.remove('pulse-animation');
+                }, 2000);
+            }
+        }
+        
+        function updateStreak() {
+            const today = new Date().getDay(); // 0 = Duminică, 1 = Luni, etc.
+            const streakDays = localStorage.getItem('finquest-streak-days') || '1,2,3,4'; // Exemple
+            
+            const streakArray = streakDays.split(',').map(Number);
+            const streakContainer = document.getElementById('streak-container');
+            
+            streakContainer.querySelectorAll('.streak-day').forEach(day => {
+                const dayNum = parseInt(day.getAttribute('data-day'));
+                if (streakArray.includes(dayNum)) {
+                    day.classList.add('active');
+                }
+            });
+        }
+        
+        // --- 4. ANIMAȚII PARTICULE ---
+        function createParticles() {
+            const colors = ['#1e40af', '#f59e0b', '#7c3aed'];
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Poziție aleatorie
+                    particle.style.left = `${Math.random() * 100}%`;
+                    
+                    // Culoare aleatorie
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // Dimensiune aleatorie
+                    const size = Math.random() * 10 + 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Viteză aleatorie
+                    particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    
+                    document.body.appendChild(particle);
+                    
+                    // Șterge particula după ce termină animația
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 30000);
+                }, i * 500);
+            }
+            
+            // Repetă crearea particulelor la fiecare 30 de secunde
+            setInterval(createParticles, 30000);
+        }
+        
+        // --- 5. EFECTE HOVER AVANSATE ---
+        function initCardHoverEffects() {
+            const cards = document.querySelectorAll('.tree-node, .gamification-card, .method-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateY = (x - centerX) / 25;
+                    const rotateX = (centerY - y) / 25;
+                    
+                    this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                });
+            });
+        }
+        
+        // --- 6. ANIMAȚIE CONTOR XP ---
+        function animateXPCounters() {
+            const counters = document.querySelectorAll('.node-xp');
+            
+            counters.forEach(counter => {
+                const originalText = counter.textContent;
+                const xpValue = parseInt(originalText.replace(/\D/g, ''));
+                
+                counter.addEventListener('mouseenter', function() {
+                    let current = 0;
+                    const increment = xpValue / 20;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= xpValue) {
+                            current = xpValue;
+                            clearInterval(timer);
+                        }
+                        this.textContent = `+${Math.floor(current)} XP`;
+                    }, 50);
+                    
+                    this.dataset.originalText = originalText;
+                });
+                
+                counter.addEventListener('mouseleave', function() {
+                    if (this.dataset.originalText) {
+                        this.textContent = this.dataset.originalText;
+                    }
+                });
+            });
+        }
+        
+        // --- 7. FUNCȚII UTILITARE ---
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                window.scrollTo({
+                    top: section.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
         }
         
         // Navigare pentru nodurile de joc
         document.querySelectorAll('.tree-node:not(.locked)').forEach(node => {
-            node.addEventListener('click', function() {
-                if (!this.classList.contains('locked')) {
+            node.addEventListener('click', function(e) {
+                if (!this.classList.contains('locked') && !e.target.closest('a')) {
                     const link = this.querySelector('a');
                     if (link) {
                         window.location.href = link.getAttribute('href');
@@ -877,6 +1611,48 @@
                 }
             });
         });
+        
+        // Efect de ondulare la click pe butoane
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Adaugă stil pentru efectul de ondulare
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.7);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
