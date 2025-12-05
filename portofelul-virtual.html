@@ -1,1373 +1,965 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofelul Virtual - Joc Educativ Financiar</title>
+    <title>FinQuest: Portofelul Virtual - Level Up!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
+        /* --- VARIABLES & THEME CONFIG --- */
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
-            --success: #4ade80;
-            --warning: #fbbf24;
+            /* Light Theme Defaults */
+            --bg-gradient: linear-gradient(135deg, #f6f8fd 0%, #e1e9f5 100%);
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --text-main: #2b3452;
+            --text-secondary: #64748b;
+            
+            --primary: #4f46e5;
+            --primary-glow: rgba(79, 70, 229, 0.3);
+            --accent: #06b6d4;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            
+            --card-radius: 24px;
+            --transition-speed: 0.4s;
+            
+            --pattern-opacity: 0.05;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Overrides */
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --text-main: #f1f5f9;
+            --text-secondary: #94a3b8;
+            
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.5);
+            --accent: #22d3ee;
+            --success: #34d399;
             --danger: #f87171;
-            --light: #f8f9fa;
-            --dark: #1e293b;
-            --gray: #6b7280;
+            
+            --pattern-opacity: 0.03;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+
+        /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background: linear-gradient(135deg, #f5f7ff 0%, #eef2ff 100%);
-            color: var(--dark);
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+            position: relative;
         }
-        
+
+        /* Background Animated Blobs */
+        .bg-blobs {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: floatBlob 20s infinite alternate;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: var(--primary); animation-delay: 0s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: var(--accent); animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 40%; width: 300px; height: 300px; background: var(--success); animation-delay: -10s; opacity: 0.2; }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* --- GLASSMORPHISM UTILS --- */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* --- HEADER --- */
         .game-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin: 1rem;
         }
-        
+
         .header-content {
-            max-width: 1000px;
-            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
-        
-        .game-header-left {
+
+        .logo-area {
             display: flex;
             align-items: center;
             gap: 15px;
         }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+        }
+
+        .game-title h1 {
+            font-weight: 800;
+            font-size: 1.5rem;
+            line-height: 1.2;
+        }
         
-        .game-title {
+        .game-title span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .header-controls {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
+            gap: 20px;
         }
-        
-        .game-icon {
-            color: var(--accent);
-        }
-        
-        .badge-financial-game {
-            background: linear-gradient(135deg, #2a3c8f, #1a2a6c);
-            border-radius: 8px;
-            padding: 6px 12px;
-            color: white;
-            font-weight: 700;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 2px solid #4cc9f0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .badge-financial-game::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 10px 10px;
-            transform: rotate(15deg);
-            pointer-events: none;
-        }
-        
-        .badge-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .badge-line-1 {
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            color: #4cc9f0;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        .badge-line-2 {
-            font-size: 0.9rem;
-            letter-spacing: 1.5px;
-            color: white;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-        }
-        
-        .game-stats {
+
+        /* Stats Bar */
+        .stats-bar {
             display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
+            gap: 15px;
         }
         
-        .stat-item {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
-            border-radius: 20px;
+        .stat-pill {
+            background: rgba(var(--primary), 0.1);
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 0.9rem;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
         
-        .stat-value {
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        
-        .currency {
-            font-size: 0.8rem;
-            font-weight: normal;
-            margin-left: 2px;
-        }
-        
-        .game-container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-            flex-grow: 1;
-        }
-        
-        .game-layout {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .game-sidebar {
-            flex: 1;
-            min-width: 250px;
-        }
-        
-        .game-main {
-            flex: 2;
-            min-width: 300px;
-        }
-        
-        .wallet-card {
-            background: linear-gradient(135deg, #1a2a6c, #2a3c8f);
-            border-radius: 16px;
-            padding: 2rem;
-            color: white;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        
-        .wallet-title {
+        .stat-pill i { color: var(--accent); }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-main);
             font-size: 1.5rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .theme-toggle:hover { transform: rotate(15deg) scale(1.1); }
+
+        /* --- MAIN LAYOUT --- */
+        .game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 2rem;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Wallet Card 3D */
+        .wallet-card {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
         
+        .wallet-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: rotateLight 10s linear infinite;
+        }
+        
+        @keyframes rotateLight { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
         .wallet-amount {
             font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 800;
+            margin: 1rem 0;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        
-        .wallet-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
+
+        .btn-wallet {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
-            border: none;
-            font-size: 1rem;
+            font-weight: 600;
         }
-        
-        .btn-primary {
-            background-color: var(--accent);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: #3ab8dd;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .btn-return {
-            background-color: var(--success);
-            color: white;
-        }
-        
-        .btn-return:hover {
-            background-color: #22c55e;
-        }
-        
-        .progress-container {
-            background-color: white;
-            border-radius: 12px;
+        .btn-wallet:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+
+        /* Progress & Goals */
+        .widget-card {
             padding: 1.5rem;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-            margin-bottom: 2rem;
         }
         
-        .progress-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
+        .widget-header {
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
-        
-        .progress-bar {
-            height: 20px;
-            background-color: #e5e7eb;
+
+        .progress-track {
+            height: 12px;
+            background: rgba(0,0,0,0.05);
             border-radius: 10px;
             overflow: hidden;
-            margin-bottom: 1rem;
+            position: relative;
         }
         
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--accent), var(--primary));
             border-radius: 10px;
-            transition: width 0.5s ease;
+            width: 0%;
+            transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
         }
         
-        .progress-info {
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+            animation: moveStripes 1s linear infinite;
+        }
+        
+        @keyframes moveStripes { from { background-position: 0 0; } to { background-position: 20px 0; } }
+
+        /* Transaction History */
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .history-list::-webkit-scrollbar { width: 4px; }
+        .history-list::-webkit-scrollbar-thumb { background: var(--text-secondary); border-radius: 4px; opacity: 0.3; }
+        
+        .history-item {
             display: flex;
             justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             font-size: 0.9rem;
-            color: var(--gray);
+            animation: slideInLeft 0.3s ease forwards;
         }
         
-        .weekly-goal {
-            background-color: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-        }
-        
-        .goal-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .goal-amount {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .goal-desc {
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-        }
-        
-        .game-scene {
-            background-color: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            min-height: 400px;
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* --- GAME SCENE --- */
+        .game-main {
             display: flex;
             flex-direction: column;
+            gap: 1.5rem;
         }
-        
-        .scene-header {
+
+        .scene-card {
+            padding: 3rem;
+            min-height: 500px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f3f4f6;
+            flex-direction: column;
+            position: relative;
         }
-        
-        .scene-title {
-            font-size: 1.8rem;
-            color: var(--secondary);
-        }
-        
-        .scene-step {
-            background-color: var(--accent);
+
+        .scene-progress-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
             color: white;
-            padding: 8px 16px;
+            padding: 5px 15px;
             border-radius: 20px;
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 700;
         }
-        
-        .scene-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .scene-message {
-            font-size: 1.4rem;
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
-            text-align: center;
-            padding: 0 1rem;
-        }
-        
-        .character {
+
+        /* Character */
+        .character-area {
             text-align: center;
             margin-bottom: 2rem;
         }
         
-        .character-img {
-            font-size: 5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
+        .character-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            animation: floatChar 3s ease-in-out infinite;
+            border: 4px solid white;
         }
         
-        .character-name {
-            font-size: 1.2rem;
+        @keyframes floatChar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        .scene-question {
+            font-size: 1.4rem;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 3rem;
             font-weight: 600;
-            color: var(--secondary);
         }
-        
-        .options-container {
+
+        /* Options Grid */
+        .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
-        
-        .option {
-            background-color: #f8fafc;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
+
+        .option-card {
+            background: rgba(255,255,255,0.5);
+            border: 2px solid transparent;
+            border-radius: 16px;
             padding: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
         }
         
-        .option:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        .option.selected {
+        [data-theme="dark"] .option-card { background: rgba(255,255,255,0.05); }
+
+        .option-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: var(--glass-bg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             border-color: var(--primary);
-            background-color: #eef2ff;
         }
+
+        .option-card:active { transform: scale(0.98); }
+
+        .option-card.selected { border-color: var(--text-secondary); opacity: 0.7; pointer-events: none; }
         
-        .option.correct {
+        .option-card.correct {
             border-color: var(--success);
-            background-color: #f0fdf4;
+            background: rgba(16, 185, 129, 0.1);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            animation: bounce 0.5s;
         }
         
-        .option.incorrect {
+        .option-card.incorrect {
             border-color: var(--danger);
-            background-color: #fef2f2;
+            background: rgba(239, 68, 68, 0.1);
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
         
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
         .option-icon {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 1rem;
             color: var(--primary);
         }
-        
+
         .option-text {
+            font-weight: 700;
             font-size: 1.1rem;
-            font-weight: 600;
             margin-bottom: 0.5rem;
         }
         
         .option-desc {
             font-size: 0.9rem;
-            color: var(--gray);
+            color: var(--text-secondary);
         }
-        
-        .feedback {
-            padding: 1.5rem;
-            border-radius: 12px;
+
+        /* Feedback Overlay */
+        .feedback-overlay {
             margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 16px;
             display: none;
+            animation: fadeInUp 0.5s ease;
         }
         
-        .feedback.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
+        .feedback-overlay.correct { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); color: var(--success); }
+        .feedback-overlay.incorrect { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); color: var(--danger); }
         
-        .feedback.correct {
-            background-color: #f0fdf4;
-            border: 2px solid var(--success);
-        }
-        
-        .feedback.incorrect {
-            background-color: #fef2f2;
-            border: 2px solid var(--danger);
-        }
-        
-        .feedback-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .feedback-title.correct {
-            color: var(--success);
-        }
-        
-        .feedback-title.incorrect {
-            color: var(--danger);
-        }
-        
-        .feedback-text {
-            font-size: 1.1rem;
-            line-height: 1.5;
-        }
-        
-        .action-buttons {
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Action Buttons */
+        .action-area {
             display: flex;
             justify-content: center;
             gap: 1rem;
             margin-top: 2rem;
+            display: none; /* Hidden by default */
         }
-        
-        .action-btn {
-            padding: 12px 24px;
+
+        .btn-main {
+            padding: 14px 32px;
+            border-radius: 50px;
             font-size: 1.1rem;
-        }
-        
-        .xp-reward {
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
-            background-color: rgba(76, 201, 240, 0.1);
-            padding: 1rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-            font-weight: 600;
-            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        
-        .xp-icon {
-            color: var(--accent);
+
+        .btn-next {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+        }
+        .btn-next:hover {
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-hint {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-main);
+            border: 1px solid var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .game-container { grid-template-columns: 1fr; }
+            .sidebar { flex-direction: row; flex-wrap: wrap; }
+            .wallet-card { flex: 1 1 300px; }
+            .widget-card { flex: 1 1 300px; }
+        }
+
+        /* XP Floating Animation */
+        .xp-float {
+            position: absolute;
+            color: var(--warning);
+            font-weight: bold;
             font-size: 1.5rem;
+            pointer-events: none;
+            animation: floatUpFade 1.5s ease-out forwards;
+            z-index: 1000;
         }
-        
-        .game-complete {
-            text-align: center;
-            padding: 3rem 1rem;
-        }
-        
-        .complete-icon {
-            font-size: 5rem;
-            color: var(--success);
-            margin-bottom: 1.5rem;
-        }
-        
-        .complete-title {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
-        
-        .complete-text {
-            font-size: 1.2rem;
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-        
-        .transaction-history {
-            background-color: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-            margin-top: 2rem;
-        }
-        
-        .history-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .history-list {
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        
-        .history-item:last-child {
-            border-bottom: none;
-        }
-        
-        .history-amount.positive {
-            color: var(--success);
-            font-weight: 600;
-        }
-        
-        .history-amount.negative {
-            color: var(--danger);
-            font-weight: 600;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .game-header-left {
-                flex-direction: column;
-                gap: 0.5rem;
-                text-align: center;
-            }
-            
-            .game-stats {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .wallet-amount {
-                font-size: 2.8rem;
-            }
-            
-            .scene-title {
-                font-size: 1.5rem;
-            }
-            
-            .options-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .badge-financial-game {
-                padding: 4px 8px;
-            }
-            
-            .badge-line-1 {
-                font-size: 0.7rem;
-            }
-            
-            .badge-line-2 {
-                font-size: 0.8rem;
-            }
+
+        @keyframes floatUpFade {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <header class="game-header">
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <header class="game-header glass-panel">
         <div class="header-content">
-            <div class="game-header-left">
+            <div class="logo-area">
+                <i class="fas fa-wallet logo-icon"></i>
                 <div class="game-title">
-                    <i class="fas fa-piggy-bank game-icon"></i>
+                    <h1>FinQuest</h1>
                     <span>Portofelul Virtual</span>
-                </div>
-                <div class="badge-financial-game">
-                    <div class="badge-content">
-                        <div class="badge-line badge-line-1">FINANCIAL</div>
-                        <div class="badge-line badge-line-2">EDUCATION</div>
-                    </div>
                 </div>
             </div>
             
-            <div class="game-stats">
-                <div class="stat-item">
-                    <i class="fas fa-clock"></i>
-                    <span>Timp: <span class="stat-value" id="time">3:00</span></span>
+            <div class="header-controls">
+                <div class="stats-bar">
+                    <div class="stat-pill">
+                        <i class="fas fa-clock"></i>
+                        <span id="time">03:00</span>
+                    </div>
+                    <div class="stat-pill">
+                        <i class="fas fa-star"></i>
+                        <span id="xp">0 XP</span>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <i class="fas fa-star"></i>
-                    <span>XP: <span class="stat-value" id="xp">0</span></span>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Decizii: <span class="stat-value" id="decisions">0/7</span></span>
-                </div>
+                <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
         </div>
     </header>
-    
+
     <main class="game-container">
-        <div class="game-layout">
-            <aside class="game-sidebar">
-                <div class="wallet-card">
-                    <div class="wallet-title">PORTOFELUL TĂU</div>
-                    <div class="wallet-amount">50 <span class="currency">MDL</span></div>
-                    <div class="wallet-controls">
-                        <button class="btn btn-secondary" id="addMoney">
-                            <i class="fas fa-plus"></i> Primește bani
-                        </button>
-                        <button class="btn btn-secondary" id="resetGame">
-                            <i class="fas fa-redo"></i> Restart
-                        </button>
+        <aside class="sidebar">
+            <div class="wallet-card glass-panel">
+                <h3>Bani Disponibili</h3>
+                <div class="wallet-amount" id="walletAmount">50 <small>MDL</small></div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button class="btn-wallet" id="restartBtn"><i class="fas fa-redo"></i> Restart</button>
                     </div>
+            </div>
+
+            <div class="widget-card glass-panel">
+                <div class="widget-header">
+                    <i class="fas fa-bullseye"></i> Obiectiv: Economii
                 </div>
-                
-                <div class="progress-container">
-                    <div class="progress-title">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Progres Joc</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-info">
-                        <span>Început</span>
-                        <span id="progressText">0%</span>
-                        <span>Final</span>
-                    </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span id="savingsAmount">0 MDL</span>
+                    <span style="color: var(--text-secondary)">din 20 MDL</span>
                 </div>
-                
-                <div class="weekly-goal">
-                    <div class="goal-title">
-                        <i class="fas fa-bullseye"></i>
-                        <span>Obiectivul Săptămânii</span>
-                    </div>
-                    <div class="goal-amount">20 MDL</div>
-                    <div class="goal-desc">Economisește 20 MDL din banii de buzunar pentru a cumpăra un joc nou.</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="savingsFill" style="width: 0%"></div>
-                    </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="savingsFill"></div>
                 </div>
-                
-                <div class="transaction-history">
-                    <div class="history-title">
-                        <i class="fas fa-history"></i>
-                        <span>Istoric Tranzacții</span>
-                    </div>
-                    <div class="history-list" id="historyList">
-                        <!-- Transactions will be added here dynamically -->
-                    </div>
+            </div>
+
+            <div class="widget-card glass-panel">
+                <div class="widget-header">
+                    <i class="fas fa-flag-checkered"></i> Progres Joc
                 </div>
-            </aside>
+                <div class="progress-track">
+                    <div class="progress-fill" id="gameProgressFill" style="background: linear-gradient(90deg, #6366f1, #a855f7)"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.8rem; margin-top: 5px; color: var(--text-secondary);" id="stepsText">Pas 0/7</div>
+            </div>
+
+            <div class="widget-card glass-panel">
+                <div class="widget-header">
+                    <i class="fas fa-receipt"></i> Istoric Recent
+                </div>
+                <div class="history-list" id="historyList">
+                    </div>
+            </div>
+        </aside>
+
+        <section class="game-main">
+            <div class="scene-card glass-panel" id="gameScene">
+                </div>
             
-            <section class="game-main">
-                <div class="game-scene" id="gameScene">
-                    <!-- Game content will be loaded here dynamically -->
-                </div>
-                
-                <div class="action-buttons" id="actionButtons" style="display: none;">
-                    <button class="btn btn-primary action-btn" id="nextBtn">
-                        <i class="fas fa-arrow-right"></i> Următoarea Decizie
-                    </button>
-                    <button class="btn btn-secondary action-btn" id="hintBtn">
-                        <i class="fas fa-lightbulb"></i> Sugestie
-                    </button>
-                </div>
-            </section>
-        </div>
+            <div class="action-area" id="actionArea">
+                <button class="btn-main btn-hint" id="hintBtn">
+                    <i class="fas fa-lightbulb"></i> Indiciu
+                </button>
+                <button class="btn-main btn-next" id="nextBtn">
+                    Următorul <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
     </main>
-    
+
     <script>
-        // Funcție pentru amestecarea aleatoare a unui array (Fisher-Yates shuffle)
-        function shuffleArray(array) {
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
-        }
-        
-        // Game state
-        const gameState = {
-            wallet: 50,
-            savings: 0,
-            xp: 0,
-            currentStep: 0,
-            decisions: 0,
-            maxDecisions: 7,
-            timeLeft: 180, // 3 minutes in seconds
-            timer: null,
-            weeklyGoal: 20,
-            transactions: [
-                { description: "Bani de buzunar săptămânal", amount: 50, type: "income", currency: "MDL" }
-            ]
-        };
-        
-        // Game scenarios
+        /* --- GAME DATA --- */
         const scenarios = [
             {
                 id: 1,
-                title: "Săptămâna Începe!",
-                message: "Bună! Eu sunt Alex, antrenorul tău financiar. Ai primit 50 MDL pentru săptămâna aceasta. Cum vei gestiona acești bani?",
-                character: "fas fa-user-tie",
-                characterName: "Alex - Antrenor Financiar",
+                title: "Start Săptămână!",
+                message: "Bună! Ai primit 50 MDL bani de buzunar. Cum decizi să îi gestionezi la început de săptămână?",
+                character: "fas fa-user-astronaut",
+                color: "#6366f1",
                 options: [
-                    {
-                        id: "a",
-                        text: "Îi cheltui imediat pe dulciuri și suc",
-                        description: "Vei avea satisfacție imediată, dar banii se vor termina repede",
-                        correct: false,
-                        feedback: "A cheltui toți banii imediat nu este o strategie bună. Învață să te bucuri de lucruri mici în fiecare zi, nu totul deodată!",
-                        walletChange: -20,
-                        xp: 5
-                    },
-                    {
-                        id: "b",
-                        text: "Îi pun toți în pușculiță pentru economii",
-                        description: "Vei economisi tot, dar nu vei avea bani pentru cheltuieli zilnice",
-                        correct: false,
-                        feedback: "Economisirea este excelentă, dar trebuie să lași și bani pentru cheltuieli necesare. Un buget echilibrat include atât economii, cât și cheltuieli.",
-                        walletChange: -50,
-                        savingsChange: 50,
-                        xp: 10
-                    },
-                    {
-                        id: "c",
-                        text: "Îmi fac un plan: 20 MDL economii, 30 MDL cheltuieli",
-                        description: "Un echilibru între economisire și cheltuieli rezonabile",
-                        correct: true,
-                        feedback: "Excelent! Acesta este un plan echilibrat. Economisești pentru obiectivele tale, dar îți și permiți să te bucuri de prezent. Acesta este principiul de bază al unui buget sănătos!",
-                        walletChange: -20,
-                        savingsChange: 20,
-                        xp: 25
-                    }
+                    { id: "a", text: "Cheltui totul pe dulciuri", desc: "Satisfacție imediată", correct: false, feedback: "Banii s-au dus rapid! E greu fără plan.", wallet: -20, xp: 5 },
+                    { id: "b", text: "Pun totul la ciorap", desc: "Economie extremă", correct: false, feedback: "Economisirea e bună, dar trebuie să și trăiești puțin.", wallet: -50, savings: 50, xp: 10 },
+                    { id: "c", text: "Plan: 20 economii, 30 cheltuieli", desc: "Echilibru perfect", correct: true, feedback: "Excelent! Buget echilibrat.", wallet: -20, savings: 20, xp: 50 }
                 ],
-                hint: "Gândește-te la un echilibru între a economisi pentru viitor și a te bucura de prezent."
+                hint: "Caută calea de mijloc."
             },
             {
                 id: 2,
-                title: "Prietenul Te Cheamă la Cinema",
-                message: "Prietenul tău te invită la cinema. Biletul costă 15 MDL, iar popcorn și suc încă 10 MDL. Ce faci?",
+                title: "Cinema cu Prietenii",
+                message: "Prietenii merg la film. Bilet + popcorn = 25 MDL. Ce faci?",
                 character: "fas fa-film",
-                characterName: "Decizie Socială",
+                color: "#ec4899",
                 options: [
-                    {
-                        id: "a",
-                        text: "Refuz pentru că e prea scump",
-                        description: "Economisești bani, dar ratezi o experiență socială",
-                        correct: false,
-                        feedback: "Refuzul permanent poate afecta relațiile sociale. Uneori, cheltuielile pentru experiențe valoroase cu prietenii merită.",
-                        walletChange: 0,
-                        xp: 5
-                    },
-                    {
-                        id: "b",
-                        text: "Merg și cheltui tot: 25 MDL",
-                        description: "Te distrezi, dar cheltui o sumă mare dintr-o dată",
-                        correct: false,
-                        feedback: "Cheltuind 25 MDL dintr-o dată, îți reduci semnificativ bugetul pentru restul săptămânii. Poate poți găsi o alternativă mai ieftină?",
-                        walletChange: -25,
-                        xp: 5
-                    },
-                    {
-                        id: "c",
-                        text: "Propun o alternativă mai ieftină",
-                        description: "Te întâlnești cu prietenul la o plimbare în parc sau acasă",
-                        correct: true,
-                        feedback: "Excelentă decizie! Socializarea nu trebuie să fie costisitoare. Propunerea unei alternative mai ieftine arată maturitate financiară și creativitate.",
-                        walletChange: -5,
-                        xp: 30
-                    }
+                    { id: "a", text: "Nu merg, e scump", desc: "Ratezi distracția", correct: false, feedback: "Izolarea nu e soluția. Banii sunt și pentru experiențe.", wallet: 0, xp: 5 },
+                    { id: "b", text: "Merg și iau tot pachetul", desc: "Cost: 25 MDL", correct: false, feedback: "Distractiv, dar costisitor pentru bugetul tău.", wallet: -25, xp: 10 },
+                    { id: "c", text: "Propun o plimbare sau film acasă", desc: "Cost: 5 MDL (snacks)", correct: true, feedback: "Super! Socializare smart și ieftină.", wallet: -5, xp: 40 }
                 ],
-                hint: "Socializarea este importantă, dar poate fi făcută și într-un mod mai economic."
+                hint: "Există alternative la distracția scumpă?"
             },
             {
                 id: 3,
-                title: "Vezi un Joc Nou la Magazin",
-                message: "La magazin vezi un joc nou care costă 45 MDL. Îl dorești mult, dar depășește bugetul tău. Cum procedezi?",
-                character: "fas fa-shopping-cart",
-                characterName: "Tentația Cumpărăturilor",
+                title: "Tentația",
+                message: "Vezi un joc nou la 45 MDL. Îl vrei ACUM, dar nu prea ai bani.",
+                character: "fas fa-gamepad",
+                color: "#8b5cf6",
                 options: [
-                    {
-                        id: "a",
-                        text: "Îl cumpăr acum, indiferent de consecințe",
-                        description: "Îți împlinești dorința imediat, dar rămâi fără bani",
-                        correct: false,
-                        feedback: "Achiziționarea impulsivă este una dintre cele mai comune greșeli financiare. Duce la regret și probleme financiare ulterioare.",
-                        walletChange: -45,
-                        xp: 5
-                    },
-                    {
-                        id: "b",
-                        text: "Nu îl cumpăr niciodată",
-                        description: "Economisești bani, dar nu îți împlinești dorința",
-                        correct: false,
-                        feedback: "Renunțarea completă la dorințe nu este nici ea sănătoasă. Poți planifica să îți împlinești dorințele într-un mod responsabil.",
-                        walletChange: 0,
-                        xp: 5
-                    },
-                    {
-                        id: "c",
-                        text: "Îl pun pe lista de dorințe și strâng bani",
-                        description: "Economisești în săptămânile următoare pentru a-l cumpăra",
-                        correct: true,
-                        feedback: "Perfect! Amânarea satisfacției pentru a-ți permite financiar achiziția este un semn de maturitate financiară. Îți vei bucura mai mult de joc când îl vei cumpăra cu banii strânși.",
-                        walletChange: 0,
-                        xp: 35
-                    }
+                    { id: "a", text: "Îl iau orice ar fi", desc: "Rămâi pe zero", correct: false, feedback: "Impulsivitate! Acum nu mai ai bani de nimic altceva.", wallet: -45, xp: 5 },
+                    { id: "b", text: "Nu-l cumpăr niciodată", desc: "Tristețe", correct: false, feedback: "Prea drastic. Poți să-l iei mai târziu.", wallet: 0, xp: 5 },
+                    { id: "c", text: "Îl pun pe Wishlist", desc: "Strâng bani pentru el", correct: true, feedback: "Maturitate financiară! O să te bucuri mai mult când strângi banii.", wallet: 0, xp: 45 }
                 ],
-                hint: "Poți să-ți împlinești dorințele într-un mod responsabil prin planificare."
+                hint: "Răbdarea e o virtute financiară."
             },
             {
                 id: 4,
-                title: "Oferă Specială la Magazinul de Dulciuri",
-                message: "Magazinul de dulciuri are o ofertă: 3 ciocolate la prețul a 2. Costul unei ciocolate este de 5 MDL. Ce alegi?",
-                character: "fas fa-candy-cane",
-                characterName: "Oferte și Reduceri",
+                title: "Oferta 'Irezistibilă'",
+                message: "3 ciocolate la 10 MDL (una costă 5 MDL). Tu voiai doar una.",
+                character: "fas fa-tags",
+                color: "#ef4444",
                 options: [
-                    {
-                        id: "a",
-                        text: "Cumpăr oferta: 3 ciocolate cu 10 MDL",
-                        description: "Economisești 5 MDL față de prețul individual",
-                        correct: false,
-                        feedback: "Ofertele sunt tentante, dar dacă cumperi mai mult decât ai nevoie, de fapt cheltui mai mult, nu economisești.",
-                        walletChange: -10,
-                        xp: 10
-                    },
-                    {
-                        id: "b",
-                        text: "Nu cumpăr nimic",
-                        description: "Economisești cei 10 MDL complet",
-                        correct: false,
-                        feedback: "Dacă îți dorești o ciocolată, poți să-ți permiți una. Refuzul total nu este întotdeauna cea mai bună soluție.",
-                        walletChange: 0,
-                        xp: 5
-                    },
-                    {
-                        id: "c",
-                        text: "Cumpăr o singură ciocolată cu 5 MDL",
-                        description: "Îți satisfaci pofta, dar cheltui responsabil",
-                        correct: true,
-                        feedback: "Foarte bine! Cumpărând doar ceea ce ai nevoie cu adevărat, eviți cheltuielile inutile. Ofertele sunt bune doar dacă cumperi ceea ce ai consuma oricum.",
-                        walletChange: -5,
-                        xp: 25
-                    }
+                    { id: "a", text: "Iau oferta (3 buc)", desc: "Economisești teoretic", correct: false, feedback: "Ai cheltuit 10 lei în loc de 5. E o capcană de marketing.", wallet: -10, xp: 10 },
+                    { id: "b", text: "Nu iau nimic", desc: "Refuz total", correct: false, feedback: "Dacă îți era poftă, e ok să iei una.", wallet: 0, xp: 5 },
+                    { id: "c", text: "Iau doar una", desc: "Cost: 5 MDL", correct: true, feedback: "Corect! Cumperi doar ce ai nevoie, nu ce vrea magazinul să vândă.", wallet: -5, xp: 35 }
                 ],
-                hint: "O ofertă bună este doar atunci când cumperi ce ai nevoie cu adevărat."
+                hint: "Dacă nu aveai nevoie de 3, nu ai economisit nimic."
             },
             {
                 id: 5,
-                title: "Primești Ofertă de Muncă",
-                message: "Un vecin îți oferă 15 MDL să cureți frunzele din grădina lui. Accepti?",
-                character: "fas fa-leaf",
-                characterName: "Oportunitate de Câștig",
+                title: "Job Ocazional",
+                message: "Un vecin oferă 15 MDL să cureți curtea.",
+                character: "fas fa-broom",
+                color: "#10b981",
                 options: [
-                    {
-                        id: "a",
-                        text: "Refuz, prefer să mă joc",
-                        description: "Pierzi o oportunitate de a câștiga bani",
-                        correct: false,
-                        feedback: "Oportunitățile de a câștiga bani în mod legal și corect sunt valoroase. Munca onestă te învață valoarea banilor.",
-                        walletChange: 0,
-                        xp: 5
-                    },
-                    {
-                        id: "b",
-                        text: "Accept și cheltui imediat banii",
-                        description: "Câștigi bani, dar îi cheltui fără să te gândești",
-                        correct: false,
-                        feedback: "Câștigul de bani este excelent, dar cheltuirea lor imediată nu este cea mai bună strategie. Gândește-te cum poți folosi acești bani în mod inteligent.",
-                        walletChange: 15,
-                        xp: 15
-                    },
-                    {
-                        id: "c",
-                        text: "Accept și pun banii în economii",
-                        description: "Câștigi bani și îi economisești pentru obiectivele tale",
-                        correct: true,
-                        feedback: "Excelent! Acesta este modul perfect de a gestiona banii câștigați. Economisirea banilor câștigați prin muncă îți va ajuta să atingi obiectivele tale mai rapid.",
-                        walletChange: 15,
-                        savingsChange: 15,
-                        xp: 40
-                    }
+                    { id: "a", text: "Nu, mersi", desc: "Lenevești", correct: false, feedback: "Ai ratat un venit extra.", wallet: 0, xp: 0 },
+                    { id: "b", text: "Accept și cheltui tot", desc: "Bani de buzunar extra", correct: false, feedback: "Munca e bună, dar încearcă să și pui deoparte.", wallet: 15, xp: 20 },
+                    { id: "c", text: "Accept și economisesc", desc: "Muncă + Investiție", correct: true, feedback: "Bravo! Banii munciți se simt cel mai bine în economii.", wallet: 15, savings: 15, xp: 50 }
                 ],
-                hint: "Banii câștigați prin muncă au o valoare specială și merită folosiți cu grijă."
+                hint: "Banii munciți au valoare dublă."
             },
             {
                 id: 6,
-                title: "Ziua Prietenului Tău",
-                message: "Este ziua prietenului tău bun. Vrei să-i cumperi un cadou. Care este cea mai bună opțiune?",
-                character: "fas fa-birthday-cake",
-                characterName: "Cadouri și Prietenie",
+                title: "Cadoul",
+                message: "Ziua celui mai bun prieten. Ce cadou iei?",
+                character: "fas fa-gift",
+                color: "#f59e0b",
                 options: [
-                    {
-                        id: "a",
-                        text: "Cumpăr cel mai scump cadou: 30 MDL",
-                        description: "Îți arăți aprecierea, dar cheltui mult",
-                        correct: false,
-                        feedback: "Valoarea unui cadou nu este dată de preț, ci de gândul din spatele lui. Prietenii adevărați apreciază intenția, nu costul.",
-                        walletChange: -30,
-                        xp: 10
-                    },
-                    {
-                        id: "b",
-                        text: "Nu cumpăr nimic, doar îi urez La mulți ani",
-                        description: "Economisești bani, dar cadoul tău este nepersonalizat",
-                        correct: false,
-                        feedback: "Un cadou simbolic este important pentru a arăta că ții la prietenul tău. Nu trebuie să coste mult pentru a fi semnificativ.",
-                        walletChange: 0,
-                        xp: 5
-                    },
-                    {
-                        id: "c",
-                        text: "Îi fac un cadou personalizat manual",
-                        description: "Îți arăți aprecierea într-un mod creativ și personal",
-                        correct: true,
-                        feedback: "Perfect! Cadourile făcute manual sunt adesea mai apreciate decât cele scumpe pentru că arată că ai investit timp și gândire. Costă doar 5 MDL pentru materiale!",
-                        walletChange: -5,
-                        xp: 30
-                    }
+                    { id: "a", text: "Cel mai scump (30 MDL)", desc: "Impresionezi", correct: false, feedback: "Prietenia nu se măsoară în bani. E prea mult pentru bugetul tău.", wallet: -30, xp: 15 },
+                    { id: "b", text: "Doar o felicitare", desc: "Gratis", correct: false, feedback: "Cam puțin pentru cel mai bun prieten.", wallet: 0, xp: 5 },
+                    { id: "c", text: "Cadou DIY (Handmade)", desc: "Cost materiale: 5 MDL", correct: true, feedback: "Perfect! Efortul personal valorează mai mult decât banii.", wallet: -5, xp: 40 }
                 ],
-                hint: "Cadourile nu trebuie să fie scumpe pentru a fi speciale. Gândirea și personalizarea contează mai mult."
+                hint: "Inima contează, nu prețul."
             },
             {
                 id: 7,
-                title: "Sfârșitul Săptămânii",
-                message: "Ai ajuns la sfârșitul săptămânii. Ce ai învățat din această experiență?",
+                title: "Review Final",
+                message: "Săptămâna s-a încheiat. Care e concluzia ta?",
                 character: "fas fa-graduation-cap",
-                characterName: "Reflecție Finală",
+                color: "#3b82f6",
                 options: [
-                    {
-                        id: "a",
-                        text: "Banii trebuie cheltuiți imediat pentru satisfacție",
-                        description: "Vei continua să trăiești de la o săptămână la alta",
-                        correct: false,
-                        feedback: "Această mentalitate duce la dificultăți financiare pe termen lung. Planificarea este cheia succesului financiar.",
-                        walletChange: 0,
-                        xp: 10
-                    },
-                    {
-                        id: "b",
-                        text: "Trebuie să economisesc tot, fără a cheltui nimic",
-                        description: "Vei avea economii, dar nu te vei bucura de prezent",
-                        correct: false,
-                        feedback: "Echilibrul este cheia. Economisirea excesivă care exclude orice plăcere nu este un mod sănătos de a trăi.",
-                        walletChange: 0,
-                        xp: 10
-                    },
-                    {
-                        id: "c",
-                        text: "Echilibrul între economii și cheltuieli responsabile",
-                        description: "Cea mai sănătoasă abordare financiară",
-                        correct: true,
-                        feedback: "Excelent! Ai înțeles principiul fundamental al gestionării banilor de buzunar: echilibrul între a economisi pentru viitor și a te bucura responsabil de prezent. Aceasta este cheia succesului financiar pe termen lung!",
-                        walletChange: 0,
-                        xp: 50
-                    }
+                    { id: "a", text: "Banii sunt de cheltuit", desc: "YOLO", correct: false, feedback: "Pe termen lung vei avea probleme.", xp: 10 },
+                    { id: "b", text: "Strâng tot, nu trăiesc", desc: "Zgârcenie", correct: false, feedback: "Viața trebuie trăită echilibrat.", xp: 10 },
+                    { id: "c", text: "Echilibru și Planificare", desc: "Cheia succesului", correct: true, feedback: "Ai absolvit cu brio cursul de educație financiară!", xp: 60 }
                 ],
-                hint: "Gândește-te la ce ai învățat pe parcursul acestei săptămâni virtuale."
+                hint: "Ce ai învățat?"
             }
         ];
-        
-        // DOM elements
-        const gameScene = document.getElementById('gameScene');
-        const actionButtons = document.getElementById('actionButtons');
-        const nextBtn = document.getElementById('nextBtn');
-        const hintBtn = document.getElementById('hintBtn');
-        const addMoneyBtn = document.getElementById('addMoney');
-        const resetGameBtn = document.getElementById('resetGame');
-        const timeDisplay = document.getElementById('time');
-        const xpDisplay = document.getElementById('xp');
-        const decisionsDisplay = document.getElementById('decisions');
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
-        const savingsFill = document.getElementById('savingsFill');
-        const historyList = document.getElementById('historyList');
-        
-        // Initialize game
-        function initGame() {
-            updateGameStats();
-            loadScenario(0);
+
+        /* --- STATE --- */
+        let state = {
+            step: 0,
+            wallet: 50,
+            savings: 0,
+            xp: 0,
+            timeLeft: 180,
+            goal: 20,
+            timerInterval: null
+        };
+
+        /* --- DOM ELEMENTS --- */
+        const ui = {
+            wallet: document.getElementById('walletAmount'),
+            savings: document.getElementById('savingsAmount'),
+            savingsFill: document.getElementById('savingsFill'),
+            gameProgressFill: document.getElementById('gameProgressFill'),
+            stepsText: document.getElementById('stepsText'),
+            xp: document.getElementById('xp'),
+            time: document.getElementById('time'),
+            scene: document.getElementById('gameScene'),
+            actions: document.getElementById('actionArea'),
+            history: document.getElementById('historyList'),
+            nextBtn: document.getElementById('nextBtn'),
+            hintBtn: document.getElementById('hintBtn'),
+            themeBtn: document.getElementById('themeBtn')
+        };
+
+        /* --- INITIALIZATION --- */
+        function init() {
+            renderScene();
             startTimer();
-            updateTransactionHistory();
+            updateUI();
+            
+            // Theme setup
+            if(localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                ui.themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
         }
+
+        /* --- CORE FUNCTIONS --- */
         
-        // Start the timer
-        function startTimer() {
-            updateTimerDisplay();
-            gameState.timer = setInterval(() => {
-                gameState.timeLeft--;
-                updateTimerDisplay();
-                
-                if (gameState.timeLeft <= 0) {
-                    clearInterval(gameState.timer);
-                    endGame(false, "Timpul a expirat!");
+        function renderScene() {
+            if (state.step >= scenarios.length) {
+                endGame(true);
+                return;
+            }
+
+            const data = scenarios[state.step];
+            
+            // Build HTML
+            ui.scene.innerHTML = `
+                <div class="scene-progress-badge">Nivelul ${state.step + 1}</div>
+                <div class="character-area">
+                    <div class="character-avatar" style="background: linear-gradient(135deg, ${data.color}, var(--primary))">
+                        <i class="${data.character}"></i>
+                    </div>
+                    <h2 style="color: ${data.color}">${data.title}</h2>
+                </div>
+                <div class="scene-question">${data.message}</div>
+                <div class="options-grid">
+                    ${data.options.map(opt => `
+                        <div class="option-card" onclick="selectOption('${opt.id}')">
+                            <div class="option-icon"><i class="fas ${opt.id === 'a' ? 'fa-bolt' : opt.id === 'b' ? 'fa-piggy-bank' : 'fa-balance-scale'}"></i></div>
+                            <div class="option-text">${opt.text}</div>
+                            <div class="option-desc">${opt.desc}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="feedback-overlay" id="feedbackBox"></div>
+            `;
+            
+            ui.actions.style.display = 'none';
+        }
+
+        window.selectOption = function(id) {
+            const data = scenarios[state.step];
+            const selected = data.options.find(o => o.id === id);
+            const cards = document.querySelectorAll('.option-card');
+            
+            // Lock interaction
+            cards.forEach(c => {
+                c.style.pointerEvents = 'none';
+                if (!c.innerHTML.includes(selected.text)) c.classList.add('selected');
+            });
+
+            const targetCard = [...cards].find(c => c.innerHTML.includes(selected.text));
+            const feedbackBox = document.getElementById('feedbackBox');
+
+            if (selected.correct) {
+                targetCard.classList.add('correct');
+                feedbackBox.className = 'feedback-overlay correct';
+                feedbackBox.innerHTML = `<i class="fas fa-check-circle"></i> <strong>Corect!</strong> ${selected.feedback}`;
+                triggerConfetti();
+                addXP(selected.xp);
+                playSound('success');
+            } else {
+                targetCard.classList.add('incorrect');
+                feedbackBox.className = 'feedback-overlay incorrect';
+                feedbackBox.innerHTML = `<i class="fas fa-times-circle"></i> <strong>Ups!</strong> ${selected.feedback}`;
+                document.body.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-5px)' },
+                    { transform: 'translateX(5px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 300 });
+                addXP(selected.xp); // Small XP for trying
+            }
+
+            feedbackBox.style.display = 'block';
+
+            // Update Logic
+            if (selected.wallet) {
+                state.wallet += selected.wallet;
+                addTransaction(selected.wallet > 0 ? 'Venit' : 'Cheltuială', selected.wallet);
+            }
+            if (selected.savings) {
+                state.savings += selected.savings;
+            }
+
+            updateUI();
+            ui.actions.style.display = 'flex';
+        };
+
+        function addTransaction(text, amount) {
+            const item = document.createElement('div');
+            item.className = 'history-item';
+            item.innerHTML = `
+                <span>${text}</span>
+                <span style="color: ${amount > 0 ? 'var(--success)' : 'var(--danger)'}; font-weight:bold;">
+                    ${amount > 0 ? '+' : ''}${amount} MDL
+                </span>
+            `;
+            ui.history.prepend(item);
+        }
+
+        function addXP(amount) {
+            state.xp += amount;
+            ui.xp.textContent = `${state.xp} XP`;
+            
+            // Floating XP effect
+            const float = document.createElement('div');
+            float.className = 'xp-float';
+            float.textContent = `+${amount} XP`;
+            float.style.top = '50%';
+            float.style.left = '50%';
+            document.body.appendChild(float);
+            setTimeout(() => float.remove(), 1500);
+        }
+
+        function updateUI() {
+            // Wallet animation
+            animateValue(ui.wallet, parseInt(ui.wallet.innerText), state.wallet, 1000);
+            
+            // Bars
+            const savingPct = Math.min(100, (state.savings / state.goal) * 100);
+            ui.savingsFill.style.width = `${savingPct}%`;
+            ui.savings.textContent = `${state.savings} MDL`;
+            
+            const gamePct = ((state.step) / scenarios.length) * 100;
+            ui.gameProgressFill.style.width = `${gamePct}%`;
+            ui.stepsText.textContent = `Pas ${state.step}/${scenarios.length}`;
+        }
+
+        // Helper for number animation
+        function animateValue(obj, start, end, duration) {
+            if (start === end) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = `${Math.floor(progress * (end - start) + start)} <small>MDL</small>`;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    obj.innerHTML = `${end} <small>MDL</small>`;
                 }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#4f46e5', '#06b6d4', '#10b981']
+            });
+        }
+
+        function playSound(type) {
+            // Placeholder for sound logic - using visual feedback instead for this file
+        }
+
+        function endGame(won) {
+            clearInterval(state.timerInterval);
+            const title = won ? "Felicitări! Ești un Maestru!" : "Timpul a expirat!";
+            const icon = won ? "fa-trophy" : "fa-hourglass-end";
+            
+            ui.scene.innerHTML = `
+                <div style="text-align:center; padding: 2rem;">
+                    <i class="fas ${icon}" style="font-size: 5rem; color: var(--warning); margin-bottom: 1rem; animation: bounce 1s infinite;"></i>
+                    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">${title}</h1>
+                    <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem;">
+                        Ai terminat cu <strong>${state.wallet} MDL</strong> în buzunar și <strong>${state.savings} MDL</strong> economii.
+                    </p>
+                    <div class="stat-pill" style="display:inline-flex; font-size: 1.5rem; margin-bottom: 2rem;">
+                        <i class="fas fa-star"></i> Scor Total: ${state.xp} XP
+                    </div>
+                    <br>
+                    <button class="btn-main btn-next" onclick="location.reload()" style="margin: 0 auto;">
+                        <i class="fas fa-redo"></i> Joacă din Nou
+                    </button>
+                </div>
+            `;
+            ui.actions.style.display = 'none';
+            if(won) triggerConfetti();
+        }
+
+        /* --- EVENTS --- */
+        ui.nextBtn.addEventListener('click', () => {
+            state.step++;
+            renderScene();
+            updateUI();
+        });
+
+        ui.hintBtn.addEventListener('click', () => {
+            alert(scenarios[state.step].hint); // In a real app, use a nice modal
+        });
+
+        ui.themeBtn.addEventListener('click', () => {
+            const html = document.documentElement;
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                ui.themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                ui.themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        document.getElementById('restartBtn').addEventListener('click', () => location.reload());
+
+        /* --- TIMER --- */
+        function startTimer() {
+            state.timerInterval = setInterval(() => {
+                state.timeLeft--;
+                const m = Math.floor(state.timeLeft / 60);
+                const s = state.timeLeft % 60;
+                ui.time.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+                if (state.timeLeft <= 0) endGame(false);
             }, 1000);
         }
-        
-        // Update timer display
-        function updateTimerDisplay() {
-            const minutes = Math.floor(gameState.timeLeft / 60);
-            const seconds = gameState.timeLeft % 60;
-            timeDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }
-        
-        // Load a scenario
-        function loadScenario(index) {
-            gameState.currentStep = index;
-            const scenario = scenarios[index];
-            
-            // Amestecă opțiunile în ordine aleatorie
-            const shuffledOptions = shuffleArray(scenario.options);
-            
-            let optionsHTML = '';
-            shuffledOptions.forEach(option => {
-                // Iconițe diferite pentru fiecare opțiune (în funcție de ID-ul original pentru identificare)
-                const iconClass = option.id === 'a' ? 'apple-alt' : option.id === 'b' ? 'book' : 'check-circle';
-                optionsHTML += `
-                    <div class="option" data-id="${option.id}">
-                        <div class="option-icon">
-                            <i class="fas fa-${iconClass}"></i>
-                        </div>
-                        <div class="option-text">${option.text}</div>
-                        <div class="option-desc">${option.description}</div>
-                    </div>
-                `;
-            });
-            
-            gameScene.innerHTML = `
-                <div class="scene-header">
-                    <div class="scene-title">${scenario.title}</div>
-                    <div class="scene-step">Pasul ${index + 1}/7</div>
-                </div>
-                <div class="scene-content">
-                    <div class="character">
-                        <div class="character-img">
-                            <i class="${scenario.character}"></i>
-                        </div>
-                        <div class="character-name">${scenario.characterName}</div>
-                    </div>
-                    <div class="scene-message">${scenario.message}</div>
-                    <div class="options-container" id="optionsContainer">
-                        ${optionsHTML}
-                    </div>
-                    <div class="feedback" id="feedback"></div>
-                </div>
-            `;
-            
-            actionButtons.style.display = 'none';
-            
-            // Add event listeners to options
-            document.querySelectorAll('.option').forEach(option => {
-                option.addEventListener('click', function() {
-                    selectOption(this, scenario);
-                });
-            });
-            
-            // Update progress
-            updateProgress();
-        }
-        
-        // Select an option
-        function selectOption(optionElement, scenario) {
-            const optionId = optionElement.getAttribute('data-id');
-            const selectedOption = scenario.options.find(opt => opt.id === optionId);
-            
-            // Disable all options
-            document.querySelectorAll('.option').forEach(opt => {
-                opt.style.pointerEvents = 'none';
-            });
-            
-            // Mark selected option
-            optionElement.classList.add('selected');
-            
-            // Mark correct/incorrect
-            if (selectedOption.correct) {
-                optionElement.classList.add('correct');
-            } else {
-                optionElement.classList.add('incorrect');
-            }
-            
-            // Show feedback
-            const feedback = document.getElementById('feedback');
-            feedback.innerHTML = `
-                <div class="feedback-title ${selectedOption.correct ? 'correct' : 'incorrect'}">
-                    <i class="fas fa-${selectedOption.correct ? 'check-circle' : 'times-circle'}"></i>
-                    <span>${selectedOption.correct ? 'Răspuns corect!' : 'Răspuns incorect'}</span>
-                </div>
-                <div class="feedback-text">${selectedOption.feedback}</div>
-            `;
-            feedback.classList.add('show', selectedOption.correct ? 'correct' : 'incorrect');
-            
-            // Update game state
-            gameState.decisions++;
-            gameState.xp += selectedOption.xp;
-            
-            // Update wallet
-            if (selectedOption.walletChange) {
-                gameState.wallet += selectedOption.walletChange;
-                
-                // Add transaction to history
-                const type = selectedOption.walletChange > 0 ? 'income' : 'expense';
-                const description = selectedOption.correct ? 'Decizie financiară corectă' : 'Decizie financiară incorectă';
-                
-                gameState.transactions.push({
-                    description: description,
-                    amount: Math.abs(selectedOption.walletChange),
-                    type: type,
-                    currency: "MDL"
-                });
-            }
-            
-            // Update savings
-            if (selectedOption.savingsChange) {
-                gameState.savings += selectedOption.savingsChange;
-            }
-            
-            // Update displays
-            updateGameStats();
-            updateTransactionHistory();
-            
-            // Show action buttons
-            actionButtons.style.display = 'flex';
-            
-            // If this was the last scenario
-            if (gameState.currentStep === scenarios.length - 1) {
-                nextBtn.innerHTML = '<i class="fas fa-trophy"></i> Vezi Rezultatele';
-            }
-        }
-        
-        // Update game stats displays
-        function updateGameStats() {
-            xpDisplay.textContent = gameState.xp;
-            decisionsDisplay.textContent = `${gameState.decisions}/${gameState.maxDecisions}`;
-            
-            // Update wallet display in the wallet card
-            document.querySelector('.wallet-amount').innerHTML = `${gameState.wallet} <span class="currency">MDL</span>`;
-            
-            // Update savings progress
-            const savingsPercentage = Math.min(100, (gameState.savings / gameState.weeklyGoal) * 100);
-            savingsFill.style.width = `${savingsPercentage}%`;
-            
-            // Update XP reward if available
-            updateXPReward();
-        }
-        
-        // Update progress bar
-        function updateProgress() {
-            const progressPercentage = (gameState.currentStep / scenarios.length) * 100;
-            progressFill.style.width = `${progressPercentage}%`;
-            progressText.textContent = `${Math.round(progressPercentage)}%`;
-        }
-        
-        // Update transaction history
-        function updateTransactionHistory() {
-            historyList.innerHTML = '';
-            
-            // Show only last 5 transactions
-            const recentTransactions = gameState.transactions.slice(-5);
-            
-            recentTransactions.forEach(transaction => {
-                const item = document.createElement('div');
-                item.className = 'history-item';
-                
-                const amountClass = transaction.type === 'income' ? 'positive' : 'negative';
-                const amountSign = transaction.type === 'income' ? '+' : '-';
-                
-                item.innerHTML = `
-                    <div class="history-description">${transaction.description}</div>
-                    <div class="history-amount ${amountClass}">${amountSign}${transaction.amount} ${transaction.currency || 'MDL'}</div>
-                `;
-                
-                historyList.appendChild(item);
-            });
-        }
-        
-        // Update XP reward display
-        function updateXPReward() {
-            // Remove existing XP reward if present
-            const existingReward = document.querySelector('.xp-reward');
-            if (existingReward) {
-                existingReward.remove();
-            }
-            
-            // Add XP reward after feedback if feedback is shown
-            const feedback = document.getElementById('feedback');
-            if (feedback && feedback.classList.contains('show')) {
-                const xpReward = document.createElement('div');
-                xpReward.className = 'xp-reward';
-                xpReward.innerHTML = `
-                    <i class="fas fa-star xp-icon"></i>
-                    <span>Ai câștigat ${scenarios[gameState.currentStep].options.find(opt => opt.correct).xp} XP pentru această decizie!</span>
-                `;
-                
-                feedback.after(xpReward);
-            }
-        }
-        
-        // End the game
-        function endGame(success, message) {
-            clearInterval(gameState.timer);
-            
-            let resultHTML = '';
-            
-            if (success) {
-                resultHTML = `
-                    <div class="game-complete">
-                        <div class="complete-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div class="complete-title">Felicitări!</div>
-                        <div class="complete-text">Ai completat jocul "Portofelul Virtual" și ai demonstrat că știi să gestionezi banii de buzunar responsabil.</div>
-                        <div class="complete-text"><strong>Rezultate finale:</strong></div>
-                        <div class="complete-text">XP total: ${gameState.xp} puncte</div>
-                        <div class="complete-text">Economii acumulate: ${gameState.savings} MDL din 20 MDL țintă</div>
-                        <div class="complete-text">Bani rămași în portofel: ${gameState.wallet} MDL</div>
-                        <div class="action-buttons" style="margin-top: 2rem;">
-                            <button class="btn btn-primary action-btn" id="playAgainBtn">
-                                <i class="fas fa-redo"></i> Joacă din nou
-                            </button>
-                            <button class="btn btn-return action-btn" id="returnToMainBtn">
-                                <i class="fas fa-home"></i> Înapoi la FinQuest
-                            </button>
-                        </div>
-                    </div>
-                `;
-            } else {
-                resultHTML = `
-                    <div class="game-complete">
-                        <div class="complete-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="complete-title">${message}</div>
-                        <div class="complete-text">Ai reușit să completezi ${gameState.decisions} din ${scenarios.length} decizii.</div>
-                        <div class="complete-text"><strong>Rezultate finale:</strong></div>
-                        <div class="complete-text">XP total: ${gameState.xp} puncte</div>
-                        <div class="complete-text">Economii acumulate: ${gameState.savings} MDL din 20 MDL țintă</div>
-                        <div class="complete-text">Bani rămași în portofel: ${gameState.wallet} MDL</div>
-                        <div class="action-buttons" style="margin-top: 2rem;">
-                            <button class="btn btn-primary action-btn" id="playAgainBtn">
-                                <i class="fas fa-redo"></i> Joacă din nou
-                            </button>
-                            <button class="btn btn-return action-btn" id="returnToMainBtn">
-                                <i class="fas fa-home"></i> Înapoi la FinQuest
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            gameScene.innerHTML = resultHTML;
-            actionButtons.style.display = 'none';
-            
-            // Salvează progresul în localStorage dacă jocul a fost completat cu succes
-            if (success) {
-                localStorage.setItem('finquest-bani-de-buzunar-completed', 'true');
-                localStorage.setItem('finquest-bani-de-buzunar-xp', gameState.xp.toString());
-                localStorage.setItem('finquest-bani-de-buzunar-savings', gameState.savings.toString());
-                localStorage.setItem('finquest-bani-de-buzunar-wallet', gameState.wallet.toString());
-            }
-            
-            // Add event listeners to buttons
-            document.getElementById('playAgainBtn').addEventListener('click', resetGame);
-            document.getElementById('returnToMainBtn').addEventListener('click', returnToMain);
-        }
-        
-        // Reset the game
-        function resetGame() {
-            clearInterval(gameState.timer);
-            
-            // Reset game state
-            gameState.wallet = 50;
-            gameState.savings = 0;
-            gameState.xp = 0;
-            gameState.currentStep = 0;
-            gameState.decisions = 0;
-            gameState.timeLeft = 180;
-            gameState.transactions = [
-                { description: "Bani de buzunar săptămânal", amount: 50, type: "income", currency: "MDL" }
-            ];
-            
-            // Reinitialize game
-            initGame();
-        }
-        
-        // Return to main FinQuest site
-        function returnToMain() {
-            // Salvează progresul înainte de a pleca
-            localStorage.setItem('finquest-bani-de-buzunar-completed', 'true');
-            localStorage.setItem('finquest-bani-de-buzunar-xp', gameState.xp.toString());
-            
-            // Redirecționează către site-ul principal
-            window.location.href = 'index.html';
-        }
-        
-        // Add money to wallet (for testing)
-        addMoneyBtn.addEventListener('click', function() {
-            gameState.wallet += 10;
-            gameState.transactions.push({
-                description: "Bani adăugați manual",
-                amount: 10,
-                type: "income",
-                currency: "MDL"
-            });
-            updateGameStats();
-            updateTransactionHistory();
-        });
-        
-        // Event listeners
-        nextBtn.addEventListener('click', function() {
-            if (gameState.currentStep < scenarios.length - 1) {
-                loadScenario(gameState.currentStep + 1);
-            } else {
-                endGame(true, "Joc completat cu succes!");
-            }
-        });
-        
-        hintBtn.addEventListener('click', function() {
-            const currentScenario = scenarios[gameState.currentStep];
-            alert(`Sugestie: ${currentScenario.hint}`);
-        });
-        
-        resetGameBtn.addEventListener('click', resetGame);
-        
-        // Initialize the game when page loads
-        window.addEventListener('DOMContentLoaded', initGame);
+
+        // Start
+        init();
     </script>
 </body>
 </html>
